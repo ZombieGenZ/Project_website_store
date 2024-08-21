@@ -323,74 +323,6 @@
     <title>Store</title>
 </head>
 <body>
-    <div class="main">
-        <div class="main-left">
-            <div class="main-left-logo">
-                <img src="image/system/logo.png" alt="Logo">
-            </div>
-            <div class="main-left-logo-content" id="v_menu">
-                <div class="main-left-logo-content-group">
-                    <div class="main-left-logo-content-group-top">
-                        <p>Cửa hàng</p>
-                    </div>
-                    <div class="main-left-logo-content-group-bottom">
-                        <a href="#" class="main-left-logo-content-group-bottom-active">
-                            <button><i class="fa-solid fa-bag-shopping"></i> Cửa hàng</button>
-                        </a>
-                        <a href="#">
-                            <button><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</button>
-                        </a>
-                    </div>
-                </div>
-                    <div class="main-left-logo-content-group">
-                        <div class="main-left-logo-content-group-top">
-                            <p>Tài khoản</p>
-                        </div>
-                        <div class="main-left-logo-content-group-bottom">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginMadal">
-                                <button><i class="fa-solid fa-user"></i> Đăng nhập</button>
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#registerMadal">
-                                <button><i class="fa-solid fa-user-plus"></i> Đăng ký</button>
-                            </a>
-                        </div>
-                    </div>
-            </div>
-        </div>
-        <div class="main-right">
-            <div class="main-right-header">
-                <div class="main-right-header-menu">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="offcanvasExample">
-                        <i class="fa-solid fa-bars"></i>
-                      </button>
-                </div>
-                <div class="main-right-header-title">
-                    <h1 class="overflow-1">Cửa hàng</h1>
-                </div>
-                <div class="main-right-header-money">
-                    <button type="button" class="btn btn-warning overflow-1 btn-money">
-                        <i class="fa-solid fa-money-bill-1"></i>
-                        <span id="money">0</span>
-                        đ
-                    </button>
-                </div>
-                <div class="main-right-header-account">
-                    <div class="dropdown" id="dropdown_menu">
-                        <a class="btn btn-secondary dropdown-toggle btn-color-menu-account" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          KHÁCH
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end btn-color-menu-account-background">
-                          <li><a class="dropdown-item btn-color-menu-account-items" href="#" data-bs-toggle="modal" data-bs-target="#loginMadal">Đăng nhập</a></li>
-                          <li><a class="dropdown-item btn-color-menu-account-items" href="#" data-bs-toggle="modal" data-bs-target="#registerMadal">Đăng ký</a></li>
-                        </ul>
-                      </div>
-                </div>
-            </div>
-            <div class="main-right-header-content">
-
-            </div>
-        </div>
-    </div>
     <div class="madol" id="modal">
         <div class="modal fade" id="loginMadal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -474,6 +406,74 @@
             </div>
           </div>  
     </div>
+    <div class="main">
+        <div class="main-left">
+            <div class="main-left-logo">
+                <img src="image/system/logo.png" alt="Logo">
+            </div>
+            <div class="main-left-logo-content" id="v_menu">
+                <div class="main-left-logo-content-group">
+                    <div class="main-left-logo-content-group-top">
+                        <p>Cửa hàng</p>
+                    </div>
+                    <div class="main-left-logo-content-group-bottom">
+                        <a href="#" class="main-left-logo-content-group-bottom-active">
+                            <button><i class="fa-solid fa-bag-shopping"></i> Cửa hàng</button>
+                        </a>
+                        <a href="#">
+                            <button><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</button>
+                        </a>
+                    </div>
+                </div>
+                    <div class="main-left-logo-content-group">
+                        <div class="main-left-logo-content-group-top">
+                            <p>Tài khoản</p>
+                        </div>
+                        <div class="main-left-logo-content-group-bottom">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginMadal">
+                                <button><i class="fa-solid fa-user"></i> Đăng nhập</button>
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#registerMadal">
+                                <button><i class="fa-solid fa-user-plus"></i> Đăng ký</button>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="main-right">
+            <div class="main-right-header">
+                <div class="main-right-header-menu">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-bars"></i>
+                      </button>
+                </div>
+                <div class="main-right-header-title">
+                    <h1 class="overflow-1">Cửa hàng</h1>
+                </div>
+                <div class="main-right-header-money">
+                    <button type="button" class="btn btn-warning overflow-1 btn-money">
+                        <i class="fa-solid fa-money-bill-1"></i>
+                        <span id="money">0</span>
+                        đ
+                    </button>
+                </div>
+                <div class="main-right-header-account">
+                    <div class="dropdown" id="dropdown_menu">
+                        <a class="btn btn-secondary dropdown-toggle btn-color-menu-account" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          KHÁCH
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end btn-color-menu-account-background">
+                          <li><a class="dropdown-item btn-color-menu-account-items" href="#" data-bs-toggle="modal" data-bs-target="#loginMadal">Đăng nhập</a></li>
+                          <li><a class="dropdown-item btn-color-menu-account-items" href="#" data-bs-toggle="modal" data-bs-target="#registerMadal">Đăng ký</a></li>
+                        </ul>
+                      </div>
+                </div>
+            </div>
+            <div class="main-right-header-content">
+
+            </div>
+        </div>
+    </div>
     <div class="Offcanvas">
         <div class="offcanvas offcanvas-start" tabindex="-1" id="menu" aria-labelledby="menuLabel">
             <div class="offcanvas-header">
@@ -509,6 +509,7 @@
                             </div>
                         </div>
             </div>
+          </div>
           </div>
     </div>
     <script>
@@ -869,6 +870,7 @@
     function Logout() {
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        location.reload();
     }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>

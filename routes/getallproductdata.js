@@ -44,7 +44,6 @@ routes.post("/", async (req, res) => {
     if (response.data.status) {
       if (response.data.permission.acceptproductmanagementall) {
           let productData = await GetAllProductData();
-          console.log(productData);
           res.status(200).json({ status: true, data: productData });
       }
       else {
@@ -73,7 +72,7 @@ function normalizeString(str) {
 
   async function GetProductData(userid) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT * FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, status FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -89,7 +88,7 @@ function normalizeString(str) {
 
   async function GetAllProductData() {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT * FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, status FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
         if (err) {
           reject(err);
         } else {
