@@ -5,7 +5,8 @@ const axios = require("axios");
 const cors = require('cors');
 const path = require('path');
 const multer = require("multer");
-const { Console } = require("console");
+const { v4 } = require('uuid');
+const crypto = require('crypto');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -71,7 +72,6 @@ routes.post("/", upload.fields([
       }
   })
   .then(async response => {
-    console.log(response);
     if (response.data.status) {
       if (productname === "" || productsubtitle === "" || productdescription === "" || productprice === ""  || productquantity === "" || productinformation === "" || productinformation === undefined || productinformation == "[]" || icon === undefined || picture === undefined) {
         res.status(200).json({ status: false, message: "Bạn cần điền đầy đủ thông tin" });
@@ -99,9 +99,19 @@ routes.post("/", upload.fields([
                 const productpath = productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9));
                 // console.log(response.data.userid, productname, productsubtitle, productdescriptionHTML, productdescriptionHTML, productprice, productquantity, icon.path, productpath);
                 // console.log(req.files.icon[0].path);
-                const success = await CreateProduct(response.data.userid, productname, productsubtitle, productinformationHTML, productdescriptionHTML, productprice, productquantity, req.files.icon[0].path, productpath);
+                const UUID = await GeneratorUUID();
+                const success = await CreateProduct(UUID, response.data.userid, productname, productsubtitle, productinformationHTML, productdescriptionHTML, productprice, productquantity, req.files.icon[0].path, productpath);
                 if (success) {
-                  res.status(200).json({ status: true, message: `Đã tạo sản phẩm thành công! Sản phẩm đã được gửi đến quản trị viên chờ duyệt` });
+                  const full_success = true;
+                  Array.from(req.files.picture).forEach(async items => {
+                    const picture_upload_success = await CreatePicture(UUID, items.path);
+                  });
+                  if (full_success) {
+                    res.status(200).json({ status: true, message: `Đã tạo sản phẩm thành công! Sản phẩm đã được gửi đến quản trị viên chờ duyệt` });
+                  }
+                  else {
+                    res.status(200).json({ status: false, message: `Lỗi trong quá trình lưu ảnh` });
+                  }
                 }
                 else {
                   res.status(200).json({ status: false, message: `Lỗi khi tạo sản phẩm` });
@@ -133,13 +143,26 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
-  async function CreateProduct(sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath) {
-    const result = database.query(`INSERT INTO Product (sellerid, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-      [sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath, "Đang chờ duyệt"]);
-    if (result.rowsAffected > 0 || result.changedRows > 0) {
-      return true;
+  async function CreateProduct(productid, sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath) {
+    try {
+      const result = await database.query(`INSERT INTO Product (productid, sellerid, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+        [productid, sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath, `<span class="badge text-bg-primary">Đang chờ duyệt</span>`]);
+        return true;
     }
+    catch (e) {
+      return false;
+    }
+}
+
+async function CreatePicture(productid, picturepath) {
+  try {
+    const result = await database.query(`INSERT INTO Picture (productid, picturepath) VALUE (?, ?)`, 
+      [productid, picturepath]);
+      return true;
+  }
+  catch (e) {
     return false;
+  }
 }
 
 function parseMarkup(text) {
@@ -167,6 +190,12 @@ function parseMarkup(text) {
   }
 
   return processNestedTags(text);
+}
+
+function GeneratorUUID() {
+  const randomBytes = crypto.randomBytes(16);
+  const uuidString = v4({ uuid: randomBytes, random: randomBytes });
+  return uuidString;
 }
 
 module.exports = routes;

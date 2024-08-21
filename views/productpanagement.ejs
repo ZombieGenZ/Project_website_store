@@ -688,46 +688,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="main-right-header-content-center-bottom">
-                        <h3>Sản phẩm</h3>
-                        <table class="table table-dark">
-                            <thead>
-                              <tr>
-                                <th class="tb-col1" scope="col">ID</th>
-                                <th class="tb-col2" scope="col">Tên sản phẩm</th>
-                                <th class="tb-col3" scope="col">Người bán</th>
-                                <th class="tb-col4" scope="col">Giá bán</th>
-                                <th class="tb-col5" scope="col">Trạng thái</th>
-                                <th class="tb-col6" scope="col">Chức năng</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td class="tb-col1" scope="row">1</td>
-                                <td class="tb-col2"><a href="#">Sản phẩm 1</a></td>
-                                <td class="tb-col3"><a href="#">Author 1</a></td>
-                                <td class="tb-col4">1.000.000 đ</td>
-                                <td class="tb-col5"><span class="badge text-bg-primary">Đang chờ duyệt</span></td>
-                                <td class="tb-col6"><button type="button" class="btn btn-primary">Chức năng</button></td>
-                              </tr>
-                              <tr>
-                                <td class="tb-col1" scope="row">2</td>
-                                <td class="tb-col2"><a href="#">Sản phẩm 2</a></td>
-                                <td class="tb-col3"><a href="#">Author 2</a></td>
-                                <td class="tb-col4">1.000.000 đ</td>
-                                <td class="tb-col5"><span class="badge text-bg-danger">Bị từ chối</span></td>
-                                <td class="tb-col6"><button type="button" class="btn btn-primary">Chức năng</button></td>
-                              </tr>
-                              <tr>
-                                <td class="tb-col1" scope="row">3</td>
-                                <td class="tb-col2"><a href="#">Sản phẩm 3</a></td>
-                                <td class="tb-col3"><a href="#">Author 3</a></td>
-                                <td class="tb-col4">1.000.000 đ</td>
-                                <td class="tb-col5"><span class="badge text-bg-success">Đã được duêtj</span></td>
-                                <td class="tb-col6"><button type="button" class="btn btn-primary">Chức năng</button></td>
-                              </tr>
-                            </tbody>
-                          </table>
+                    <div class="main-right-header-content-center-bottom" id="productlist">
+
                     </div>
                 </div>
             </div>
@@ -1696,6 +1658,95 @@
             }
         });
     });
+    function loadProducts() {
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        if (username !== undefined && username !== null && password !== undefined && password !== null) {
+            const data = {
+                username: username,
+                password: password,
+            }
+            fetch('/API/authenticationpermission', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+              })
+              .then(res => res.json())
+              .then(resData => {
+                    if (resData.status) {
+                        if (resData.permission.acceptproductmanagementall) {
+                            fetch('/API/getallproductdata', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                              })
+                              .then(res => res.json())
+                              .then(resData => {
+                                if (resData.data.length > 0) {
+                                    let count = 1;
+                                    let HTML = `<h3>Sản phẩm</h3>                        
+                                                <table class="table table-dark">
+                                                <thead>
+                                                <tr>
+                                                    <th class="tb-col1" scope="col">#</th>
+                                                    <th class="tb-col2" scope="col">Tên sản phẩm</th>
+                                                    <th class="tb-col3" scope="col">Người bán</th>
+                                                    <th class="tb-col4" scope="col">Giá bán</th>
+                                                    <th class="tb-col5" scope="col">Trạng thái</th>
+                                                    <th class="tb-col6" scope="col">Chức năng</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>`;
+                                    resData.data.forEach(items => {
+                                        HTML += `<tr>
+                                                    <td class="tb-col1" scope="row">${count}</td>
+                                                    <td class="tb-col2"><a href="/product/${items.productid}">${items.producttitle}</a></td>
+                                                    <td class="tb-col3"><a href="/profile/${items.sellerid}">${items.username}</a></td>
+                                                    <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
+                                                    <td class="tb-col5">${items.status}</td>
+                                                    <td class="tb-col6"><button type="button" class="btn btn-primary">Chức năng</button></td>
+                                                </tr>`;
+                                    });
+                                    HTML += `</tbody>
+                                                </table>`;
+                                    document.getElementById("productlist").innerHTML = HTML;
+                                }
+                            })
+                        }
+                        else if (resData.permission.acceptproductmanagement) {
+                            fetch('/API/getallproductdata', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                              })
+                              .then(res => res.json())
+                              .then(resData => {
+                                console.log(resData);
+                            })
+                        }
+                        else {
+                            location.href = "/";
+                        }
+                    }
+                    else {
+                        location.href = "/";
+                    }
+                })
+            }
+            else {
+                location.href = "/";
+            }
+    }
+    loadProducts();
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

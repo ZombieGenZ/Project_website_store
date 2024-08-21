@@ -1,6 +1,6 @@
 {
   "name": "project_website_store",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Dự án cá nhân về chủ đề bán hàng",
   "main": "main.js",
   "scripts": {

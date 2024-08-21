@@ -24,10 +24,12 @@ const registerAPIRoutes = require("./routes/register");
 const authenticationAccountAPIRoutes = require("./routes/authentication");
 const authenticationPermissionAPIRoutes = require("./routes/authenticationpermission");
 const createProductAPIRoutes = require("./routes/createproduct");
+const getAllProductDataAPIRoutes = require("./routes/getallproductdata");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
 app.use('/API/authenticationpermission', authenticationPermissionAPIRoutes);
 app.use('/API/createroduct', createProductAPIRoutes);
+app.use('/API/getallproductdata', getAllProductDataAPIRoutes);
 
 app.listen(port);

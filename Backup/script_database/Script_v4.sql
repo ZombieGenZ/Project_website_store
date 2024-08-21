@@ -41,7 +41,7 @@ CREATE TABLE Badge (
 );
 
 CREATE TABLE Product (
-	productid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	productid VARCHAR(255) NOT NULL UNIQUE,
 	sellerid INT NOT NULL,
 	producttitle VARCHAR(255) NOT NULL,
 	productsubtitle VARCHAR(255) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE Product (
 
 CREATE TABLE Voucher (
 	voucherid INT NOT NULL AUTO_INCREMENT UNIQUE,
-	productid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
 	vouchertitle VARCHAR(255) NOT NULL,
 	vouchercode VARCHAR(255) NOT NULL,
 	voucherdiscount DECIMAL(4, 1) NOT NULL CHECK(voucherdiscount >= 0 AND voucherdiscount <= 100),
@@ -68,7 +68,7 @@ CREATE TABLE Voucher (
 CREATE TABLE Cart (
 	cartid INT NOT NULL AUTO_INCREMENT UNIQUE,
 	userid INT NOT NULL,
-	productid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
 	quantity INT NOT NULL DEFAULT 1,
 	PRIMARY KEY(cartid)
 );
@@ -85,7 +85,7 @@ CREATE TABLE Penalty (
 CREATE TABLE PurchaseHistory (
 	historyid INT NOT NULL AUTO_INCREMENT UNIQUE,
 	userid INT NOT NULL,
-	productid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
 	totalprice DECIMAL(15, 3) NOT NULL CHECK(totalprice > 0),
 	totalquantity INT NOT NULL CHECK(totalquantity > 0),
 	voucherid INT,
@@ -138,7 +138,7 @@ CREATE TABLE Recruitment (
 
 CREATE TABLE Picture (
 	pictureid INT NOT NULL AUTO_INCREMENT UNIQUE,
-	productid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
 	picturepath TEXT NOT NULL,
 	PRIMARY KEY(pictureid)
 );
@@ -208,6 +208,7 @@ VALUE ("admin", true, true, true, true, true, true, true, true, true, "admin");
 SELECT * FROM Account;
 SELECT * FROM Permission;
 SELECT * FROM Badge;
+SELECT * FROM Picture;
 SELECT * FROM Product;
 SELECT * FROM Voucher;
 SELECT * FROM Cart;
@@ -215,3 +216,6 @@ SELECT * FROM Penalty;
 SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
+
+DELETE FROM PICTURE;
+DELETE FROM PRODUCT;
