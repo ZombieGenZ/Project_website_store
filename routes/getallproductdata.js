@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const axios = require("axios");
 const cors = require('cors');
+const DOMParser = require('dom-parser');
 
 const database = mysql.createConnection({
   host: "localhost",
@@ -42,14 +43,17 @@ routes.post("/", async (req, res) => {
   })
   .then(async response => {
     if (response.data.status) {
-      if (response.data.permission.acceptproductmanagementall) {
+      if (Boolean(response.data.permission.acceptproductmanagementall)) {
           let productData = await GetAllProductData();
           res.status(200).json({ status: true, data: productData });
+        }
+        else if (Boolean(response.data.permission.acceptproductmanagement)) {
+          console.log(response.data.userid);
+          let productData = await GetProductData(response.data.userid);
+        res.status(200).json({ status: true, data: productData });
       }
       else {
-        let productData = await GetProductData(response.data.userid);
-        console.log(productData);
-        res.status(200).json({ status: true, data: productData });
+        res.status(200).json({ status: false, data: null });
       }
     }
     else {
@@ -72,7 +76,7 @@ function normalizeString(str) {
 
   async function GetProductData(userid) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, status FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -88,7 +92,7 @@ function normalizeString(str) {
 
   async function GetAllProductData() {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, status FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
         if (err) {
           reject(err);
         } else {

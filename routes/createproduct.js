@@ -89,7 +89,7 @@ routes.post("/", upload.fields([
               return;
             }
             else {
-                let productdescriptionHTML = await parseMarkup(productdescription.replace("\n", "<br>"));
+                let productdescriptionHTML = await parseMarkup(productdescription);
                 let productinformationHTML = "";
                 for (const items of productInfo) {
                     const { title, value } = items;
@@ -97,8 +97,6 @@ routes.post("/", upload.fields([
                     productinformationHTML += HTML; 
                 }
                 const productpath = productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9));
-                // console.log(response.data.userid, productname, productsubtitle, productdescriptionHTML, productdescriptionHTML, productprice, productquantity, icon.path, productpath);
-                // console.log(req.files.icon[0].path);
                 const UUID = await GeneratorUUID();
                 const success = await CreateProduct(UUID, response.data.userid, productname, productsubtitle, productinformationHTML, productdescriptionHTML, productprice, productquantity, req.files.icon[0].path, productpath);
                 if (success) {
@@ -180,7 +178,7 @@ function parseMarkup(text) {
   };
 
   function processNestedTags(input) {
-    const regex = /\[(\w+)\]((?:[^\[\]]|\[(?:(?!\]).)*\])*)(?=\[\w+\]|\s*$)/g;
+    const regex = /\[(\w+)\]((?:[^\[\]]|\[(?:(?!\]).)*\])*)\[\/\1\]/g;
     return input.replace(regex, (match, tag, content) => {
       if (tags[tag]) {
         return tags[tag](processNestedTags(content));
@@ -189,7 +187,10 @@ function parseMarkup(text) {
     });
   }
 
-  return processNestedTags(text);
+  // Xử lý từng dòng và thêm <br> vào cuối mỗi dòng
+  const lines = text.split('\n');
+  const processedLines = lines.map(line => processNestedTags(line.trim()));
+  return processedLines.join('<br>\n');
 }
 
 function GeneratorUUID() {
