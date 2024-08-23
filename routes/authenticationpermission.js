@@ -43,8 +43,7 @@ routes.post("/", async (req, res) => {
   .then(async response => {
     if (response.data.status) {
       const permission = await GetPermission(response.data.user.permissionid);
-      const badge = await GetBadge(permission.badge);
-      res.status(200).json({ status: true, userid: response.data.user.userid, username: response.data.user.username, money: response.data.user.money, verify: response.data.user.Verify, permission: permission, badge: badge });
+      res.status(200).json({ status: true, userid: response.data.user.userid, username: response.data.user.username, money: response.data.user.money, verify: response.data.user.Verify, permission: permission });
     }
     else {
       res.status(200).json({ status: false, data: null });
@@ -66,22 +65,6 @@ function normalizeString(str) {
   async function GetPermission(permissionid) {
     return new Promise((resolve, reject) => {
       database.query(`SELECT * FROM Permission WHERE permissionname = ?`, [permissionid], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          if (res.length > 0) {
-            resolve(res[0]);
-          } else {
-            resolve(null);
-          }
-        }
-      });
-    });
-  }
-
-  async function GetBadge(badgeid) {
-    return new Promise((resolve, reject) => {
-      database.query(`SELECT * FROM Badge WHERE badgename = ?`, [badgeid], (err, res) => {
         if (err) {
           reject(err);
         } else {

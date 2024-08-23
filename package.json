@@ -1,6 +1,6 @@
 {
   "name": "project_website_store",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Dự án cá nhân về chủ đề bán hàng",
   "main": "main.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "project_website_store": "file:",

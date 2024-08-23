@@ -682,7 +682,6 @@
               })
               .then(res => res.json())
               .then(resData => {
-                console.log(resData);
                 if (resData.status) {
                     localStorage.setItem("username", resData.user.username);
                     localStorage.setItem("password", resData.user.password);
@@ -841,14 +840,9 @@
                             document.getElementById("v_menu").innerHTML = HTML;
                             document.getElementById("menu_offcanvas").innerHTML = HTML;
 
-                            let dropdown = `
-                            <a class="btn btn-secondary dropdown-toggle btn-color-menu-account" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ${resData.username}`;
+                            let dropdown = `<a class="btn btn-secondary dropdown-toggle btn-color-menu-account" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${resData.username}`;
                             if (resData.verify) {
                                 dropdown += ` <i class="fa-solid fa-circle-check verified"></i>`
-                            }
-                            if (resData.badge != null) {
-                                dropdown += ` ${resData.badge.badgeicon}`
                             }
                             dropdown += `</a>`;
                             dropdown += `</ul>

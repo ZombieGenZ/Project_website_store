@@ -3,22 +3,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const axios = require("axios");
 const cors = require('cors');
-const path = require('path');
-const multer = require("multer");
-const { v4 } = require('uuid');
-const crypto = require('crypto');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/image/upload/product');
-  },
-  filename: function (req, file, cb) {
-   const uniquSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-   cb(null, file.fieldname + '-' + uniquSuffix + path.extname(file.originalname));
-  },
-});
-
-const upload = multer({ storage: storage });
 
 const database = mysql.createConnection({
   host: "localhost",
@@ -42,23 +27,17 @@ routes.get("/", async (req, res) => {
     res.status(403).json( { message: "Bạn không có quyền truy cập vào ứng đường dẩn này" } );
 });
 
-routes.post("/", upload.fields([
-    { name: 'icon', maxCount: 1 },
-    { name: 'picture', maxCount: 100 }
-]), async (req, res) => {
+routes.post("/", async (req, res) => {
   try {
     let { username, 
           password,
+          productid,
           productname,
           productsubtitle,
           productdescription,
           productprice,
           productquantity,
-          productinformation
     } = req.body;
-    let { icon, 
-          picture
-    } = req.files;
 
     username = await normalizeString(username);
     password = await normalizeString(password);
@@ -73,13 +52,12 @@ routes.post("/", upload.fields([
   })
   .then(async response => {
     if (response.data.status) {
-      if (response.data.permission.acceptproductmanagement || response.data.permission.acceptvouchermanagementall) {
-        if (productname === "" || productsubtitle === "" || productdescription === "" || productprice === ""  || productquantity === "" || productinformation === "" || productinformation === undefined || productinformation == "[]" || icon === undefined || picture === undefined) {
+      if (response.data.permission.acceptproductmanagement || response.data.permission.acceptproductmanagementall) {
+        if (productname === "" || productsubtitle === "" || productdescription === "" || productprice === ""  || productquantity === "") {
           res.status(200).json({ status: false, message: "Bạn cần điền đầy đủ thông tin" });
           return;
         }
         else {
-          const productInfo = JSON.parse(productinformation);
           if (Number(productprice) < 1000) {
               res.status(200).json({ status: false, message: `Giá sản phẩm phải lớn hơn ${Number(1000).toLocaleString('de-DE')}đ` });
               return;
@@ -90,34 +68,34 @@ routes.post("/", upload.fields([
                 return;
               }
               else {
-                  let productdescriptionHTML = await parseMarkup(productdescription);
-                  let productinformationHTML = "";
-                  for (const items of productInfo) {
-                      const { title, value } = items;
-                      const HTML = `<div class="main-right-header-content-center-center-center-items"><div class="main-right-header-content-center-center-center-items-left"><h class="overflow-1">${title}</h></div><div class="main-right-header-content-center-center-center-items-right"><p class="overflow-1">${value}</p></div></div>`;
-                      productinformationHTML += HTML; 
-                  }
+                if (response.data.permission.acceptproductmanagementall) {
                   const productpath = await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9)));
-                  const UUID = await GeneratorUUID();
-                  const success = await CreateProduct(UUID, response.data.userid, productname, productsubtitle, productinformationHTML, productdescriptionHTML, productprice, productquantity, req.files.icon[0].path, productpath);
+                  let productdescriptionHTML = await parseMarkup(productdescription);
+                  const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);
                   if (success) {
-                    const full_success = true;
-                    Array.from(req.files.picture).forEach(async items => {
-                      const picture_upload_success = await CreatePicture(UUID, items.path);
-                      if (!picture_upload_success) {
-                          full_success = false;
-                      }
-                    });
-                    if (full_success) {
-                      res.status(200).json({ status: true, message: `Đã tạo sản phẩm thành công! Sản phẩm đã được gửi đến quản trị viên chờ duyệt` });
-                    }
-                    else {
-                      res.status(200).json({ status: false, message: `Lỗi trong quá trình lưu ảnh` });
-                    }
+                    res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
                   }
                   else {
-                    res.status(200).json({ status: false, message: `Lỗi khi tạo sản phẩm` });
+                    res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
                   }
+                }
+                else {
+                  const isAuthor = await CheckAuthor(response.data.userid, productid);
+                  if (isAuthor) {
+                    const productpath = await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9)));
+                    let productdescriptionHTML = await parseMarkup(productdescription);
+                      const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);
+                      if (success) {
+                        res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
+                      }
+                      else {
+                        res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
+                      }
+                    }
+                  else {
+                    res.status(200).json({ status: false, message: `Bạn không có quyền thực hiện điều này` });
+                  }
+                }
               }
           }
         }
@@ -149,10 +127,10 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
-  async function CreateProduct(productid, sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath) {
+  async function EditProduct(productid, producttitle, productsubtitle, productcontent, productprice, productquantity, productpath) {
     try {
-      const result = await database.query(`INSERT INTO Product (productid, sellerid, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [productid, sellerid, producttitle, productsubtitle, productinformation, productcontent, productprice, productquantity, producticonpath, productpath, `<span class="badge text-bg-primary">Đang chờ duyệt</span>`]);
+      const result = await database.query(`UPDATE Product SET producttitle = ?, productsubtitle = ?, productcontent = ?, price = ?, quantity = ?, productpath = ? WHERE productid = ?`, 
+        [ producttitle, productsubtitle, productcontent, productprice, productquantity, productpath, productid ]);
         return true;
     }
     catch (e) {
@@ -160,11 +138,18 @@ function normalizeString(str) {
     }
 }
 
-async function CreatePicture(productid, picturepath) {
+async function CheckAuthor(userid, productid) {
   try {
-    const result = await database.query(`INSERT INTO Picture (productid, picturepath) VALUE (?, ?)`, 
-      [productid, picturepath]);
-      return true;
+    const [results] = await database.query(
+      `SELECT sellerid FROM Product WHERE productid = ?`, 
+      [productid]
+    );
+
+    if (results.length > 0) {
+      return results[0].sellerid === userid;
+    } else {
+      return false;
+    }
   }
   catch (e) {
     return false;
@@ -198,12 +183,6 @@ function parseMarkup(text) {
   const lines = text.split('\n');
   const processedLines = lines.map(line => processNestedTags(line.trim()));
   return processedLines.join('<br>\n');
-}
-
-function GeneratorUUID() {
-  const randomBytes = crypto.randomBytes(16);
-  const uuidString = v4({ uuid: randomBytes, random: randomBytes });
-  return uuidString;
 }
 
 function removeDiacritics(str) {
