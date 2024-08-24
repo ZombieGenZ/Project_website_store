@@ -1814,79 +1814,149 @@
                                                     </thead>
                                                     <tbody>`;
                                         resData.data.forEach(items => {
-                                            let viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-scrollable">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
-                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            let viewModal = "";
+                                            if (items.status == `<span class="badge text-bg-success">Đã được duyệt</span>`) {
+                                                viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="create-product-form">
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-name">Tên sản phẩm</label>
+                                                                <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
+                                                                <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-description">Mô tả sản phẩm</label>
+                                                                <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-price">Giá tiền</label>
+                                                                <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-quantity">Số lượng sản phẩm còn lại</label>
+                                                                <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center">
+                                                            <div class="main-right-header-content-center-center-top">
+                                                                <h3>Chi tiết sản phẩm</h3>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center">
+                                                                ${items.information}
+                                                            </div>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center">
+                                                            <div class="main-right-header-content-center-center-top">
+                                                                <h3>Thông tin sản phẩm</h3>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center">
+                                                                <div class="main-right-header-content-center-center-center-items">
+                                                                    <div class="main-right-header-content-center-center-center-items-left">
+                                                                        <h class="overflow-1">Liên kết: </h>
+                                                                    </div>
+                                                                    <div class="main-right-header-content-center-center-center-items-right">
+                                                                        <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                <div class="create-product-form">
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-name">Tên sản phẩm</label>
-                                                                        <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
+                                                                <div class="main-right-header-content-center-center-center-items">
+                                                                    <div class="main-right-header-content-center-center-center-items-left">
+                                                                        <h class="overflow-1">Bán bởi: </h>
                                                                     </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                        <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-description">Mô tả sản phẩm</label>
-                                                                        <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-price">Giá tiền</label>
-                                                                        <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-quantity">Số lượng sản phẩm còn lại</label>
-                                                                        <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
+                                                                    <div class="main-right-header-content-center-center-center-items-right">
+                                                                        <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Chi tiết sản phẩm</h3>
+                                                                <div class="main-right-header-content-center-center-center-items">
+                                                                    <div class="main-right-header-content-center-center-center-items-left">
+                                                                        <h class="overflow-1">Trạng thái</h>
                                                                     </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        ${items.information}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Thông tin sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Liên kết: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Bán bởi: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Trạng thái</h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1">${items.status}</p>
-                                                                            </div>
-                                                                        </div>
+                                                                    <div class="main-right-header-content-center-center-center-items-right">
+                                                                        <p class="overflow-1">${items.status}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>`;
+                                            }
+                                            else {
+                                                viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="create-product-form">
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-name">Tên sản phẩm</label>
+                                                                <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
                                                             </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
+                                                                <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
                                                             </div>
-                                                        </div>`;
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-description">Mô tả sản phẩm</label>
+                                                                <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-price">Giá tiền</label>
+                                                                <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-quantity">Số lượng sản phẩm còn lại</label>
+                                                                <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center">
+                                                            <div class="main-right-header-content-center-center-top">
+                                                                <h3>Chi tiết sản phẩm</h3>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center">
+                                                                ${items.information}
+                                                            </div>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center">
+                                                            <div class="main-right-header-content-center-center-top">
+                                                                <h3>Thông tin sản phẩm</h3>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center">
+                                                                <div class="main-right-header-content-center-center-center-items">
+                                                                    <div class="main-right-header-content-center-center-center-items-left">
+                                                                        <h class="overflow-1">Bán bởi: </h>
+                                                                    </div>
+                                                                    <div class="main-right-header-content-center-center-center-items-right">
+                                                                        <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items">
+                                                                    <div class="main-right-header-content-center-center-center-items-left">
+                                                                        <h class="overflow-1">Trạng thái</h>
+                                                                    </div>
+                                                                    <div class="main-right-header-content-center-center-center-items-right">
+                                                                        <p class="overflow-1">${items.status}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>`;
+                                            }
                                             document.getElementById("view-product-modal").innerHTML += viewModal;
                                             function reverseParseMarkup(html) {
                                                 let text = html.replace(/<br>\n?/g, '\n');
@@ -1923,92 +1993,104 @@
                                                 return processNestedHtml(text);
                                             }
                                             let description = reverseParseMarkup(items.productcontent);
-                                            let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
-                                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                    <div class="create-product-form">
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-name">Tên sản phẩm</label>
-                                                                            <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                            <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-description">Mô tả sản phẩm</label>
-                                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-price">Giá tiền</label>
-                                                                            <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-quantity">Số lượng sản phẩm còn </label>
-                                                                            <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Chi tiết sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        ${items.information}
-                                                                    </div>
+                                            if (items.status !== `<span class="badge text-bg-danger">Bị từ chối</span>`) {
+                                                let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="create-product-form">
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-name">Tên sản phẩm</label>
+                                                                <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
+                                                                <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-description">Mô tả sản phẩm</label>
+                                                                <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-price">Giá tiền</label>
+                                                                <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-quantity">Số lượng sản phẩm còn </label>
+                                                                <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Chi tiết sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            ${items.information}
+                                                        </div>
+                                                    </div>
+                                                    <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Thông tin sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Liên kết: </h>
                                                                 </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Thông tin sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Liên kết: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Bán bởi: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Trạng thái</h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1">${items.status}</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="accoutn-auth-group-btn">
-                                                                            <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    </div>
-                                                                </div>
-                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
                                                                 </div>
                                                             </div>
-                                                            </div>`;
-                                            document.getElementById("edit-product-modal").innerHTML += EditModal;
-                                            HTML += `<tr>
-                                                <td class="tb-col1" scope="row">${count}</td>
-                                                <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
-                                                <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                                <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
-                                                <td class="tb-col5">${items.status}</td>
-                                                <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
-                                            </tr>`;
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Bán bởi: </h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Trạng thái</h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1">${items.status}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accoutn-auth-group-btn">
+                                                                <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>`;
+                                                document.getElementById("edit-product-modal").innerHTML += EditModal;
+                                                HTML += `<tr>
+                                                    <td class="tb-col1" scope="row">${count}</td>
+                                                    <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
+                                                    <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                    <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
+                                                    <td class="tb-col5">${items.status}</td>
+                                                    <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
+                                                </tr>`;
+                                            }
+                                            else {
+                                                HTML += `<tr>
+                                                    <td class="tb-col1" scope="row">${count}</td>
+                                                    <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
+                                                    <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                    <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
+                                                    <td class="tb-col5">${items.status}</td>
+                                                    <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
+                                                </tr>`;
+                                            }
                                         });
                                         HTML += `</tbody>
                                                     </table>`;
@@ -2205,6 +2287,19 @@
         if (username !== undefined && username !== null && password !== undefined && password !== null) {
             const input = document.getElementById("product-search").value;
             if (input === "") {
+                document.getElementById("productlist").innerHTML = `<div class="loading-product placeholder-glow">
+                                                                        <span class="placeholder col-4"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-5"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-1"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-6"></span>
+                                                                        <span class="placeholder col-1"></span>
+                                                                    </div>`;
                 const data = {
                     username: username,
                     password: password,
@@ -2219,19 +2314,6 @@
                   })
                   .then(res => res.json())
                   .then(resData => {
-                        document.getElementById("productlist").innerHTML = `<div class="loading-product placeholder-glow">
-                                                                                <span class="placeholder col-4"></span>
-                                                                                <span class="placeholder col-2"></span>
-                                                                                <span class="placeholder col-5"></span>
-                                                                                <span class="placeholder col-3"></span>
-                                                                                <span class="placeholder col-1"></span>
-                                                                                <span class="placeholder col-2"></span>
-                                                                                <span class="placeholder col-2"></span>
-                                                                                <span class="placeholder col-3"></span>
-                                                                                <span class="placeholder col-3"></span>
-                                                                                <span class="placeholder col-6"></span>
-                                                                                <span class="placeholder col-1"></span>
-                                                                            </div>`;
                         if (resData.status) {
                             fetch('/API/getallproductdata', {
                                 method: 'POST',
@@ -2244,6 +2326,9 @@
                               .then(res => res.json())
                               .then(resData => {
                                 if (resData.status) {
+                                    document.getElementById("productlist").innerHTML = "";
+                                    document.getElementById("view-product-modal").innerHTML = "";
+                                    document.getElementById("edit-product-modal").innerHTML = "";
                                     if (resData.data === null) {
                                         document.getElementById("productlist").innerHTML = `<div class="none-items">
                                             <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
@@ -2472,6 +2557,19 @@
                     })
             }
             else {
+                document.getElementById("productlist").innerHTML = `<div class="loading-product placeholder-glow">
+                                                                        <span class="placeholder col-4"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-5"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-1"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-2"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-3"></span>
+                                                                        <span class="placeholder col-6"></span>
+                                                                        <span class="placeholder col-1"></span>
+                                                                    </div>`;
                 const data = {
                     username: username,
                     password: password,
@@ -2487,251 +2585,231 @@
                   })
                   .then(res => res.json())
                   .then(resData => {
-                    document.getElementById("productlist").innerHTML = `<div class="loading-product placeholder-glow">
-                                                                            <span class="placeholder col-4"></span>
-                                                                            <span class="placeholder col-2"></span>
-                                                                            <span class="placeholder col-5"></span>
-                                                                            <span class="placeholder col-3"></span>
-                                                                            <span class="placeholder col-1"></span>
-                                                                            <span class="placeholder col-2"></span>
-                                                                            <span class="placeholder col-2"></span>
-                                                                            <span class="placeholder col-3"></span>
-                                                                            <span class="placeholder col-3"></span>
-                                                                            <span class="placeholder col-6"></span>
-                                                                            <span class="placeholder col-1"></span>
-                                                                        </div>`;
                     if (resData.status) {
+                        document.getElementById("productlist").innerHTML = "";
+                        document.getElementById("view-product-modal").innerHTML = "";
+                        document.getElementById("edit-product-modal").innerHTML = "";
                         if (resData.data === null) {
                             document.getElementById("productlist").innerHTML = `<div class="none-items">
                                 <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
                             </div>`;
                             return;
                         }
-                        else {
-                            if (resData.status) {
-                                if (resData.data === null) {
-                                    document.getElementById("productlist").innerHTML = `<div class="none-items">
-                                        <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
-                                    </div>`;
-                                    return;
-                                }
-                                if (resData.data.length > 0) {
-                                    let count = 1;
-                                    let HTML = `<h3>Sản phẩm</h3>                        
-                                                <table class="table table-dark">
-                                                <thead>
-                                                <tr>
-                                                    <th class="tb-col1" scope="col">#</th>
-                                                    <th class="tb-col2" scope="col">Tên sản phẩm</th>
-                                                    <th class="tb-col3" scope="col">Người bán</th>
-                                                    <th class="tb-col4" scope="col">Giá bán</th>
-                                                    <th class="tb-col5" scope="col">Trạng thái</th>
-                                                    <th class="tb-col6" scope="col">Chức năng</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>`;
-                                    resData.data.forEach(items => {
-                                        let viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-scrollable">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        if (resData.data.length > 0) {
+                            let count = 1;
+                            let HTML = `<h3>Sản phẩm</h3>                        
+                                        <table class="table table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th class="tb-col1" scope="col">#</th>
+                                            <th class="tb-col2" scope="col">Tên sản phẩm</th>
+                                            <th class="tb-col3" scope="col">Người bán</th>
+                                            <th class="tb-col4" scope="col">Giá bán</th>
+                                            <th class="tb-col5" scope="col">Trạng thái</th>
+                                            <th class="tb-col6" scope="col">Chức năng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>`;
+                            resData.data.forEach(items => {
+                                let viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    <div class="create-product-form">
+                                                        <div class="create-product-form-group">
+                                                            <label for="product-name">Tên sản phẩm</label>
+                                                            <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
+                                                        </div>
+                                                        <div class="create-product-form-group">
+                                                            <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
+                                                            <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
+                                                        </div>
+                                                        <div class="create-product-form-group">
+                                                            <label for="product-description">Mô tả sản phẩm</label>
+                                                            <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
+                                                        </div>
+                                                        <div class="create-product-form-group">
+                                                            <label for="product-price">Giá tiền</label>
+                                                            <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
+                                                        </div>
+                                                        <div class="create-product-form-group">
+                                                            <label for="product-quantity">Số lượng sản phẩm còn lại</label>
+                                                            <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Chi tiết sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            ${items.information}
+                                                        </div>
+                                                    </div>
+                                                    <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Thông tin sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Liên kết: </h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
+                                                                </div>
                                                             </div>
-                                                            <div class="modal-body">
-                                                            <div class="create-product-form">
-                                                                <div class="create-product-form-group">
-                                                                    <label for="product-name">Tên sản phẩm</label>
-                                                                    <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Bán bởi: </h>
                                                                 </div>
-                                                                <div class="create-product-form-group">
-                                                                    <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                    <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
-                                                                </div>
-                                                                <div class="create-product-form-group">
-                                                                    <label for="product-description">Mô tả sản phẩm</label>
-                                                                    <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
-                                                                </div>
-                                                                <div class="create-product-form-group">
-                                                                    <label for="product-price">Giá tiền</label>
-                                                                    <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
-                                                                </div>
-                                                                <div class="create-product-form-group">
-                                                                    <label for="product-quantity">Số lượng sản phẩm còn lại</label>
-                                                                    <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
                                                                 </div>
                                                             </div>
-                                                            <div class="main-right-header-content-center-center">
-                                                                <div class="main-right-header-content-center-center-top">
-                                                                    <h3>Chi tiết sản phẩm</h3>
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Trạng thái</h>
                                                                 </div>
-                                                                <div class="main-right-header-content-center-center-center">
-                                                                    ${items.information}
-                                                                </div>
-                                                            </div>
-                                                            <div class="main-right-header-content-center-center">
-                                                                <div class="main-right-header-content-center-center-top">
-                                                                    <h3>Thông tin sản phẩm</h3>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center">
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Liên kết: </h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Bán bởi: </h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Trạng thái</h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1">${items.status}</p>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1">${items.status}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        </div>
-                                                        </div>
-                                                    </div>`;
-                                        document.getElementById("view-product-modal").innerHTML += viewModal;
-                                        function reverseParseMarkup(html) {
-                                            let text = html.replace(/<br>\n?/g, '\n');
-                                            
-                                            const reverseTags = {
-                                                'h4': 'header',
-                                                'h5': 'subheader',
-                                                'li': 'list',
-                                                'span': {
-                                                'red': 'red',
-                                                'green': 'green',
-                                                'blue': 'blue',
-                                                'aqua': 'aqua',
-                                                'pink': 'pink',
-                                                'yellow': 'yellow',
-                                                'black': 'black'
-                                                }
-                                            };
-                                            
-                                            function processNestedHtml(input) {
-                                                const regex = /<(\w+)(?:\s+class="(\w+)")?>([^<]+|(?:<(?!\/\1>)[\s\S])*)<\/\1>/g;
-                                                return input.replace(regex, (match, tag, className, content) => {
-                                                if (reverseTags[tag]) {
-                                                    let customTag = reverseTags[tag];
-                                                    if (typeof customTag === 'object') {
-                                                    customTag = customTag[className] || tag;
-                                                    }
-                                                    return `[${customTag}]${processNestedHtml(content)}[/${customTag}]`;
-                                                }
-                                                return match;
-                                                });
-                                            }
-                                            
-                                            return processNestedHtml(text);
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                            </div>`;
+                                document.getElementById("view-product-modal").innerHTML += viewModal;
+                                function reverseParseMarkup(html) {
+                                    let text = html.replace(/<br>\n?/g, '\n');
+                                    
+                                    const reverseTags = {
+                                        'h4': 'header',
+                                        'h5': 'subheader',
+                                        'li': 'list',
+                                        'span': {
+                                        'red': 'red',
+                                        'green': 'green',
+                                        'blue': 'blue',
+                                        'aqua': 'aqua',
+                                        'pink': 'pink',
+                                        'yellow': 'yellow',
+                                        'black': 'black'
                                         }
-                                        let description = reverseParseMarkup(items.productcontent);
-                                        let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-scrollable">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
-                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                <div class="create-product-form">
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-name">Tên sản phẩm</label>
-                                                                        <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                        <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-description">Mô tả sản phẩm</label>
-                                                                        <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-price">Giá tiền</label>
-                                                                        <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-quantity">Số lượng sản phẩm còn </label>
-                                                                        <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                <div class="main-right-header-content-center-center-top">
-                                                                    <h3>Chi tiết sản phẩm</h3>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center">
-                                                                    ${items.information}
-                                                                </div>
+                                    };
+                                    
+                                    function processNestedHtml(input) {
+                                        const regex = /<(\w+)(?:\s+class="(\w+)")?>([^<]+|(?:<(?!\/\1>)[\s\S])*)<\/\1>/g;
+                                        return input.replace(regex, (match, tag, className, content) => {
+                                        if (reverseTags[tag]) {
+                                            let customTag = reverseTags[tag];
+                                            if (typeof customTag === 'object') {
+                                            customTag = customTag[className] || tag;
+                                            }
+                                            return `[${customTag}]${processNestedHtml(content)}[/${customTag}]`;
+                                        }
+                                        return match;
+                                        });
+                                    }
+                                    
+                                    return processNestedHtml(text);
+                                }
+                                let description = reverseParseMarkup(items.productcontent);
+                                let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="create-product-form">
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-name">Tên sản phẩm</label>
+                                                                <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
                                                             </div>
-                                                            <div class="main-right-header-content-center-center">
-                                                                <div class="main-right-header-content-center-center-top">
-                                                                    <h3>Thông tin sản phẩm</h3>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center">
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Liên kết: </h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Bán bởi: </h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center-items">
-                                                                        <div class="main-right-header-content-center-center-center-items-left">
-                                                                            <h class="overflow-1">Trạng thái</h>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items-right">
-                                                                            <p class="overflow-1">${items.status}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="accoutn-auth-group-btn">
-                                                                        <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
-                                                                    </div>
-                                                                </div>
-                                                                </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
+                                                                <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
                                                             </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-description">Mô tả sản phẩm</label>
+                                                                <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
                                                             </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-price">Giá tiền</label>
+                                                                <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
+                                                            </div>
+                                                            <div class="create-product-form-group">
+                                                                <label for="product-quantity">Số lượng sản phẩm còn </label>
+                                                                <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
                                                             </div>
                                                         </div>
-                                                        </div>`;
-                                        document.getElementById("edit-product-modal").innerHTML += EditModal;
-                                        HTML += `<tr>
-                                            <td class="tb-col1" scope="row">${count}</td>
-                                            <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
-                                            <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                            <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
-                                            <td class="tb-col5">${items.status}</td>
-                                            <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
-                                        </tr>`;
-                                    });
-                                    HTML += `</tbody>
-                                                </table>`;
-                                    document.getElementById("productlist").innerHTML = HTML;
-                                }
-                            }
+                                                        <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Chi tiết sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            ${items.information}
+                                                        </div>
+                                                    </div>
+                                                    <div class="main-right-header-content-center-center">
+                                                        <div class="main-right-header-content-center-center-top">
+                                                            <h3>Thông tin sản phẩm</h3>
+                                                        </div>
+                                                        <div class="main-right-header-content-center-center-center">
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Liên kết: </h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Bán bởi: </h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1"><a href="/profile/${items.sellerid}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-center-center-items">
+                                                                <div class="main-right-header-content-center-center-center-items-left">
+                                                                    <h class="overflow-1">Trạng thái</h>
+                                                                </div>
+                                                                <div class="main-right-header-content-center-center-center-items-right">
+                                                                    <p class="overflow-1">${items.status}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accoutn-auth-group-btn">
+                                                                <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>`;
+                                document.getElementById("edit-product-modal").innerHTML += EditModal;
+                                HTML += `<tr>
+                                    <td class="tb-col1" scope="row">${count}</td>
+                                    <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
+                                    <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                    <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
+                                    <td class="tb-col5">${items.status}</td>
+                                    <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
+                                </tr>`;
+                            });
+                            HTML += `</tbody>
+                                        </table>`;
+                            document.getElementById("productlist").innerHTML = HTML;
                         }
                     }
                     else {

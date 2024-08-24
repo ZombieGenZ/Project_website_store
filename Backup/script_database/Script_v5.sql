@@ -88,6 +88,16 @@ CREATE TABLE PurchaseHistory (
 	PRIMARY KEY(historyid)
 );
 
+CREATE TABLE Evaluate (
+	evaluateid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	userid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
+	rating DECIMAL(2,1) NOT NULL CHECK(rating >= 1 AND rating <= 5),
+	comment VARCHAR(255) NOT NULL,
+	createtime DATETIME,
+	PRIMARY KEY(evaluateid)
+);
+
 CREATE TABLE Apply (
 	applyid INT NOT NULL AUTO_INCREMENT UNIQUE,
 	recruitmentid INT NOT NULL,
@@ -171,6 +181,12 @@ ADD FOREIGN KEY(userid) REFERENCES Account(userid)
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE Picture
 ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Evaluate
+ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Evaluate
+ADD FOREIGN KEY(userid) REFERENCES Account(userid)
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 -- member permission

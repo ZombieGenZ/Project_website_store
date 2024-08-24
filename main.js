@@ -33,6 +33,7 @@ const editProductAPIRoutes = require("./routes/editproduct");
 const deleteProductAPIRoutes = require("./routes/deleteproduct");
 const searchProductManagementAPIRoutes = require("./routes/searchproductmanagement");
 const getPictureAPIRoutes = require("./routes/getpicture");
+const chanageProductStatusAPIRoutes = require("./routes/chanageProductStatus");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -43,5 +44,6 @@ app.use('/API/editproduct', editProductAPIRoutes);
 app.use('/API/deleteproduct', deleteProductAPIRoutes);
 app.use('/API/searchproductmanagement', searchProductManagementAPIRoutes);
 app.use('/API/getpicture', getPictureAPIRoutes);
+app.use('/API/chanageproductstatus', chanageProductStatusAPIRoutes);
 
 app.listen(port);

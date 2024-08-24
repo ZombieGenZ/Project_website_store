@@ -42,7 +42,7 @@ routes.post("/", async (req, res) => {
   })
   .then(async response => {
     if (response.data.status) {
-      if (Boolean(response.data.permission.acceptproductmanagementall)) {
+      if (Boolean(response.data.permission.acceptproductmanagementall) || Boolean(response.data.permission.acceptcensorproduct)) {
           let productData = await GetAllProductData();
           res.status(200).json({ status: true, data: productData });
         }
