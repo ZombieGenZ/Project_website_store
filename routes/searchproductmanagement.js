@@ -32,10 +32,6 @@ routes.post("/", async (req, res) => {
     username = await normalizeString(username);
     password = await normalizeString(password);
 
-    console.log(username);
-    console.log(password);
-    console.log(keyword);
-
     axios.post('http://localhost:3000/API/authenticationpermission', {
       username: username,
       password: password
@@ -46,15 +42,12 @@ routes.post("/", async (req, res) => {
   })
   .then(async response => {
     if (response.data.status) {
-      console.log(response.data);
       if (Boolean(response.data.permission.acceptproductmanagementall)) {
           let productData = await SearchGetAllProductData(keyword);
-          console.log(productData);
           res.status(200).json({ status: true, data: productData });
         }
         else if (Boolean(response.data.permission.acceptproductmanagement)) {
           let productData = await SearchGetProductData(response.data.userid, keyword);
-          console.log(productData);
         res.status(200).json({ status: true, data: productData });
       }
       else {

@@ -203,3 +203,6 @@ SELECT * FROM Penalty;
 SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
+
+DELETE FROM picture;
+DELETE FROM product;

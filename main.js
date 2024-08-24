@@ -19,6 +19,10 @@ app.get("/productpanagement", (req, res) => {
     res.status(200);
     res.render("productpanagement");
 });
+app.get("/censorproduct", (req, res) => {
+    res.status(200);
+    res.render("censorproduct");
+});
 
 const registerAPIRoutes = require("./routes/register");
 const authenticationAccountAPIRoutes = require("./routes/authentication");
@@ -28,6 +32,7 @@ const getAllProductDataAPIRoutes = require("./routes/getallproductdata");
 const editProductAPIRoutes = require("./routes/editproduct");
 const deleteProductAPIRoutes = require("./routes/deleteproduct");
 const searchProductManagementAPIRoutes = require("./routes/searchproductmanagement");
+const getPictureAPIRoutes = require("./routes/getpicture");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -37,5 +42,6 @@ app.use('/API/getallproductdata', getAllProductDataAPIRoutes);
 app.use('/API/editproduct', editProductAPIRoutes);
 app.use('/API/deleteproduct', deleteProductAPIRoutes);
 app.use('/API/searchproductmanagement', searchProductManagementAPIRoutes);
+app.use('/API/getpicture', getPictureAPIRoutes);
 
 app.listen(port);

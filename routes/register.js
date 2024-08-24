@@ -88,7 +88,6 @@ routes.post("/", async (req, res) => {
             }
         }
         catch (e) {
-            console.log("Fix");
             console.error(e);
             res.status(200).json({ status: false, message: e.toString() });
         }
