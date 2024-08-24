@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const axios = require("axios");
 const cors = require('cors');
-const path = require('path');
 const fs = require('fs');
 
 const database = mysql.createConnection({
@@ -50,29 +49,85 @@ routes.post("/", async (req, res) => {
     if (response.data.status) {
       if (response.data.permission.acceptproductmanagement || response.data.permission.acceptproductmanagementall) {
         if (response.data.permission.acceptproductmanagementall) {
-          // const picture_path = await GetPicturePath(productid);
-          const success_delete_picture = await await DeletePicture(productid);
-          const success_delete_product = await await DeleteProduct(productid);
-          if (success_delete_picture && success_delete_product) {
-            res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
-          }
-          else {
-            res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
+          const picture_path = await GetPicturePath(productid);
+
+          const deletePromises = picture_path.map(item => {
+            return new Promise((resolve, reject) => {
+              fs.unlink(item.picturepath, err => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(true);
+                }
+              });
+            });
+          });
+          
+          try {
+            await Promise.all(deletePromises);
+            
+            const icon_path = await GetIconPath(productid);
+            await fs.unlink(icon_path.producticonpath, err => {
+              if (err) {
+                  res.status(200).json({ status: false, message: err.toString() });
+                  return;
+                }
+            });
+          
+            const success_delete_picture = await DeletePicture(productid);
+            const success_delete_product = await DeleteProduct(productid);
+          
+            if (success_delete_picture && success_delete_product) {
+              res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
+            } else {
+              res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
+            }
+          } catch (error) {
+            console.error(error);
+            res.status(500).json({ status: false, message: 'Lỗi khi xóa dữ liệu!' });
           }
         }
         else {
           const isAuthor = await CheckAuthor(response.data.userid, productid);
           if (isAuthor) {
-            // const picture_path = await GetPicturePath(productid);
-            const success_delete_picture = await DeletePicture(productid);
-            const success_delete_product = await DeleteProduct(productid);
-            if (success_delete_picture && success_delete_product) {
-              res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
+            const picture_path = await GetPicturePath(productid);
+
+            const deletePromises = picture_path.map(item => {
+              return new Promise((resolve, reject) => {
+                fs.unlink(item.picturepath, err => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve(true);
+                  }
+                });
+              });
+            });
+            
+            try {
+              await Promise.all(deletePromises);
+              
+              const icon_path = await GetIconPath(productid);
+              await fs.unlink(icon_path.producticonpath, err => {
+                if (err) {
+                    res.status(200).json({ status: false, message: err.toString() });
+                    return;
+                  }
+              });
+            
+              const success_delete_picture = await DeletePicture(productid);
+              const success_delete_product = await DeleteProduct(productid);
+            
+              if (success_delete_picture && success_delete_product) {
+                res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
+              } else {
+                res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
+              }
+            } catch (error) {
+              console.error(error);
+              res.status(500).json({ status: false, message: 'Lỗi khi xóa dữ liệu!' });
             }
-            else {
-              res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
-            }
-            }
+          }
           else {
             res.status(200).json({ status: false, message: `Bạn không có quyền thực hiện điều này` });
           }
@@ -105,15 +160,28 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
-  async function GetPicturePath(productid) {
-    try {
-      const result = await database.query(`SELECT picturepath FROM Picture WHERE productid = ?`, 
-        [ productid ]);
-        return true;
-    }
-    catch (e) {
-      return false;
-    }
+async function GetPicturePath(productid) {
+  return new Promise((resolve, reject) => {
+    database.query(`SELECT picturepath FROM Picture WHERE productid = ?`, [ productid ], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
+async function GetIconPath(productid) {
+  return new Promise((resolve, reject) => {
+    database.query(`SELECT producticonpath FROM Product WHERE productid = ?`, [ productid ], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res[0]);
+      }
+    });
+  });
 }
 
   async function DeletePicture(productid) {
@@ -139,21 +207,15 @@ function normalizeString(str) {
 }
 
 async function CheckAuthor(userid, productid) {
-  try {
-    const [results] = await database.query(
-      `SELECT sellerid FROM Product WHERE productid = ?`, 
-      [productid]
-    );
-
-    if (results.length > 0) {
-      return results[0].sellerid === userid;
-    } else {
-      return false;
-    }
-  }
-  catch (e) {
-    return false;
-  }
+  return new Promise((resolve, reject) => {
+    database.query(`SELECT sellerid FROM Product WHERE productid = ?`, [productid], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res[0].sellerid == userid);
+      }
+    });
+  });
 }
 
 module.exports = routes;

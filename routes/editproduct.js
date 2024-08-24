@@ -139,21 +139,15 @@ function normalizeString(str) {
 }
 
 async function CheckAuthor(userid, productid) {
-  try {
-    const [results] = await database.query(
-      `SELECT sellerid FROM Product WHERE productid = ?`, 
-      [productid]
-    );
-
-    if (results.length > 0) {
-      return results[0].sellerid === userid;
-    } else {
-      return false;
-    }
-  }
-  catch (e) {
-    return false;
-  }
+  return new Promise((resolve, reject) => {
+    database.query(`SELECT sellerid FROM Product WHERE productid = ?`, [productid], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res[0].sellerid == userid);
+      }
+    });
+  });
 }
 
 function parseMarkup(text) {

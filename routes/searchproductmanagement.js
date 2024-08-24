@@ -14,7 +14,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API get all product data successfully connected to the server");
+  console.log("API search product management successfully connected to the server");
 });
 
 const routes = express.Router();
@@ -27,10 +27,14 @@ routes.get("/", async (req, res) => {
 });
 
 routes.post("/", async (req, res) => {
-    let { username, password } = req.body;
+    let { username, password, keyword } = req.body;
 
     username = await normalizeString(username);
     password = await normalizeString(password);
+
+    console.log(username);
+    console.log(password);
+    console.log(keyword);
 
     axios.post('http://localhost:3000/API/authenticationpermission', {
       username: username,
@@ -42,12 +46,15 @@ routes.post("/", async (req, res) => {
   })
   .then(async response => {
     if (response.data.status) {
+      console.log(response.data);
       if (Boolean(response.data.permission.acceptproductmanagementall)) {
-          let productData = await GetAllProductData();
+          let productData = await SearchGetAllProductData(keyword);
+          console.log(productData);
           res.status(200).json({ status: true, data: productData });
         }
         else if (Boolean(response.data.permission.acceptproductmanagement)) {
-          let productData = await GetProductData(response.data.userid);
+          let productData = await SearchGetProductData(response.data.userid, keyword);
+          console.log(productData);
         res.status(200).json({ status: true, data: productData });
       }
       else {
@@ -60,7 +67,7 @@ routes.post("/", async (req, res) => {
   })
   .catch(e => {
     console.error(e);
-    res.status(200).json({ status: false, data: null });
+    res.status(200).json({ status: false, data: null, message: e.toString() });
   });
 });
 
@@ -72,9 +79,9 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
-  async function GetProductData(userid) {
+  async function SearchGetProductData(userid, keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
+      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ? AND (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -88,9 +95,9 @@ function normalizeString(str) {
     });
   }
 
-  async function GetAllProductData() {
+  async function SearchGetAllProductData(keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
+      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, (err, res) => {
         if (err) {
           reject(err);
         } else {
