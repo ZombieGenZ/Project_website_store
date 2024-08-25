@@ -47,6 +47,9 @@ CREATE TABLE Product (
 	productpath VARCHAR(255) NOT NULL,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
 	status VARCHAR(255) NOT NULL,
+    totalsold INT NOT NULL DEFAULT 0 CHECK(totalsold >= 0),
+    ratingstar DECIMAL(2, 1) NOT NULL DEFAULT 0,
+    EvaluateTotal INT NOT NULL DEFAULT 0,
 	PRIMARY KEY(productid)
 );
 
@@ -209,6 +212,40 @@ VALUE ("developer", true, true, true, true, true, true);
 INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptvouchermanagement, acceptvouchermanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
 VALUE ("admin", true, true, true, true, true, true, true, true, true);
 
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_star
+AFTER INSERT ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET ratingstar = (
+        SELECT AVG(rating)
+        FROM Evaluate
+        WHERE productid = NEW.productid
+    )
+    WHERE id = NEW.productid;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_total
+AFTER INSERT ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET evaluatetotal = (
+        SELECT COUNT(*)
+        FROM Evaluate
+        WHERE productid = NEW.productid
+    )
+    WHERE id = NEW.productid;
+END//
+
+DELIMITER ;
+
 SELECT * FROM Account;
 SELECT * FROM Permission;
 SELECT * FROM Picture;
@@ -219,6 +256,7 @@ SELECT * FROM Penalty;
 SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
+SELECT * FROM Evaluate;
 
 DELETE FROM picture;
 DELETE FROM product;

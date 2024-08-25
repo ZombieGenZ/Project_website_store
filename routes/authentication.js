@@ -45,7 +45,7 @@ routes.post("/", async (req, res) => {
                 const now = new Date();
                 if (penaltyEndDate > now) {
                   const penaltyBy = await GetUser(penalty.penaltyby);
-                  res.status(200).json({ status: false, message: `Tài khoản ${acceptLogin.user.username} đã bị khóa bởi ${penaltyBy.username} vì lý do ${penalty.penaltyreason} vào ${penalty.penaltystart} và trừng phạt sẽ kết thúc vào ${penalty.penaltyend}` });
+                  res.status(200).json({ status: false, message: `Tài khoản ${acceptLogin.user.username} đã bị khóa bởi ${penaltyBy.username} vì lý do ${penalty.penaltyreason} vào ${formatDate(penalty.penaltystart)} và trừng phạt sẽ kết thúc vào ${formatDate(penalty.penaltyend)}` });
                 }
                 else {
                   const deletefinished = await DeletePenalty_All(penalty.penaltyid, acceptLogin.user.userid);
@@ -186,5 +186,16 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
+  function formatDate(date) {
+    const now = new Date(date);
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+  
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+  }
 
 module.exports = routes;

@@ -324,101 +324,217 @@
         }
         .main-right-header-content-center {
             grid-column: 2;
-            display: grid;
-            grid-template-rows: 80px minmax(0px, 50px) auto;
-        }
-        .main-right-header-content-center-top {
             background-color: var(--prominentColor);
             display: grid;
-            grid-template-columns: minmax(0px, 850px) minmax(auto, 350px);
-        }
-        .main-right-header-content-center-top-right {
-            padding: 5px;
-            display: grid;
-            place-content: center;
-            grid-column: 2;
-        }
-        .search input {
-            padding: 2px 5px;
-            color: white;
-            height: 35px;
-            background-color: var(--brightColor);
-            border: none;
-            outline: none;
-        }
-        .search button {
-            height: 32px;
-            width: 35px;
-            background-color: var(--itemsColor);
-            color: white;
-            border: none;
-        }
-        .main-right-header-content-center-bottom {
-            display: grid;
-            justify-content: center;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 290px));
-            grid-auto-rows: 400px;
-            background-color: var(--prominentColor);
-            row-gap: 10px;
-            column-gap: 10px;
-        }
-        .main-right-header-content-center-bottom-items {
-            border-radius: 10px;
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            transition: 0.3s;
+            grid-template-rows: minmax(360px, auto) minmax(0px, auto) 1fr;
             gap: 10px;
         }
-        .main-right-header-content-center-bottom-items:hover {
-            box-shadow: 0 0 20px #46497b;
-        }
-        .main-right-header-content-center-bottom-items-top  {
+        .main-right-header-content-center-top {
             display: grid;
-            place-content: center;
+            grid-template-columns: 35% 65%;
+            column-gap: 10px;
         }
-        .main-right-header-content-center-bottom-items-top img {
-            border-radius: 10px 10px 0 0;
-            width: 250px;
-            height: 200px;
+        .information-left i {
+            margin-right: 5px;
         }
-        .main-right-header-content-center-bottom-items-bottom {
-            padding: 5px 10px;
+        .information {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 35% 1fr;
+            gap: 5px;
         }
-        .main-right-header-content-center-bottom-items-bottom a {
-            margin-top: 3px;
-            margin-bottom: 3px;
+        .information-right {
+            text-align: right;
+        }
+        .information-right a {
             color: white;
             text-decoration: none;
             transition: 0.3s;
         }
-        .main-right-header-content-center-bottom-items-bottom a:hover {
+        .information-right a:hover {
             color: var(--itemsColor);
         }
-        .price-hide {
+        .main-right-header-content-center-top-right {
+            padding: 20px;
+        }
+        .product-price-hide {
             color: #c6c6c6;
             font-size: 0.8em;
             text-decoration: line-through;
         }
-        @media (max-width: 600px) {
-            .main-right-header-content-center-top {
-                background-color: var(--prominentColor);
-                display: grid;
-                grid-template-columns: auto;
-            }
-            .main-right-header-content-center-top-left {
-                display: none;
-            }
-            .main-right-header-content-center-top-right {
-                padding: 5px;
-                display: grid;
-                place-content: center;
-                grid-column: 1;
-            }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
-        .none-store {
+        .main-right-header-content-center-top-right input {
+            color: white;
+            background-color: var(--brightColor);
+            outline: none;
+            border: none;
+            width: 100px;
+            height: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #42447a;
+            text-align: center;
+            transition: 0.3s;
+            margin: 0 5px;
+        }
+        .main-right-header-content-center-top-right input:focus {
+            box-shadow: 0 0 20px #42447a;
+        }
+        .main-right-header-content-center-top-right>button {
+            color: white;
+            background-color: var(--itemsColor);
+            outline: none;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            /* box-shadow: 0 0 10px #42447a; */
+            transition: 0.3s;
+        }
+        .main-right-header-content-center-top-right>button:hover {
+            background-color: #3859a1;
+        }
+        #addtocart {
+            margin-top: 15px;
+            border: 2px solid #3869d3;
+            color: white;
+            background-color: #3869d36b;
+            padding: 10px 20px;
+            margin-right: 5px;
+            transition: 0.3s;
+        }
+        #addtocart:hover {
+            background-color: #81a9ff6b;
+        }
+        #buynow {
+            margin-top: 15px;
+            color: white;
+            background-color: #3869d3;
+            border: 2px solid #3869d3;
+            padding: 10px 20px;
+            transition: 0.3s;
+        }
+        #buynow:hover {
+            background-color: #4680ff;
+        }
+        .main-right-header-content-center-center {
+            display: grid;
+            grid-template-rows: 50px minmax(0px, auto) 50px minmax(50px, auto);
+            padding: 10px;
+        }
+        .main-right-header-content-center-center-top {
+            display: flex;
+            align-items: center;
+        }
+        .main-right-header-content-center-center-center-items {
+            display: grid;
+            grid-template-columns: 20% 80%;
+            column-gap: 10px;
+        }
+        .main-right-header-content-center-center-center-items-right {
+            text-align: left;
+        }
+        .main-right-header-content-center-bottom {
+            padding: 10px;
+            flex-direction: column;
+            display: flex;
+            gap: 10px;
+        }
+        .main-right-header-content-center-bottom-items {
+            display: grid;
+            grid-template-columns: 1fr 150px;
+            column-gap: 10px;
+        }
+        .main-right-header-content-center-bottom-items-left {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+        }
+        .main-right-header-content-center-bottom-items-left-left img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        .main-right-header-content-center-bottom-items-left-right a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .main-right-header-content-center-bottom-items-left-right a:hover {
+            color: var(--itemsColor);
+        }
+        .main-right-header-content-center-bottom-items-left-left {
             display: grid;
             place-content: center;
-            background-color: var(--prominentColor);
+        }
+        .main-right-header-content-center-bottom-items-right {
+            display: grid;
+            place-items: center;
+        }
+        .form-label {
+            color: white;
+        }
+        #raiting-comment {
+            color: white;
+            background-color: var(--brightColor) !important;
+        }
+        @media (max-width: 1000px) {
+            .main-right-header-content-center-top {
+                display: grid;
+                grid-template-columns: 100%;
+                column-gap: 10px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-right-header-content-center-bottom-items {
+                display: grid;
+                grid-template-columns: 1fr;
+                column-gap: 10px;
+            }
+        }
+        @media (max-width: 500px) {
+            .main-right-header-content-center-bottom-items-left {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .main-right-header-content-center-bottom-items-left-left {
+                display: none;
+            }
+            .main-right-header-content-center-bottom-items-left-left img {
+                max-width: 100px;
+                max-height: 100px;
+            }
+            .main-right-header-content-center-bottom-items-left-right h5 {
+                text-align: center;
+            }
+            .main-right-header-content-center-bottom-items-left-left {
+                display: grid;
+                place-content: center;
+            }
+        }
+        .green {
+            color: green;
+        }
+        .aqua {
+            color: aqua;
+        }
+        .yellow {
+            color: yellow;
+        }
+        .black {
+            color: black;
+        }
+        .blue {
+            color: blue;
+        }
+        .pink {
+            color: pink;
+        }
+        .red {
+            color: red;
         }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
@@ -512,7 +628,7 @@
     <div class="main">
         <div class="main-left">
             <div class="main-left-logo">
-                <img src="image/system/logo.png" alt="Logo">
+                <img src="/image/system/logo.png" alt="Logo">
             </div>
             <div class="main-left-logo-content" id="v_menu">
                 <div class="main-left-logo-content-group">
@@ -548,7 +664,7 @@
                       </button>
                 </div>
                 <div class="main-right-header-title">
-                    <h1 class="overflow-1">Cửa hàng</h1>
+                    <h1 class="overflow-1">Sản phẩm</h1>
                 </div>
                 <div class="main-right-header-money">
                     <button type="button" class="btn btn-warning overflow-1 btn-money">
@@ -572,182 +688,170 @@
             <div class="main-right-header-content">
                 <div class="main-right-header-content-center">
                     <div class="main-right-header-content-center-top">
-                        <div class="main-right-header-content-center-top-left"></div>
+                        <div class="main-right-header-content-center-top-left">
+                            <div class="priview">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active" data-bs-interval="5000">
+                                        <img src="/image/system/default_producticon.png" class="d-block w-100" alt="">
+                                      </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Next</span>
+                                    </button>
+                                  </div>
+                            </div>
+                            <div class="information">
+                                <div class="information-left">
+                                    <p class="overflow-1"><i class="fa-solid fa-user"></i> Người bán</p>
+                                    <p class="overflow-1"><i class="fa-solid fa-clock"></i> Ngày bày bán</p>
+                                    <p class="overflow-1"><i class="fa-brands fa-shopify"></i> Đã mua</p>
+                                    <p class="overflow-1"><i class="fa-solid fa-warehouse"></i> Hàng còn lại</p>
+                                    <p class="overflow-1"><i class="fa-solid fa-star"></i> Đánh giá</p>
+                                </div>
+                                <div class="information-right">
+                                    <p class="overflow-1" id="author">
+                                        <span class="placeholder col-6"></span>
+                                    </p>
+                                    <p class="overflow-1" id="createtime">
+                                        <span class="placeholder col-6"></span>
+                                    </p>
+                                    <p class="overflow-1" id="totalsold">
+                                        <span class="placeholder col-6"></span>
+                                    </p>
+                                    <p class="overflow-1" id="quantity">
+                                        <span class="placeholder col-6"></span>
+                                    </p>
+                                    <p class="overflow-1" id="rating">
+                                        <span class="placeholder col-6"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="main-right-header-content-center-top-right">
-                            <div class="search">
-                                <input type="text" placeholder="Tìm kiếm...">
-                                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <h2 id="title"><span class="placeholder col-8"></span><span class="placeholder col-10"></span></h2>
+                            <h5 id="subtitle"><span class="placeholder col-8"></span><span class="placeholder col-12"></span><span class="placeholder col-10"></span></h5>
+                            <h3 id="price"><span class="placeholder col-6"></span></h3>
+                            <label for="quantity"><h4>Số lượng</h4></label>
+                            <input type="number" value="1" min="1" id="quantity">
+                            <div class="buy">
+                                <!-- <button id="addtocart">Thêm vào giỏ hàng</button>
+                                <button id="buynow">Mua ngay</button> -->
                             </div>
                         </div>
                     </div>
-                    <div class="none-store" id="none-store-product"></div>
-                    <div class="main-right-header-content-center-bottom" id="storelist">
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
+                    <div class="main-right-header-content-center-center">
+                        <div class="main-right-header-content-center-center-top">
+                            <h3>Chi tiết sản phẩm</h3>
+                        </div>
+                        <div class="main-right-header-content-center-center-center" id="information">
+                            <div class="main-right-header-content-center-center-center-items">
+                                <div class="main-right-header-content-center-center-center-items-left">
+                                    <h class="overflow-1"><span class="placeholder col-8"></span></h>
+                                </div>
+                                <div class="main-right-header-content-center-center-center-items-right">
+                                    <p class="overflow-1"><span class="placeholder col-2"></span></p>
+                                </div>
                             </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
+                            <div class="main-right-header-content-center-center-center-items">
+                                <div class="main-right-header-content-center-center-center-items-left">
+                                    <h class="overflow-1"><span class="placeholder col-8"></span></h>
+                                </div>
+                                <div class="main-right-header-content-center-center-center-items-right">
+                                    <p class="overflow-1"><span class="placeholder col-2"></span></p>
+                                </div>
+                            </div>
+                            <div class="main-right-header-content-center-center-center-items">
+                                <div class="main-right-header-content-center-center-center-items-left">
+                                    <h class="overflow-1"><span class="placeholder col-8"></span></h>
+                                </div>
+                                <div class="main-right-header-content-center-center-center-items-right">
+                                    <p class="overflow-1"><span class="placeholder col-2"></span></p>
+                                </div>
                             </div>
                         </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
+                        <div class="main-right-header-content-center-center-medium">
+                            <h3>Mô tả sang phẩm</h3>
+                        </div>
+                        <div class="main-right-header-content-center-center-bottom" id="description">
+                            <p>Gói hosting cơ bản này mang đến một giải pháp mạnh mẽ và đáng tin cậy cho các doanh nghiệp và cá nhân đang tìm kiếm một nền tảng hosting chất lượng cao. Trái tim của hệ thống là bộ vi xử lý Intel Xeon E5-2689 v4, một chip server hiệu năng cao được thiết kế để xử lý các tác vụ đòi hỏi khắt khe. Với kiến trúc Broadwell-EP, bộ vi xử lý này cung cấp sự cân bằng tuyệt vời giữa hiệu suất và hiệu quả năng lượng, đảm bảo khả năng xử lý nhanh chóng cho các ứng dụng web phức tạp và cơ sở dữ liệu lớn.</p>
+                            <p>Bộ nhớ RAM 128GB là một điểm nổi bật của gói hosting này. Dung lượng RAM lớn cho phép server xử lý đồng thời nhiều tác vụ đòi hỏi bộ nhớ cao, như chạy nhiều ứng dụng web, quản lý cơ sở dữ liệu lớn, và xử lý cache hiệu quả. Điều này đảm bảo trải nghiệm mượt mà và không bị gián đoạn cho người dùng cuối, ngay cả trong những thời điểm có lưu lượng truy cập cao.</p>
+                            <p>Ổ cứng SSD 512GB mang lại tốc độ đọc/ghi dữ liệu vượt trội so với ổ cứng HDD truyền thống. Công nghệ SSD không chỉ cải thiện đáng kể thời gian tải trang và phản hồi ứng dụng, mà còn tăng cường độ tin cậy và tuổi thọ của hệ thống lưu trữ. Dung lượng 512GB cung cấp không gian đủ lớn để lưu trữ nhiều trang web, ứng dụng, và cơ sở dữ liệu, đồng thời vẫn đảm bảo hiệu suất ổn định.</p>
+                            <p>Gói hosting này lý tưởng cho các doanh nghiệp vừa và nhỏ, các trang thương mại điện tử có lưu lượng truy cập trung bình đến cao, các ứng dụng web phức tạp, và các dự án đòi hỏi xử lý dữ liệu nhanh chóng. Nó cung cấp sự cân bằng tuyệt vời giữa hiệu suất, độ tin cậy và khả năng mở rộng, cho phép các doanh nghiệp tập trung vào việc phát triển và mở rộng online mà không phải lo lắng về hạ tầng kỹ thuật.</p>
+                            <p>Với cấu hình mạnh mẽ này, khách hàng có thể yên tâm về khả năng xử lý của server trong các tình huống có lưu lượng truy cập đột biến hoặc khi cần mở rộng quy mô hoạt động online. Đây là một lựa chọn đáng cân nhắc cho những ai đang tìm kiếm một giải pháp hosting có thể đáp ứng nhu cầu hiện tại và tương lai của họ.</p>
+                        </div>
+                    </div>
+                    <div class="main-right-header-content-center-bottom">
+                        <h3>Đánh giá</h3>
+                        <div class="write-rating">
+                            <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createreview">Viết đánh giá</button> -->
+                        </div>
+                        <!-- <div class="main-right-header-content-center-bottom-items">
+                            <div class="main-right-header-content-center-bottom-items-left">
+                                <div class="main-right-header-content-center-bottom-items-left-left">
+                                    <img src="/image/system/default_user.png" alt="">
+                                </div>
+                                <div class="main-right-header-content-center-bottom-items-left-right">
+                                    <h5>
+                                        <div class="user-information"><a href="#">ZombieGenZ <i class="fa-solid fa-screwdriver-wrench developer"></i> <i class="fa-solid fa-circle-check verified"></i></a></div>
+                                        <div class="user-rating-star">4.4 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i></div>
+                                    </h5>
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto voluptates consectetur officiis eligendi dolorum exercitationem, cupiditate debitis? Architecto quos autem eius atque sit reiciendis animi doloribus, laboriosam deserunt porro nostrum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias eaque voluptatem optio non nulla! Reiciendis quo assumenda qui, commodi doloribus libero, ipsa veritatis officia aliquid error voluptatem ea, ad placeat? Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis nisi voluptas ratione tempora numquam sit odio fugiat quis repellendus quaerat illo ipsum saepe velit at, nemo aspernatur quod provident cum.</p>
+                                </div>
                             </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
+                            <div class="main-right-header-content-center-bottom-items-right">
+                                <p>00:00:00 00/00/0000</p>
+                            </div>
+                        </div> -->
+                        <div class="main-right-header-content-center-bottom-items">
+                            <div class="main-right-header-content-center-bottom-items-left">
+                                <div class="main-right-header-content-center-bottom-items-left-left">
+                                    <img src="/image/system/default_user.png" alt="">
+                                </div>
+                                <div class="main-right-header-content-center-bottom-items-left-right">
+                                    <h5 class="placeholder-glow">
+                                        <span class="placeholder col-3"></span>
+                                        <br>
+                                        <span class="placeholder col-4"></span>
+                                    </h5>
+                                    <p class="content placeholder-glow">
+                                        <span class="placeholder col-4"></span>
+                                        <span class="placeholder col-5"></span>
+                                        <span class="placeholder col-6"></span>
+                                        <span class="placeholder col-2"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
+                                <span class="placeholder col-12"></span>
                             </div>
                         </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
+                        <div class="main-right-header-content-center-bottom-items">
+                            <div class="main-right-header-content-center-bottom-items-left">
+                                <div class="main-right-header-content-center-bottom-items-left-left">
+                                    <img src="/image/system/default_user.png" alt="">
+                                </div>
+                                <div class="main-right-header-content-center-bottom-items-left-right">
+                                    <h5 class="placeholder-glow">
+                                        <span class="placeholder col-3"></span>
+                                        <br>
+                                        <span class="placeholder col-4"></span>
+                                    </h5>
+                                    <p class="content placeholder-glow">
+                                        <span class="placeholder col-4"></span>
+                                        <span class="placeholder col-5"></span>
+                                        <span class="placeholder col-6"></span>
+                                        <span class="placeholder col-2"></span>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                            <div class="main-right-header-content-center-bottom-items-top">
-                                <img src="image/system/default_producticon.png" alt="">
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-bottom">
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-12 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-6 bg-light"></span>
-                                    <span class="placeholder col-3 bg-light"></span>
-                                </p>
-                                <p class="placeholder-glow">
-                                    <span class="placeholder col-8 bg-light"></span>
-                                </p>
+                            <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
+                                <span class="placeholder col-12"></span>
                             </div>
                         </div>
                     </div>
@@ -791,6 +895,7 @@
           </div>
     </div>
     <script>
+    const PRIDUCTID = "<%= productid %>";
     async function RegisterAccount() {
         let username = document.getElementById("register-username").value;
         let email = document.getElementById("register-email").value;
@@ -989,7 +1094,7 @@
                 }
             })
         }
-        }
+    }
     function checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -1032,7 +1137,28 @@
               .then(res => res.json())
               .then(resData => {
                 if (resData.status) {
-                    document.getElementById("modal").innerHTML = "";
+                    document.getElementById("modal").innerHTML = `<div class="modal fade" id="createreview" tabindex="-1" aria-labelledby="createreviewLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5" id="createreviewLabel">Tạo đánh giá</h1>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <label for="rating_star" class="form-label">Đánh giá: <span id="rating-star">5</span> <i class="fa-solid fa-star"></i></label>
+                                                                            <input type="range" class="form-range" min="0" max="5" step="0.5" value="5" id="rating_star" onchange="chanageRating()">
+                                                                            <label for="raiting-comment" class="form-label">Cảm nhận về sản phẩm</label>
+                                                                            <div class="input-group">
+                                                                                <textarea class="form-control" id="raiting-comment" ></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hũy</button>
+                                                                        <button type="button" class="btn btn-primary">Gửi</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>`;
                     let HTML = `<div class="main-left-logo-content-group">
                         <div class="main-left-logo-content-group-top">
                             <p>Cửa hàng</p>
@@ -1137,35 +1263,6 @@
                     }
               })
         }
-        fetch('/API/getproductdata', {
-            method: 'POST',
-            credentials: 'include'
-          })
-          .then(res => res.json())
-          .then(resData => {
-              document.getElementById("none-store-product").innerHTML = "";
-              if (resData.data == null) {
-                  document.getElementById("storelist").innerHTML = "";
-                  document.getElementById("none-store-product").innerHTML = "<p>Không có sản phẩm nào hợp lệ</p>";
-                  return;
-              }
-              document.getElementById("storelist").innerHTML = "";
-              resData.data.forEach(async items => {
-                  let iconPath = items.producticonpath.replace("public\\", "/").replace("\\", "/");
-                  let starIcon = await calculateStars(items.ratingstar);
-                  document.getElementById("storelist").innerHTML += `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                                                              <div class="main-right-header-content-center-bottom-items-top">
-                                                                  <img src="${iconPath}" alt="">
-                                                              </div>
-                                                              <div class="main-right-header-content-center-bottom-items-bottom">
-                                                                  <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
-                                                                  <a href="/profile/${items.sellerid}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
-                                                                  <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
-                                                                  <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
-                                                              </div>
-                                                          </div>`;
-              });
-          });
     }
     LoadFunction();
     function Logout() {
@@ -1173,7 +1270,69 @@
         localStorage.removeItem("password");
         location.reload();
     }
-    function calculateStars(rating) {
+    function chanageRating() {
+        let rating = document.getElementById("rating_star").value;
+        document.getElementById("rating-star").textContent = rating;
+    }
+    document.addEventListener("DOMContentLoaded", async () => {
+        const data = {
+            productid: PRIDUCTID
+        }
+        fetch('/API/getproductdataview', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .then(resData => {
+            console.log(resData);
+            if (resData.status) {
+                fetch('/API/getpicture', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+                  .then(res => res.json())
+                  .then(resDataPicture => {
+                    console.log(resDataPicture);
+                    if (resDataPicture.status) {
+                        document.getElementById("author").innerHTML = `<a href="/profile/${resData.data.sellerid}">${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a>`;
+                        document.getElementById("createtime").innerHTML = `${formatDate(resData.data.createtime)}`;
+                        document.getElementById("totalsold").innerHTML = `${resData.data.totalsold}`;
+                        document.getElementById("quantity").innerHTML = `${resData.data.quantity}`;
+                        document.getElementById("rating").innerHTML = `${Math.round(resData.data.ratingstar)} ${calculateStars(resData.data.ratingstar)} (${resData.data.EvaluateTotal} đánh giá)`;
+                        document.getElementById("title").innerHTML = `${resData.data.producttitle}`;
+                        document.getElementById("subtitle").innerHTML = `${resData.data.producttitle}`;
+                        document.getElementById("price").innerHTML = `<span class="product-price-show">${resData.data.price.toLocaleString("de-DE")} đ</span>`;
+                        document.getElementById("information").innerHTML = `${resData.data.information}`;
+                        document.getElementById("description").innerHTML = `${resData.data.productcontent}`;
+                    } else {
+                        location.href = "/";
+                    }
+                })
+            } else {
+                location.href = "/";
+            }
+        })
+    });
+    function formatDate(date) {
+        const now = new Date(date);
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const year = now.getFullYear();
+      
+        return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+      }
+      function calculateStars(rating) {
         const fullStars = Math.floor(rating);
         const hasHalfStar = Math.round(rating * 2) % 2 === 1;
         const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);

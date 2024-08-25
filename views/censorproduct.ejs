@@ -906,11 +906,8 @@
                         <p>Cửa hàng</p>
                     </div>
                     <div class="main-left-logo-content-group-bottom">
-                        <a href="#" class="main-left-logo-content-group-bottom-active">
+                        <a href="/" class="main-left-logo-content-group-bottom-active">
                             <button><i class="fa-solid fa-bag-shopping"></i> Cửa hàng</button>
-                        </a>
-                        <a href="#">
-                            <button><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</button>
                         </a>
                     </div>
                 </div>
@@ -937,7 +934,7 @@
                       </button>
                 </div>
                 <div class="main-right-header-title">
-                    <h1 class="overflow-1">Cửa hàng</h1>
+                    <h1 class="overflow-1">Kiếm duyệt sản phẩm</h1>
                 </div>
                 <div class="main-right-header-money">
                     <button type="button" class="btn btn-warning overflow-1 btn-money">
@@ -1000,11 +997,8 @@
                             <p>Cửa hàng</p>
                         </div>
                         <div class="main-left-logo-content-group-bottom">
-                            <a href="#" class="main-left-logo-content-group-bottom-active">
+                            <a href="/" class="main-left-logo-content-group-bottom-active">
                                 <button><i class="fa-solid fa-bag-shopping"></i> Cửa hàng</button>
-                            </a>
-                            <a href="#">
-                                <button><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</button>
                             </a>
                         </div>
                     </div>
@@ -1026,228 +1020,6 @@
           </div>
     </div>
     <script>
-    async function RegisterAccount() {
-        let username = document.getElementById("register-username").value;
-        let email = document.getElementById("register-email").value;
-        let password = document.getElementById("register-password").value;
-        let comfirmpassword = document.getElementById("register-comfirmpassword").value;
-
-        username = normalizeString(username);
-        email = normalizeString_Email(email);
-        password = normalizeString(password);
-        comfirmpassword = normalizeString(comfirmpassword);
-
-        if (username === "" || email === "" || password === "" || comfirmpassword === "") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Bạn cần điền đầy đủ thông tin để tiếp tục",
-                background: '#222338',
-                color: "white",
-                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                });
-            return;
-        }
-        else {
-                if (username.length < 4 || username.length > 20) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Tên người dùng chỉ có thể dài từ 4 đến 20 ký tự",
-                        background: '#222338',
-                        color: "white",
-                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                      });
-                    return;
-                }
-                else {
-                    const accpetUsername = checkAlphanumeric(username);
-                    if (accpetUsername === false) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Tên người dùng không đựa chứa các ký tự đặt biệt",
-                            background: '#222338',
-                            color: "white",
-                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                          });
-                        return;
-                    }
-                    else {
-                        const isEmail = checkEmail(email);
-                        if (!isEmail) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Email không hợp lệ",
-                                background: '#222338',
-                                color: "white",
-                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                              });
-                            return;
-                        }
-                        else {
-                            if (password !== comfirmpassword) {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Oops...",
-                                    text: "Hai mật khẩu không trùng khớp",
-                                    background: '#222338',
-                                    color: "white",
-                                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                                  });
-                                return;
-                            }
-                            else {
-                                if (password.length < 8 || password.length > 50) {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "Mật khẩu chỉ có thể dài 8 đến 50 ký tự",
-                                        background: '#222338',
-                                        color: "white",
-                                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                                      });
-                                    return;
-                                }
-                                else {
-                                    const data = {
-                                        username: username,
-                                        email: email,
-                                        password: password,
-                                        comfirmpassword: comfirmpassword
-                                    }
-                                    fetch('/API/register', {
-                                        method: 'POST',
-                                        headers: {
-                                          'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify(data),
-                                        credentials: 'include'
-                                      })
-                                      .then(res => res.json())
-                                      .then(resData => {
-                                        if (resData.status) {
-                                            localStorage.setItem("username", resData.username);
-                                            localStorage.setItem("password", resData.password);
-                                            Swal.fire({
-                                                icon: "success",
-                                                title: "Chúc mừng",
-                                                text: `${resData.message}`,
-                                                background: '#222338',
-                                                color: "white"
-                                            }).then((result) => {
-                                                if (result.dismiss === Swal.DismissReason.backdrop) {
-                                                  location.reload();
-                                                }
-                                                else {
-                                                    location.reload();
-                                                }
-                                              });;
-                                        } else {
-                                            Swal.fire({
-                                                icon: "error",
-                                                title: "Oops...",
-                                                text: `${resData.message}`,
-                                                background: '#222338',
-                                                color: "white",
-                                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                                            });
-                                        }
-                                      })
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-    }
-    function LoginAccount(){
-        let username = document.getElementById("login-username").value;
-        let password = document.getElementById("login-password").value;
-
-        username = normalizeString(username);
-        password = normalizeString(password);
-
-        if (username === "" || password === "") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Vui lòng điền đầy đủ thông tin",
-                background: '#222338',
-                color: "white",
-                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-              });
-            return;
-        }
-        else {
-            const data = {
-                username: username,
-                password: password
-            }
-            fetch('/API/authentication', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-                credentials: 'include'
-              })
-              .then(res => res.json())
-              .then(resData => {
-                if (resData.status) {
-                    localStorage.setItem("username", resData.user.username);
-                    localStorage.setItem("password", resData.user.password);
-                    Swal.fire({
-                        icon: "success",
-                        title: "Chúc mừng",
-                        text: `${resData.message}`,
-                        background: '#222338',
-                        color: "white"
-                    }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.backdrop) {
-                          location.reload();
-                        }
-                        else {
-                            location.reload();
-                        }
-                      });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: `${resData.message}`,
-                        background: '#222338',
-                        color: "white",
-                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                    });
-                }
-            })
-        }
-    }
-    function checkEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-    function checkAlphanumeric(str) {
-        const alphanumericRegex = /^[a-zA-Z0-9]+$/;
-        return alphanumericRegex.test(str);
-    }
-    function normalizeString(str) {
-        return String(str)
-            .trim()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\s+/g, "");
-        }
-    function normalizeString_Email(str) {
-        return String(str)
-            .trim()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\s+/g, "")
-            .toLowerCase();
-    }
     function LoadFunction() {
         const username = localStorage.getItem("username");
         const password = localStorage.getItem("password");
@@ -1599,8 +1371,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="create-product-form-group-center">
-                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Đình chỉi</button>
                                                 </div>
                                             </div>
                                             </div>
@@ -1670,8 +1441,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="create-product-form-group-center">
-                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Cấp phép</button>
                                                 </div>
                                             </div>
                                             </div>
@@ -1935,8 +1705,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="create-product-form-group-center">
-                                                        <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                        <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                        <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Đình chỉ</button>
                                                     </div>
                                                 </div>
                                                 </div>
@@ -2006,8 +1775,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="create-product-form-group-center">
-                                                        <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                        <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                        <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Cấp phép</button>
                                                     </div>
                                                 </div>
                                                 </div>
@@ -2260,8 +2028,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="create-product-form-group-center">
-                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Đình chỉ</button>
                                                 </div>
                                             </div>
                                             </div>
@@ -2331,8 +2098,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="create-product-form-group-center">
-                                                    <button type="button" class="btn btn-danger" onclick="ChanageProduct('${items.productid}', 2)">Từ chối</button>
-                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Chấp nhận</button>
+                                                    <button type="button" class="btn btn-success" onclick="ChanageProduct('${items.productid}', 1)">Cấp phép</button>
                                                 </div>
                                             </div>
                                             </div>
