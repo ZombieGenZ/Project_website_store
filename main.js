@@ -76,6 +76,8 @@ const getPictureAPIRoutes = require("./routes/getpicture");
 const chanageProductStatusAPIRoutes = require("./routes/chanageProductStatus");
 const getProductDataAPIRoutes = require("./routes/getproductdata");
 const getProductDataViewAPIRoutes = require("./routes/getproductdataview");
+const buyProductAPIRoutes = require("./routes/buyproduct");
+const checkBuyAPIRoutes = require("./routes/checkbuy");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -89,5 +91,7 @@ app.use('/API/getpicture', getPictureAPIRoutes);
 app.use('/API/chanageproductstatus', chanageProductStatusAPIRoutes);
 app.use('/API/getproductdata', getProductDataAPIRoutes);
 app.use('/API/getproductdataview', getProductDataViewAPIRoutes);
+app.use('/API/buyproduct', buyProductAPIRoutes);
+app.use('/API/checkbuy', checkBuyAPIRoutes);
 
 app.listen(port);

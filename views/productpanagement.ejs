@@ -1063,11 +1063,6 @@
                                         <button><i class="fa-brands fa-product-hunt"></i> Quản lý sản phẩm</button>
                                     </a>`;
                         }
-                        if (resData.permission.acceptvouchermanagementall || resData.permission.acceptcensorproduct) {
-                            HTML += `<a href="/vouchermanagement">
-                                            <button><i class="fa-solid fa-ticket"></i> Quản lý voucher</button>
-                                        </a>`;
-                        }
                         if (resData.permission.acceptviewchart || resData.permission.acceptviewchartall) {
                             HTML += `<a href="/statistical">
                                         <button><i class="fa-solid fa-chart-simple"></i> Thống kê</button>
@@ -1730,41 +1725,6 @@
                                                 </div>`;
                                             }
                                             document.getElementById("view-product-modal").innerHTML += viewModal;
-                                            function reverseParseMarkup(html) {
-                                                let text = html.replace(/<br>\n?/g, '\n');
-                                                
-                                                const reverseTags = {
-                                                    'h4': 'header',
-                                                    'h5': 'subheader',
-                                                    'li': 'list',
-                                                    'span': {
-                                                    'red': 'red',
-                                                    'green': 'green',
-                                                    'blue': 'blue',
-                                                    'aqua': 'aqua',
-                                                    'pink': 'pink',
-                                                    'yellow': 'yellow',
-                                                    'black': 'black'
-                                                    }
-                                                };
-                                                
-                                                function processNestedHtml(input) {
-                                                    const regex = /<(\w+)(?:\s+class="(\w+)")?>([^<]+|(?:<(?!\/\1>)[\s\S])*)<\/\1>/g;
-                                                    return input.replace(regex, (match, tag, className, content) => {
-                                                    if (reverseTags[tag]) {
-                                                        let customTag = reverseTags[tag];
-                                                        if (typeof customTag === 'object') {
-                                                        customTag = customTag[className] || tag;
-                                                        }
-                                                        return `[${customTag}]${processNestedHtml(content)}[/${customTag}]`;
-                                                    }
-                                                    return match;
-                                                    });
-                                                }
-                                                
-                                                return processNestedHtml(text);
-                                            }
-                                            let description = reverseParseMarkup(items.productcontent);
                                             let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-scrollable">
                                                 <div class="modal-content">
@@ -1784,7 +1744,7 @@
                                                         </div>
                                                         <div class="create-product-form-group">
                                                             <label for="product-description">Mô tả sản phẩm</label>
-                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
+                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${items.productcontent}</textarea>
                                                         </div>
                                                         <div class="create-product-form-group">
                                                             <label for="product-price">Giá tiền</label>
@@ -2186,41 +2146,6 @@
                                                             </div>
                                                         </div>`;
                                             document.getElementById("view-product-modal").innerHTML += viewModal;
-                                            function reverseParseMarkup(html) {
-                                                let text = html.replace(/<br>\n?/g, '\n');
-                                                
-                                                const reverseTags = {
-                                                    'h4': 'header',
-                                                    'h5': 'subheader',
-                                                    'li': 'list',
-                                                    'span': {
-                                                    'red': 'red',
-                                                    'green': 'green',
-                                                    'blue': 'blue',
-                                                    'aqua': 'aqua',
-                                                    'pink': 'pink',
-                                                    'yellow': 'yellow',
-                                                    'black': 'black'
-                                                    }
-                                                };
-                                                
-                                                function processNestedHtml(input) {
-                                                    const regex = /<(\w+)(?:\s+class="(\w+)")?>([^<]+|(?:<(?!\/\1>)[\s\S])*)<\/\1>/g;
-                                                    return input.replace(regex, (match, tag, className, content) => {
-                                                    if (reverseTags[tag]) {
-                                                        let customTag = reverseTags[tag];
-                                                        if (typeof customTag === 'object') {
-                                                        customTag = customTag[className] || tag;
-                                                        }
-                                                        return `[${customTag}]${processNestedHtml(content)}[/${customTag}]`;
-                                                    }
-                                                    return match;
-                                                    });
-                                                }
-                                                
-                                                return processNestedHtml(text);
-                                            }
-                                            let description = reverseParseMarkup(items.productcontent);
                                             let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-scrollable">
                                                                 <div class="modal-content">
@@ -2240,7 +2165,7 @@
                                                                         </div>
                                                                         <div class="create-product-form-group">
                                                                             <label for="product-description">Mô tả sản phẩm</label>
-                                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
+                                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${items.productcontent}</textarea>
                                                                         </div>
                                                                         <div class="create-product-form-group">
                                                                             <label for="product-price">Giá tiền</label>
@@ -2447,41 +2372,6 @@
                                                 </div>
                                             </div>`;
                                 document.getElementById("view-product-modal").innerHTML += viewModal;
-                                function reverseParseMarkup(html) {
-                                    let text = html.replace(/<br>\n?/g, '\n');
-                                    
-                                    const reverseTags = {
-                                        'h4': 'header',
-                                        'h5': 'subheader',
-                                        'li': 'list',
-                                        'span': {
-                                        'red': 'red',
-                                        'green': 'green',
-                                        'blue': 'blue',
-                                        'aqua': 'aqua',
-                                        'pink': 'pink',
-                                        'yellow': 'yellow',
-                                        'black': 'black'
-                                        }
-                                    };
-                                    
-                                    function processNestedHtml(input) {
-                                        const regex = /<(\w+)(?:\s+class="(\w+)")?>([^<]+|(?:<(?!\/\1>)[\s\S])*)<\/\1>/g;
-                                        return input.replace(regex, (match, tag, className, content) => {
-                                        if (reverseTags[tag]) {
-                                            let customTag = reverseTags[tag];
-                                            if (typeof customTag === 'object') {
-                                            customTag = customTag[className] || tag;
-                                            }
-                                            return `[${customTag}]${processNestedHtml(content)}[/${customTag}]`;
-                                        }
-                                        return match;
-                                        });
-                                    }
-                                    
-                                    return processNestedHtml(text);
-                                }
-                                let description = reverseParseMarkup(items.productcontent);
                                 let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-scrollable">
                                                     <div class="modal-content">
@@ -2501,7 +2391,7 @@
                                                             </div>
                                                             <div class="create-product-form-group">
                                                                 <label for="product-description">Mô tả sản phẩm</label>
-                                                                <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${description}</textarea>
+                                                                <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${items.productcontent}</textarea>
                                                             </div>
                                                             <div class="create-product-form-group">
                                                                 <label for="product-price">Giá tiền</label>

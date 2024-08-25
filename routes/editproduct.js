@@ -15,7 +15,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API create product successfully connected to the server");
+  console.log("API edit product successfully connected to the server");
 });
 
 const routes = express.Router();

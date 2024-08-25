@@ -773,11 +773,6 @@
                                         <button><i class="fa-brands fa-product-hunt"></i> Quản lý sản phẩm</button>
                                     </a>`;
                         }
-                        if (resData.permission.acceptvouchermanagementall || resData.permission.acceptcensorproduct) {
-                            HTML += `<a href="/vouchermanagement">
-                                            <button><i class="fa-solid fa-ticket"></i> Quản lý voucher</button>
-                                        </a>`;
-                        }
                         if (resData.permission.acceptviewchart || resData.permission.acceptviewchartall) {
                             HTML += `<a href="/statistical">
                                         <button><i class="fa-solid fa-chart-simple"></i> Thống kê</button>

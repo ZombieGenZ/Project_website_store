@@ -1,0 +1,243 @@
+DROP DATABASE ProjectWebsite;
+CREATE DATABASE ProjectWebsite;
+
+USE ProjectWebsite;
+
+CREATE TABLE Account (
+	userid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	username VARCHAR(255) NOT NULL UNIQUE,
+	email VARCHAR(255) NOT NULL,
+	password TEXT NOT NULL,
+	money DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(money >= 0),
+	revenue DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(revenue >= 0),
+	avatarpath TEXT NOT NULL DEFAULT "/image/system/default_user.png",
+	Verify BOOLEAN NOT NULL DEFAULT false,
+	createtime DATETIME NOT NULL DEFAULT NOW(),
+	permissionid VARCHAR(255) NOT NULL DEFAULT 'member',
+	penalty INT,
+	PRIMARY KEY(userid)
+);
+
+ALTER TABLE Account AUTO_INCREMENT = 10000000;
+
+CREATE TABLE Permission (
+	permissionname VARCHAR(255) NOT NULL UNIQUE,
+	acceptproductmanagement BOOLEAN NOT NULL DEFAULT false,
+	acceptproductmanagementall BOOLEAN NOT NULL DEFAULT false,
+	acceptvouchermanagement BOOLEAN NOT NULL DEFAULT false,
+	acceptvouchermanagementall BOOLEAN NOT NULL DEFAULT false,
+	acceptcensorproduct BOOLEAN NOT NULL DEFAULT false,
+	acceptcensorcooperate BOOLEAN NOT NULL DEFAULT false,
+	acceptaccountmanagement BOOLEAN NOT NULL DEFAULT false,
+	acceptviewchart BOOLEAN NOT NULL,
+	acceptviewchartall BOOLEAN NOT NULL,
+	PRIMARY KEY(permissionname)
+);
+
+CREATE TABLE Product (
+	productid VARCHAR(255) NOT NULL UNIQUE,
+	sellerid VARCHAR(255) NOT NULL,
+	producttitle VARCHAR(255) NOT NULL,
+	productsubtitle VARCHAR(255) NOT NULL,
+	information TEXT,
+	productcontent TEXT NOT NULL,
+	price DECIMAL(15,3) NOT NULL CHECK(price > 0),
+	quantity INT NOT NULL CHECK(quantity > 0),
+	producticonpath TEXT(255) NOT NULL,
+	productpath VARCHAR(255) NOT NULL,
+	createtime DATETIME NOT NULL DEFAULT NOW(),
+	status VARCHAR(255) NOT NULL,
+    totalsold INT NOT NULL DEFAULT 0 CHECK(totalsold >= 0),
+    ratingstar DECIMAL(2, 1) NOT NULL DEFAULT 0,
+    EvaluateTotal INT NOT NULL DEFAULT 0,
+	PRIMARY KEY(productid)
+);
+
+CREATE TABLE Cart (
+	cartid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	userid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
+	quantity INT NOT NULL DEFAULT 1,
+	PRIMARY KEY(cartid)
+);
+
+CREATE TABLE Penalty (
+	penaltyid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	penaltyreason VARCHAR(255) NOT NULL,
+	penaltystart DATETIME NOT NULL,
+	penaltyend DATETIME NOT NULL,
+	penaltyby INT NOT NULL,
+	PRIMARY KEY(penaltyid)
+);
+
+CREATE TABLE PurchaseHistory (
+	historyid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	userid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
+	totalprice DECIMAL(15,3) NOT NULL CHECK(totalprice > 0),
+	totalquantity INT NOT NULL CHECK(totalquantity > 0),
+	PRIMARY KEY(historyid)
+);
+
+CREATE TABLE Evaluate (
+	evaluateid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	userid INT NOT NULL,
+	productid VARCHAR(255) NOT NULL,
+	rating DECIMAL(2,1) NOT NULL CHECK(rating >= 1 AND rating <= 5),
+	comment VARCHAR(255) NOT NULL,
+	createtime DATETIME,
+	PRIMARY KEY(evaluateid)
+);
+
+CREATE TABLE Apply (
+	applyid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	recruitmentid INT NOT NULL,
+	userid INT NOT NULL,
+	answer1 TEXT,
+	answer2 TEXT,
+	answer3 TEXT,
+	answer4 TEXT,
+	answer5 TEXT,
+	answer6 TEXT,
+	answer7 TEXT,
+	answer8 TEXT,
+	answer9 TEXT,
+	answer10 TEXT,
+	answer11 TEXT,
+	answer12 TEXT,
+	answer13 TEXT,
+	answer14 TEXT,
+	answer15 TEXT,
+	PRIMARY KEY(applyid)
+);
+
+CREATE TABLE Recruitment (
+	recruitmentid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	position VARCHAR(255) NOT NULL,
+	quantity INT NOT NULL,
+	question1 TEXT,
+	question2 TEXT,
+	question3 TEXT,
+	question4 TEXT,
+	question5 TEXT,
+	question6 TEXT,
+	question7 TEXT,
+	question8 TEXT,
+	question9 TEXT,
+	question10 TEXT,
+	question11 TEXT,
+	question12 TEXT,
+	question13 TEXT,
+	question14 TEXT,
+	question15 TEXT,
+	PRIMARY KEY(recruitmentid)
+);
+
+CREATE TABLE Picture (
+	pictureid INT NOT NULL AUTO_INCREMENT UNIQUE,
+	productid VARCHAR(255) NOT NULL,
+	picturepath TEXT NOT NULL,
+	PRIMARY KEY(pictureid)
+);
+
+ALTER TABLE Account
+ADD FOREIGN KEY(permissionid) REFERENCES Permission(permissionname)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Cart
+ADD FOREIGN KEY(userid) REFERENCES Account(userid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Cart
+ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Account
+ADD FOREIGN KEY(penalty) REFERENCES Penalty(penaltyid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE PurchaseHistory
+ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE PurchaseHistory
+ADD FOREIGN KEY(userid) REFERENCES Account(userid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Apply
+ADD FOREIGN KEY(recruitmentid) REFERENCES Recruitment(recruitmentid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Apply
+ADD FOREIGN KEY(userid) REFERENCES Account(userid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Picture
+ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Evaluate
+ADD FOREIGN KEY(productid) REFERENCES Product(productid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Evaluate
+ADD FOREIGN KEY(userid) REFERENCES Account(userid)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+-- member permission
+INSERT INTO Permission (permissionname)
+VALUE ("member");
+
+-- seller permission
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptvouchermanagement, acceptviewchart)
+VALUE ("seller", true, true, true);
+
+-- active moderator permission
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptvouchermanagement, acceptcensorproduct, acceptviewchart, acceptviewchartall)
+VALUE ("moderator", true, true, true, true, true);
+
+-- developer permission
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptvouchermanagement, acceptvouchermanagementall, acceptviewchart, acceptviewchartall)
+VALUE ("developer", true, true, true, true, true, true);
+
+-- active admim permission
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptvouchermanagement, acceptvouchermanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
+VALUE ("admin", true, true, true, true, true, true, true, true, true);
+
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_star
+AFTER INSERT ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET ratingstar = (
+        SELECT AVG(rating)
+        FROM Evaluate
+        WHERE productid = NEW.productid
+    )
+    WHERE id = NEW.productid;
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_total
+AFTER INSERT ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET evaluatetotal = (
+        SELECT COUNT(*)
+        FROM Evaluate
+        WHERE productid = NEW.productid
+    )
+    WHERE id = NEW.productid;
+END//
+
+DELIMITER ;
+
+SELECT * FROM Account;
+SELECT * FROM Permission;
+SELECT * FROM Picture;
+SELECT * FROM Product;
+SELECT * FROM Cart;
+SELECT * FROM Penalty;
+SELECT * FROM PurchaseHistory;
+SELECT * FROM Apply;
+SELECT * FROM Recruitment;
+SELECT * FROM Evaluate;
+
+DELETE FROM picture;
+DELETE FROM product;

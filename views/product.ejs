@@ -383,7 +383,7 @@
         .main-right-header-content-center-top-right input:focus {
             box-shadow: 0 0 20px #42447a;
         }
-        .main-right-header-content-center-top-right>button {
+        .main-right-header-content-center-top-right>.quantity-group>button {
             color: white;
             background-color: var(--itemsColor);
             outline: none;
@@ -394,7 +394,7 @@
             /* box-shadow: 0 0 10px #42447a; */
             transition: 0.3s;
         }
-        .main-right-header-content-center-top-right>button:hover {
+        .main-right-header-content-center-top-right>.quantity-group>button:hover {
             background-color: #3859a1;
         }
         #addtocart {
@@ -535,6 +535,12 @@
         }
         .red {
             color: red;
+        }
+        .voucher-group {
+            margin-top: 10px;
+        }
+        .voucher-group>#voucher-input {
+            width: 170px;
         }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
@@ -691,7 +697,7 @@
                         <div class="main-right-header-content-center-top-left">
                             <div class="priview">
                                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
+                                    <div class="carousel-inner" id="preview">
                                       <div class="carousel-item active" data-bs-interval="5000">
                                         <img src="/image/system/default_producticon.png" class="d-block w-100" alt="">
                                       </div>
@@ -737,12 +743,9 @@
                             <h2 id="title"><span class="placeholder col-8"></span><span class="placeholder col-10"></span></h2>
                             <h5 id="subtitle"><span class="placeholder col-8"></span><span class="placeholder col-12"></span><span class="placeholder col-10"></span></h5>
                             <h3 id="price"><span class="placeholder col-6"></span></h3>
-                            <label for="quantity"><h4>Số lượng</h4></label>
-                            <input type="number" value="1" min="1" id="quantity">
-                            <div class="buy">
-                                <!-- <button id="addtocart">Thêm vào giỏ hàng</button>
-                                <button id="buynow">Mua ngay</button> -->
-                            </div>
+                            
+                            <div class="quantity-group" id="quantity-group"></div>
+                            <div class="buy" id="buy"></div>
                         </div>
                     </div>
                     <div class="main-right-header-content-center-center">
@@ -779,18 +782,16 @@
                             <h3>Mô tả sang phẩm</h3>
                         </div>
                         <div class="main-right-header-content-center-center-bottom" id="description">
-                            <p>Gói hosting cơ bản này mang đến một giải pháp mạnh mẽ và đáng tin cậy cho các doanh nghiệp và cá nhân đang tìm kiếm một nền tảng hosting chất lượng cao. Trái tim của hệ thống là bộ vi xử lý Intel Xeon E5-2689 v4, một chip server hiệu năng cao được thiết kế để xử lý các tác vụ đòi hỏi khắt khe. Với kiến trúc Broadwell-EP, bộ vi xử lý này cung cấp sự cân bằng tuyệt vời giữa hiệu suất và hiệu quả năng lượng, đảm bảo khả năng xử lý nhanh chóng cho các ứng dụng web phức tạp và cơ sở dữ liệu lớn.</p>
-                            <p>Bộ nhớ RAM 128GB là một điểm nổi bật của gói hosting này. Dung lượng RAM lớn cho phép server xử lý đồng thời nhiều tác vụ đòi hỏi bộ nhớ cao, như chạy nhiều ứng dụng web, quản lý cơ sở dữ liệu lớn, và xử lý cache hiệu quả. Điều này đảm bảo trải nghiệm mượt mà và không bị gián đoạn cho người dùng cuối, ngay cả trong những thời điểm có lưu lượng truy cập cao.</p>
-                            <p>Ổ cứng SSD 512GB mang lại tốc độ đọc/ghi dữ liệu vượt trội so với ổ cứng HDD truyền thống. Công nghệ SSD không chỉ cải thiện đáng kể thời gian tải trang và phản hồi ứng dụng, mà còn tăng cường độ tin cậy và tuổi thọ của hệ thống lưu trữ. Dung lượng 512GB cung cấp không gian đủ lớn để lưu trữ nhiều trang web, ứng dụng, và cơ sở dữ liệu, đồng thời vẫn đảm bảo hiệu suất ổn định.</p>
-                            <p>Gói hosting này lý tưởng cho các doanh nghiệp vừa và nhỏ, các trang thương mại điện tử có lưu lượng truy cập trung bình đến cao, các ứng dụng web phức tạp, và các dự án đòi hỏi xử lý dữ liệu nhanh chóng. Nó cung cấp sự cân bằng tuyệt vời giữa hiệu suất, độ tin cậy và khả năng mở rộng, cho phép các doanh nghiệp tập trung vào việc phát triển và mở rộng online mà không phải lo lắng về hạ tầng kỹ thuật.</p>
-                            <p>Với cấu hình mạnh mẽ này, khách hàng có thể yên tâm về khả năng xử lý của server trong các tình huống có lưu lượng truy cập đột biến hoặc khi cần mở rộng quy mô hoạt động online. Đây là một lựa chọn đáng cân nhắc cho những ai đang tìm kiếm một giải pháp hosting có thể đáp ứng nhu cầu hiện tại và tương lai của họ.</p>
+                            <span class="placeholder col-8"></span>
+                            <span class="placeholder col-12"></span>
+                            <span class="placeholder col-10"></span>
+                            <span class="placeholder col-6"></span>
+                            <span class="placeholder col-10"></span>
                         </div>
                     </div>
                     <div class="main-right-header-content-center-bottom">
                         <h3>Đánh giá</h3>
-                        <div class="write-rating">
-                            <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createreview">Viết đánh giá</button> -->
-                        </div>
+                        <div class="write-rating" id="write-rating"></div>
                         <!-- <div class="main-right-header-content-center-bottom-items">
                             <div class="main-right-header-content-center-bottom-items-left">
                                 <div class="main-right-header-content-center-bottom-items-left-left">
@@ -895,7 +896,7 @@
           </div>
     </div>
     <script>
-    const PRIDUCTID = "<%= productid %>";
+    const PRODUCTID = "<%= productid %>";
     async function RegisterAccount() {
         let username = document.getElementById("register-username").value;
         let email = document.getElementById("register-email").value;
@@ -1137,28 +1138,7 @@
               .then(res => res.json())
               .then(resData => {
                 if (resData.status) {
-                    document.getElementById("modal").innerHTML = `<div class="modal fade" id="createreview" tabindex="-1" aria-labelledby="createreviewLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5" id="createreviewLabel">Tạo đánh giá</h1>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <label for="rating_star" class="form-label">Đánh giá: <span id="rating-star">5</span> <i class="fa-solid fa-star"></i></label>
-                                                                            <input type="range" class="form-range" min="0" max="5" step="0.5" value="5" id="rating_star" onchange="chanageRating()">
-                                                                            <label for="raiting-comment" class="form-label">Cảm nhận về sản phẩm</label>
-                                                                            <div class="input-group">
-                                                                                <textarea class="form-control" id="raiting-comment" ></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hũy</button>
-                                                                        <button type="button" class="btn btn-primary">Gửi</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    </div>
-                                                                </div>`;
+                    document.getElementById("modal").innerHTML = "";
                     let HTML = `<div class="main-left-logo-content-group">
                         <div class="main-left-logo-content-group-top">
                             <p>Cửa hàng</p>
@@ -1182,11 +1162,6 @@
                             HTML += `<a href="/productpanagement">
                                         <button><i class="fa-brands fa-product-hunt"></i> Quản lý sản phẩm</button>
                                     </a>`;
-                        }
-                        if (resData.permission.acceptvouchermanagementall || resData.permission.acceptcensorproduct) {
-                            HTML += `<a href="/vouchermanagement">
-                                            <button><i class="fa-solid fa-ticket"></i> Quản lý voucher</button>
-                                        </a>`;
                         }
                         if (resData.permission.acceptviewchart || resData.permission.acceptviewchartall) {
                             HTML += `<a href="/statistical">
@@ -1270,13 +1245,9 @@
         localStorage.removeItem("password");
         location.reload();
     }
-    function chanageRating() {
-        let rating = document.getElementById("rating_star").value;
-        document.getElementById("rating-star").textContent = rating;
-    }
     document.addEventListener("DOMContentLoaded", async () => {
         const data = {
-            productid: PRIDUCTID
+            productid: PRODUCTID
         }
         fetch('/API/getproductdataview', {
             method: 'POST',
@@ -1288,7 +1259,6 @@
           })
           .then(res => res.json())
           .then(resData => {
-            console.log(resData);
             if (resData.status) {
                 fetch('/API/getpicture', {
                     method: 'POST',
@@ -1300,7 +1270,6 @@
                   })
                   .then(res => res.json())
                   .then(resDataPicture => {
-                    console.log(resDataPicture);
                     if (resDataPicture.status) {
                         document.getElementById("author").innerHTML = `<a href="/profile/${resData.data.sellerid}">${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a>`;
                         document.getElementById("createtime").innerHTML = `${formatDate(resData.data.createtime)}`;
@@ -1310,8 +1279,50 @@
                         document.getElementById("title").innerHTML = `${resData.data.producttitle}`;
                         document.getElementById("subtitle").innerHTML = `${resData.data.producttitle}`;
                         document.getElementById("price").innerHTML = `<span class="product-price-show">${resData.data.price.toLocaleString("de-DE")} đ</span>`;
+                        document.getElementById("quantity-group").innerHTML = `<label for="quantity-input"><h4>Số lượng</h4></label>
+                                                                                <button onclick="decrease()">-</button>
+                                                                                <input type="number" value="1" min="1" id="quantity-input">
+                                                                                <button onclick="increase()">+</button>`;
                         document.getElementById("information").innerHTML = `${resData.data.information}`;
                         document.getElementById("description").innerHTML = `${resData.data.productcontent}`;
+                        const username = localStorage.getItem("username");
+                        const password = localStorage.getItem("password");
+                        if (username !== undefined && username !== null && password !== undefined && password !== null) {
+                            const data = {
+                                username: username,
+                                password: password
+                            }
+                            fetch('/API/authentication', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                              })
+                              .then(res => res.json())
+                              .then(resDataUser => {
+                                    if (resDataUser.status) {
+                                        document.getElementById("buy").innerHTML = `<button id="addtocart">Thêm vào giỏ hàng</button><button id="buynow" onclick="BuyNow()">Mua ngay</button>`;
+                                    }
+                                    else {
+                                        document.getElementById("buy").innerHTML = `<button id="buynow" data-bs-toggle="modal" data-bs-target="#loginMadal">Đăng nhập để mua</button>`;
+                                    }
+                              });
+                        }
+                        else {
+                            document.getElementById("buy").innerHTML = `<button id="buynow" data-bs-toggle="modal" data-bs-target="#loginMadal">Đăng nhập để mua</button>`;
+                        }
+                        const productIconPath = resData.data.producticonpath.replace("public\\", "/").replace("\\", "/");
+                        document.getElementById("preview").innerHTML = `<div class="carousel-item active">
+                                                                            <img src="${productIconPath}" class="d-block w-100" alt="">
+                                                                        </div>`;
+                        resDataPicture.data.forEach(items => {
+                            const productpPicturePath = items.picturepath.replace("public\\", "/").replace("\\", "/");
+                            document.getElementById("preview").innerHTML += `<div class="carousel-item">
+                                                                                <img src="${productpPicturePath}" class="d-block w-100" alt="">
+                                                                            </div>`;
+                        });
                     } else {
                         location.href = "/";
                     }
@@ -1320,7 +1331,57 @@
                 location.href = "/";
             }
         })
+        function Bought() {
+            const username = localStorage.getItem("username");
+            const password = localStorage.getItem("password");
+    
+            if (username !== undefined && username !== null && username !== "" && password !== undefined && password !== "" && password !== null) {
+                const data = {
+                    username: username,
+                    password: password,
+                    productid: PRODUCTID
+                }
+                fetch('/API/checkbuy', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+                  .then(res => res.json())
+                  .then(resData => {
+                        if (resData.status) {
+                            document.getElementById("modal").innerHTML += `<div class="modal fade" id="createreview" tabindex="-1" aria-labelledby="createreviewLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                    <h1 class="modal-title fs-5" id="createreviewLabel">Tạo đánh giá</h1>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <label for="rating_star" class="form-label">Đánh giá: <span id="rating-star">5</span> <i class="fa-solid fa-star"></i></label>
+                                                                                        <input type="range" class="form-range" min="0" max="5" step="0.5" value="5" id="rating_star" onchange="chanageRating()">
+                                                                                        <label for="raiting-comment" class="form-label">Cảm nhận về sản phẩm</label>
+                                                                                        <div class="input-group">
+                                                                                            <textarea class="form-control" id="raiting-comment" ></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hũy</button>
+                                                                                    <button type="button" class="btn btn-primary">Gửi</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                </div>
+                                                                            </div>`;
+                            document.getElementById("write-rating").innerHTML = `<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createreview">Viết đánh giá</button>`;
+                        }
+                  });
+            }
+        }
+        Bought();
     });
+
     function formatDate(date) {
         const now = new Date(date);
         const hours = now.getHours().toString().padStart(2, '0');
@@ -1332,7 +1393,7 @@
       
         return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
       }
-      function calculateStars(rating) {
+    function calculateStars(rating) {
         const fullStars = Math.floor(rating);
         const hasHalfStar = Math.round(rating * 2) % 2 === 1;
         const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
@@ -1352,6 +1413,107 @@
         }
     
         return result;
+    }
+    function BuyNow() {
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        const quantity = document.getElementById("quantity-input").value;
+
+        if (username == "" || password == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Lỗi xác thực người dùng",
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+              });
+            return;
+        }
+        else {
+            if (quantity == "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Vui lòng điều số lượng",
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                  });
+                return;
+            }
+            else {
+                if (quantity < 1) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Số lượng không được bé hơn 1",
+                        background: '#222338',
+                        color: "white",
+                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                      });
+                    return;
+                }
+                else {
+                    const data = {
+                        username: username,
+                        password: password,
+                        productid: PRODUCTID,
+                        quantity: quantity
+                    };
+                    // SLACKING cần làm tiếp
+                    fetch('/API/buyproduct', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                        credentials: 'include'
+                      })
+                      .then(res => res.json())
+                      .then(resData => {
+                        if (resData.status) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Chúc mừng",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white"
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.backdrop) {
+                                  location.reload();
+                                }
+                                else {
+                                    location.reload();
+                                }
+                              });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white",
+                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                            });
+                        }
+                      });
+                }
+            }
+        }
+    }
+    function increase() {
+        document.getElementById("quantity-input").value++;
+    }
+    function decrease() {
+        let quantity = document.getElementById("quantity-input");
+        if (quantity.value > 1) {
+            quantity.value--;
+        }
+    }
+    function chanageRating() {
+        let rating = document.getElementById("rating_star").value;
+        document.getElementById("rating-star").textContent = rating;
     }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
