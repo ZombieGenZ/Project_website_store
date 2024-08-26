@@ -542,6 +542,10 @@
         .voucher-group>#voucher-input {
             width: 170px;
         }
+        .no-evaluate {
+            display: grid;
+            place-content: center;
+        }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -792,67 +796,52 @@
                     <div class="main-right-header-content-center-bottom">
                         <h3>Đánh giá</h3>
                         <div class="write-rating" id="write-rating"></div>
-                        <!-- <div class="main-right-header-content-center-bottom-items">
-                            <div class="main-right-header-content-center-bottom-items-left">
-                                <div class="main-right-header-content-center-bottom-items-left-left">
-                                    <img src="/image/system/default_user.png" alt="">
+                        <div class="evaluate" id="evaluate">
+                            <div class="main-right-header-content-center-bottom-items">
+                                <div class="main-right-header-content-center-bottom-items-left">
+                                    <div class="main-right-header-content-center-bottom-items-left-left">
+                                        <img src="/image/system/default_user.png" alt="">
+                                    </div>
+                                    <div class="main-right-header-content-center-bottom-items-left-right">
+                                        <h5 class="placeholder-glow">
+                                            <span class="placeholder col-3"></span>
+                                            <br>
+                                            <span class="placeholder col-4"></span>
+                                        </h5>
+                                        <p class="content placeholder-glow">
+                                            <span class="placeholder col-4"></span>
+                                            <span class="placeholder col-5"></span>
+                                            <span class="placeholder col-6"></span>
+                                            <span class="placeholder col-2"></span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="main-right-header-content-center-bottom-items-left-right">
-                                    <h5>
-                                        <div class="user-information"><a href="#">ZombieGenZ <i class="fa-solid fa-screwdriver-wrench developer"></i> <i class="fa-solid fa-circle-check verified"></i></a></div>
-                                        <div class="user-rating-star">4.4 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i></div>
-                                    </h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto voluptates consectetur officiis eligendi dolorum exercitationem, cupiditate debitis? Architecto quos autem eius atque sit reiciendis animi doloribus, laboriosam deserunt porro nostrum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias eaque voluptatem optio non nulla! Reiciendis quo assumenda qui, commodi doloribus libero, ipsa veritatis officia aliquid error voluptatem ea, ad placeat? Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis nisi voluptas ratione tempora numquam sit odio fugiat quis repellendus quaerat illo ipsum saepe velit at, nemo aspernatur quod provident cum.</p>
-                                </div>
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-right">
-                                <p>00:00:00 00/00/0000</p>
-                            </div>
-                        </div> -->
-                        <div class="main-right-header-content-center-bottom-items">
-                            <div class="main-right-header-content-center-bottom-items-left">
-                                <div class="main-right-header-content-center-bottom-items-left-left">
-                                    <img src="/image/system/default_user.png" alt="">
-                                </div>
-                                <div class="main-right-header-content-center-bottom-items-left-right">
-                                    <h5 class="placeholder-glow">
-                                        <span class="placeholder col-3"></span>
-                                        <br>
-                                        <span class="placeholder col-4"></span>
-                                    </h5>
-                                    <p class="content placeholder-glow">
-                                        <span class="placeholder col-4"></span>
-                                        <span class="placeholder col-5"></span>
-                                        <span class="placeholder col-6"></span>
-                                        <span class="placeholder col-2"></span>
-                                    </p>
+                                <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
+                                    <span class="placeholder col-12"></span>
                                 </div>
                             </div>
-                            <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
-                                <span class="placeholder col-12"></span>
-                            </div>
-                        </div>
-                        <div class="main-right-header-content-center-bottom-items">
-                            <div class="main-right-header-content-center-bottom-items-left">
-                                <div class="main-right-header-content-center-bottom-items-left-left">
-                                    <img src="/image/system/default_user.png" alt="">
+                            <div class="main-right-header-content-center-bottom-items">
+                                <div class="main-right-header-content-center-bottom-items-left">
+                                    <div class="main-right-header-content-center-bottom-items-left-left">
+                                        <img src="/image/system/default_user.png" alt="">
+                                    </div>
+                                    <div class="main-right-header-content-center-bottom-items-left-right">
+                                        <h5 class="placeholder-glow">
+                                            <span class="placeholder col-3"></span>
+                                            <br>
+                                            <span class="placeholder col-4"></span>
+                                        </h5>
+                                        <p class="content placeholder-glow">
+                                            <span class="placeholder col-4"></span>
+                                            <span class="placeholder col-5"></span>
+                                            <span class="placeholder col-6"></span>
+                                            <span class="placeholder col-2"></span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="main-right-header-content-center-bottom-items-left-right">
-                                    <h5 class="placeholder-glow">
-                                        <span class="placeholder col-3"></span>
-                                        <br>
-                                        <span class="placeholder col-4"></span>
-                                    </h5>
-                                    <p class="content placeholder-glow">
-                                        <span class="placeholder col-4"></span>
-                                        <span class="placeholder col-5"></span>
-                                        <span class="placeholder col-6"></span>
-                                        <span class="placeholder col-2"></span>
-                                    </p>
+                                <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
+                                    <span class="placeholder col-12"></span>
                                 </div>
-                            </div>
-                            <div class="main-right-header-content-center-bottom-items-right placeholder-glow">
-                                <span class="placeholder col-12"></span>
                             </div>
                         </div>
                     </div>
@@ -1275,9 +1264,9 @@
                         document.getElementById("createtime").innerHTML = `${formatDate(resData.data.createtime)}`;
                         document.getElementById("totalsold").innerHTML = `${resData.data.totalsold}`;
                         document.getElementById("quantity").innerHTML = `${resData.data.quantity}`;
-                        document.getElementById("rating").innerHTML = `${Math.round(resData.data.ratingstar)} ${calculateStars(resData.data.ratingstar)} (${resData.data.EvaluateTotal} đánh giá)`;
+                        document.getElementById("rating").innerHTML = `${resData.data.ratingstar} ${calculateStars(resData.data.ratingstar)} (${resData.data.EvaluateTotal} đánh giá)`;
                         document.getElementById("title").innerHTML = `${resData.data.producttitle}`;
-                        document.getElementById("subtitle").innerHTML = `${resData.data.producttitle}`;
+                        document.getElementById("subtitle").innerHTML = `${resData.data.productsubtitle}`;
                         document.getElementById("price").innerHTML = `<span class="product-price-show">${resData.data.price.toLocaleString("de-DE")} đ</span>`;
                         document.getElementById("quantity-group").innerHTML = `<label for="quantity-input"><h4>Số lượng</h4></label>
                                                                                 <button onclick="decrease()">-</button>
@@ -1357,11 +1346,11 @@
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
                                                                                     <h1 class="modal-title fs-5" id="createreviewLabel">Tạo đánh giá</h1>
-                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <label for="rating_star" class="form-label">Đánh giá: <span id="rating-star">5</span> <i class="fa-solid fa-star"></i></label>
-                                                                                        <input type="range" class="form-range" min="0" max="5" step="0.5" value="5" id="rating_star" onchange="chanageRating()">
+                                                                                        <input type="range" class="form-range" min="1" max="5" step="0.5" value="5" id="rating_star" onchange="chanageRating()">
                                                                                         <label for="raiting-comment" class="form-label">Cảm nhận về sản phẩm</label>
                                                                                         <div class="input-group">
                                                                                             <textarea class="form-control" id="raiting-comment" ></textarea>
@@ -1369,7 +1358,7 @@
                                                                                     </div>
                                                                                     <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hũy</button>
-                                                                                    <button type="button" class="btn btn-primary">Gửi</button>
+                                                                                    <button type="button" class="btn btn-primary" onclick="Evaluate()">Gửi</button>
                                                                                     </div>
                                                                                 </div>
                                                                                 </div>
@@ -1380,8 +1369,232 @@
             }
         }
         Bought();
+        function LoadEvaluate() {
+            const username = localStorage.getItem("username");
+            const password = localStorage.getItem("password");
+            if (username !== undefined && username !== null && username !== "" && password !== undefined && password !== "" && password !== null) {
+                const data = {
+					username: username,
+					password: password
+				}
+				fetch('/API/authenticationpermission', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+				  .then(res => res.json())
+				  .then(resDataUser => {
+						if (resDataUser.permission.acceptproductmanagementall) {
+                            const data = {
+                                productid: PRODUCTID
+                            }
+                            fetch('/API/getevaluatedata', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                              })
+                              .then(res => res.json())
+                              .then(resDataEvaluate => {
+                                document.getElementById("evaluate").innerHTML = "";
+                                if (resDataEvaluate === null) {
+                                    document.getElementById("evaluate").innerHTML += `<div class="no-evaluate">
+                                                                                        <p>Chưa có đánh giá nào</p>
+                                                                                    </div>`;
+                                    return;
+                                }
+                                resDataEvaluate.data.forEach(items => {
+                                    const evaluatePath = items.avatarpath.replace("public\\", "/").replace("\\", "/");
+                                    document.getElementById("evaluate").innerHTML += `<div class="main-right-header-content-center-bottom-items">
+                                                                                        <div class="main-right-header-content-center-bottom-items-left">
+                                                                                            <div class="main-right-header-content-center-bottom-items-left-left">
+                                                                                                <img src="${evaluatePath}" alt="">
+                                                                                            </div>
+                                                                                            <div class="main-right-header-content-center-bottom-items-left-right">
+                                                                                                <h5>
+                                                                                                    <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                                    <div class="user-rating-star">${items.rating} ${calculateStars(items.rating)}</div>
+                                                                                                </h5>
+                                                                                                <p>${items.comment}</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="main-right-header-content-center-bottom-items-right">
+                                                                                            <p>${formatDate(items.createtime)}</p>
+                                                                                        </div>
+                                                                                    </div>`;
+                                });
+                              })
+                        }
+                        else {
+                            const data = {
+                                productid: PRODUCTID
+                            }
+                            fetch('/API/getevaluatedata', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                              })
+                              .then(res => res.json())
+                              .then(resDataEvaluate => {
+                                document.getElementById("evaluate").innerHTML = "";
+                                if (resDataEvaluate === null) {
+                                    document.getElementById("evaluate").innerHTML += `<div class="no-evaluate">
+                                                                                        <p>Chưa có đánh giá nào</p>
+                                                                                    </div>`;
+                                    return;
+                                }
+                                resDataEvaluate.data.forEach(items => {
+                                    const evaluatePath = items.avatarpath.replace("public\\", "/").replace("\\", "/");
+                                    document.getElementById("evaluate").innerHTML += `<div class="main-right-header-content-center-bottom-items">
+                                                                                        <div class="main-right-header-content-center-bottom-items-left">
+                                                                                            <div class="main-right-header-content-center-bottom-items-left-left">
+                                                                                                <img src="${evaluatePath}" alt="">
+                                                                                            </div>
+                                                                                            <div class="main-right-header-content-center-bottom-items-left-right">
+                                                                                                <h5>
+                                                                                                    <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                                    <div class="user-rating-star">${items.rating} ${calculateStars(items.rating)}</div>
+                                                                                                </h5>
+                                                                                                <p>${items.comment}</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="main-right-header-content-center-bottom-items-right">
+                                                                                            <p>${formatDate(items.createtime)}</p>
+                                                                                        </div>
+                                                                                    </div>`;
+                                });
+                              })
+                        }
+				  })
+            }
+            else {
+                const data = {
+					productid: PRODUCTID
+				}
+				fetch('/API/getevaluatedata', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+				  .then(res => res.json())
+				  .then(resDataEvaluate => {
+                    document.getElementById("evaluate").innerHTML = "";
+                    if (resDataEvaluate === null) {
+                        document.getElementById("evaluate").innerHTML += `<div class="no-evaluate">
+                                                                            <p>Chưa có đánh giá nào</p>
+                                                                        </div>`;
+                        return;
+                    }
+                    resDataEvaluate.data.forEach(items => {
+                        const evaluatePath = items.avatarpath.replace("public\\", "/").replace("\\", "/");
+                        document.getElementById("evaluate").innerHTML += `<div class="main-right-header-content-center-bottom-items">
+                                                                            <div class="main-right-header-content-center-bottom-items-left">
+                                                                                <div class="main-right-header-content-center-bottom-items-left-left">
+                                                                                    <img src="${evaluatePath}" alt="">
+                                                                                </div>
+                                                                                <div class="main-right-header-content-center-bottom-items-left-right">
+                                                                                    <h5>
+                                                                                        <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                        <div class="user-rating-star">${items.rating} ${calculateStars(items.rating)}</div>
+                                                                                    </h5>
+                                                                                    <p>${items.comment}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="main-right-header-content-center-bottom-items-right">
+                                                                                <p>${formatDate(items.createtime)}</p>
+                                                                            </div>
+                                                                        </div>`;
+                    });
+				  })
+            }
+        }
+        LoadEvaluate();
     });
+    function Evaluate() {
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        const Evaluate_Star = document.getElementById("rating_star").value;
+        const Evaluate_Comment = document.getElementById("raiting-comment").value;
 
+        if (username !== undefined && username !== null && username !== "" && password !== undefined && password !== "" && password !== null) {
+            if (Evaluate_Star !== "") {
+				const data = {
+					username: username,
+					password: password,
+					productid: PRODUCTID,
+                    Evaluate_Star: Evaluate_Star,
+                    Evaluate_Comment: Evaluate_Comment
+				}
+				fetch('/API/createevaluate', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+				  .then(res => res.json())
+				  .then(resData => {
+                        if (resData.status) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Chúc mừng",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white"
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.backdrop) {
+                                  location.reload();
+                                }
+                                else {
+                                    location.reload();
+                                }
+                              });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white",
+                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                            });
+                        }
+				  })
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Bạn cần điền đầy đủ thông tin`,
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                });
+            }
+        }
+        else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Bạn chưa mua sản phẩm này`,
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+            });
+        }
+    }
     function formatDate(date) {
         const now = new Date(date);
         const hours = now.getHours().toString().padStart(2, '0');
@@ -1461,7 +1674,6 @@
                         productid: PRODUCTID,
                         quantity: quantity
                     };
-                    // SLACKING cần làm tiếp
                     fetch('/API/buyproduct', {
                         method: 'POST',
                         headers: {

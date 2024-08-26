@@ -69,21 +69,38 @@ routes.post("/", async (req, res) => {
               }
               else {
                 if (response.data.permission.acceptproductmanagementall) {
-                  const productpath = await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9)));
+                  let productpath = "";
+                  const productData = await GetProducteData(productid);
+                  productpath = await productname !== productData.producttitle ? await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9))) : "";
+                  console.log(productpath);
                   let productdescriptionHTML = await parseMarkup(productdescription);
-                  const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);
-                  if (success) {
-                    res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
+                  if (productpath !== "") {
+                    const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);
+                    if (success) {
+                      res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
+                    }
+                    else {
+                      res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
+                    }
                   }
                   else {
-                    res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
+                    const success = await EditProduct_NoPath(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity);
+                    if (success) {
+                      res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
+                    }
+                    else {
+                      res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
+                    }
                   }
                 }
                 else {
                   const isAuthor = await CheckAuthor(response.data.userid, productid);
                   if (isAuthor) {
-                    const productpath = await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9)));
+                    let productpath = "";
+                    const productData = await GetProducteData(productid);
+                    productname !== productData.producttitle ? productpath =  await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9))) : "";
                     let productdescriptionHTML = await parseMarkup(productdescription);
+                    if (productpath !== "") {
                       const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);
                       if (success) {
                         res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
@@ -91,6 +108,16 @@ routes.post("/", async (req, res) => {
                       else {
                         res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
                       }
+                    }
+                    else {
+                      const success = await EditProduct_NoPath(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity);
+                      if (success) {
+                        res.status(200).json({ status: true, message: `Đã cập nhật thông tin sản phẩm thành công!` });
+                      }
+                      else {
+                        res.status(200).json({ status: false, message: `Lỗi khi cập nhật thông tin sản phẩm` });
+                      }
+                    }
                     }
                   else {
                     res.status(200).json({ status: false, message: `Bạn không có quyền thực hiện điều này` });
@@ -138,6 +165,17 @@ function normalizeString(str) {
     }
 }
 
+async function EditProduct_NoPath(productid, producttitle, productsubtitle, productcontent, productprice, productquantity) {
+  try {
+    const result = await database.query(`UPDATE Product SET producttitle = ?, productsubtitle = ?, productcontent = ?, price = ?, quantity = ? WHERE productid = ?`, 
+      [ producttitle, productsubtitle, productcontent, productprice, productquantity, productid ]);
+      return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
 async function CheckAuthor(userid, productid) {
   return new Promise((resolve, reject) => {
     database.query(`SELECT sellerid FROM Product WHERE productid = ?`, [productid], (err, res) => {
@@ -183,6 +221,22 @@ function removeDiacritics(str) {
   return str.normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
+
+async function GetProducteData(productid) {
+  return new Promise((resolve, reject) => {
+    database.query(`SELECT * FROM Product WHERE productid = ?`, [productid], (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (res.length > 0) {
+          resolve(res[0]);
+        } else {
+          resolve(null);
+        }
+      }
+    });
+  });
 }
 
 module.exports = routes;

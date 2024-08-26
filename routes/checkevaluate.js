@@ -14,7 +14,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
     if (err) throw err;
-    console.log("API check buy successfully connected to the server");
+    console.log("API check evaluate successfully connected to the server");
 });
 
 const routes = express.Router();
@@ -32,35 +32,24 @@ routes.post("/", async (req, res) => {
     password = await normalizeString(password);
 
     try {
-      axios.post('http://localhost:3000/API/authenticationpermission', {
+      axios.post('http://localhost:3000/API/checkbuy', {
         username: username,
-        password: password
+        password: password,
+        productid: productid
     }, {
         headers: {
           'Content-Type': 'application/json'
         }
     })
-    .then(async responseUser => {
-      if (responseUser.data.status) {
-          axios.post('http://localhost:3000/API/getproductdata')
-          .then(async responseProduct => {
-            if (responseProduct.data.status) {
-                const success = await GetPurchaseHistoryData(productid, responseUser.data.userid);
-                if (success !== null) {
-                  res.status(200).json({ status: true, message: "Người dùng đã mua sản phẩm", userid: responseUser.data.userid });
-                }
-                else {
-                  res.status(200).json({ status: false, message: "Người dùng chưa mua sản phẩm" });
-                }
-            }
-            else {
-                res.status(200).json({ status: false, message: "Không thể tìm thấy sản phẩm được chỉ định" });
-            }
-          })
-          .catch(e => {
-            console.error(e);
-            res.render("404notfound");
-          });
+    .then(async responseCheckBuy => {
+      if (responseCheckBuy.data.status) {
+          const success = await CehckEvaluate(productid, responseCheckBuy.data.userid);
+          if (success) {
+            res.status(200).json({ status: true, message: "Người dùng này chưa đánh giá lần nào", userid: responseCheckBuy.data.userid });
+          }
+          else {
+            res.status(200).json({ status: false, message: "Người dùng này đã đánh giá sản phẩm rồi" });
+          }
       }
       else {
         res.status(200).json({ status: false, message: "Lỗi xác thực người dùng" });
@@ -85,16 +74,16 @@ function normalizeString(str) {
     .replace(/\s+/g, "");
 }
 
-async function GetPurchaseHistoryData(productid, userid) {
+async function CehckEvaluate(productid, userid) {
   return new Promise((resolve, reject) => {
-    database.query(`SELECT * FROM PurchaseHistory WHERE productid = ? AND userid = ?`, [productid, userid], (err, res) => {
+    database.query(`SELECT * FROM Evaluate WHERE productid = ? AND userid = ?`, [productid, userid], (err, res) => {
       if (err) {
         reject(err);
       } else {
         if (res.length > 0) {
-          resolve(res);
+          resolve(false);
         } else {
-          resolve(null);
+          resolve(true);
         }
       }
     });

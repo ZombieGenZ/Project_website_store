@@ -10,7 +10,7 @@ CREATE TABLE Account (
 	password TEXT NOT NULL,
 	money DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(money >= 0),
 	revenue DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(revenue >= 0),
-	avatarpath TEXT NOT NULL DEFAULT "/image/system/default_user.png",
+	avatarpath TEXT NOT NULL DEFAULT "public\image\system\default_user.png",
 	Verify BOOLEAN NOT NULL DEFAULT false,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
 	permissionid VARCHAR(255) NOT NULL DEFAULT 'member',
@@ -24,8 +24,6 @@ CREATE TABLE Permission (
 	permissionname VARCHAR(255) NOT NULL UNIQUE,
 	acceptproductmanagement BOOLEAN NOT NULL DEFAULT false,
 	acceptproductmanagementall BOOLEAN NOT NULL DEFAULT false,
-	acceptvouchermanagement BOOLEAN NOT NULL DEFAULT false,
-	acceptvouchermanagementall BOOLEAN NOT NULL DEFAULT false,
 	acceptcensorproduct BOOLEAN NOT NULL DEFAULT false,
 	acceptcensorcooperate BOOLEAN NOT NULL DEFAULT false,
 	acceptaccountmanagement BOOLEAN NOT NULL DEFAULT false,
@@ -42,7 +40,7 @@ CREATE TABLE Product (
 	information TEXT,
 	productcontent TEXT NOT NULL,
 	price DECIMAL(15,3) NOT NULL CHECK(price > 0),
-	quantity INT NOT NULL CHECK(quantity > 0),
+	quantity INT NOT NULL CHECK(quantity >= 0),
 	producticonpath TEXT(255) NOT NULL,
 	productpath VARCHAR(255) NOT NULL,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
@@ -84,8 +82,8 @@ CREATE TABLE Evaluate (
 	userid INT NOT NULL,
 	productid VARCHAR(255) NOT NULL,
 	rating DECIMAL(2,1) NOT NULL CHECK(rating >= 1 AND rating <= 5),
-	comment VARCHAR(255) NOT NULL,
-	createtime DATETIME,
+	comment TEXT,
+	createtime DATETIME DEFAULT NOW(),
 	PRIMARY KEY(evaluateid)
 );
 
@@ -179,20 +177,20 @@ INSERT INTO Permission (permissionname)
 VALUE ("member");
 
 -- seller permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptvouchermanagement, acceptviewchart)
-VALUE ("seller", true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptviewchart)
+VALUE ("seller", true, true);
 
 -- active moderator permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptvouchermanagement, acceptcensorproduct, acceptviewchart, acceptviewchartall)
-VALUE ("moderator", true, true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptcensorproduct, acceptviewchart, acceptviewchartall)
+VALUE ("moderator", true, true, true, true);
 
 -- developer permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptvouchermanagement, acceptvouchermanagementall, acceptviewchart, acceptviewchartall)
-VALUE ("developer", true, true, true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall)
+VALUE ("developer", true, true, true, true);
 
 -- active admim permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptvouchermanagement, acceptvouchermanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
-VALUE ("admin", true, true, true, true, true, true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
+VALUE ("admin", true, true, true, true, true, true, true);
 
 DELIMITER //
 
@@ -206,7 +204,7 @@ BEGIN
         FROM Evaluate
         WHERE productid = NEW.productid
     )
-    WHERE id = NEW.productid;
+    WHERE productid = NEW.productid;
 END//
 
 DELIMITER ;
@@ -223,9 +221,41 @@ BEGIN
         FROM Evaluate
         WHERE productid = NEW.productid
     )
-    WHERE id = NEW.productid;
+    WHERE productid = NEW.productid;
 END//
 
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_star_delete
+AFTER DELETE ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET ratingstar = (
+        SELECT AVG(rating)
+        FROM Evaluate
+        WHERE productid = OLD.productid
+    )
+    WHERE productid = OLD.productid;
+END//
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER update_product_evaluate_total_delete
+AFTER DELETE ON Evaluate
+FOR EACH ROW
+BEGIN
+    UPDATE Product
+    SET evaluatetotal = (
+        SELECT COUNT(*)
+        FROM Evaluate
+        WHERE productid = OLD.productid
+    )
+    WHERE productid = OLD.productid;
+END//
 DELIMITER ;
 
 SELECT * FROM Account;
@@ -238,6 +268,3 @@ SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
 SELECT * FROM Evaluate;
-
-DELETE FROM picture;
-DELETE FROM product;

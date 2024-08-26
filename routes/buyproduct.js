@@ -50,16 +50,24 @@ routes.post("/", async (req, res) => {
                   if(items.productid == productid) {
                     const totalPrice = (quantity * items.price);
                     if (responseUser.data.money >= totalPrice) {
-                      const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
-                      const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
-                      const success_updateproduct = await UpdateProductData(productid);
-                      if (success && success_updatemoney && success_updateproduct) {
-                        res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
-                        return;
+                      if ((items.quantity - quantity) >= 0) {
+                        const VAT = 15 / 100; // 15%
+                        const totalRevenue = totalPrice - (totalPrice * VAT);
+                        const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
+                        const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
+                        const success_updateproduct = await UpdateProductData(productid, quantity);
+                        const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
+                        if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
+                          res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
+                          return;
+                        }
+                        else {
+                          res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
+                          return;
+                        }
                       }
                       else {
-                        res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
-                        return;
+                        res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
                       }
                     }
                     else {
@@ -112,10 +120,10 @@ async function CreatePurchaseHistory(userid, productid, totalprice, totalquantit
   }
 }
 
-async function UpdateProductData(productid) {
+async function UpdateProductData(productid, quantity) {
   try {
-    const result = await database.query(`UPDATE Product SET quantity = quantity - 1 WHERE productid = ?`, 
-      [productid]);
+    const result = await database.query(`UPDATE Product SET quantity = quantity - ?, totalsold = totalsold + ? WHERE productid = ?`, 
+      [quantity, quantity, productid]);
       return true;
   }
   catch (e) {
@@ -127,6 +135,17 @@ async function UpdateProductData(productid) {
 async function UpdateUserMoney(userid, total) {
   try {
     const result = await database.query(`UPDATE Account SET money = money - ? WHERE userid = ?`, 
+      [total, userid]);
+      return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+async function UpdateUserRevenue(total, userid) {
+  try {
+    const result = await database.query(`UPDATE Account SET revenue = revenue + ? WHERE userid = ?`, 
       [total, userid]);
       return true;
   }

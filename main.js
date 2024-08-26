@@ -78,6 +78,9 @@ const getProductDataAPIRoutes = require("./routes/getproductdata");
 const getProductDataViewAPIRoutes = require("./routes/getproductdataview");
 const buyProductAPIRoutes = require("./routes/buyproduct");
 const checkBuyAPIRoutes = require("./routes/checkbuy");
+const checkEvaluateAPIRoutes = require("./routes/checkevaluate");
+const createEvaluateAPIRoutes = require("./routes/createevaluate");
+const getEvaluateDataAPIRoutes = require("./routes/getevaluatedata");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -93,5 +96,8 @@ app.use('/API/getproductdata', getProductDataAPIRoutes);
 app.use('/API/getproductdataview', getProductDataViewAPIRoutes);
 app.use('/API/buyproduct', buyProductAPIRoutes);
 app.use('/API/checkbuy', checkBuyAPIRoutes);
+app.use('/API/checkevaluate', checkEvaluateAPIRoutes);
+app.use('/API/createevaluate', createEvaluateAPIRoutes);
+app.use('/API/getevaluatedata', getEvaluateDataAPIRoutes);
 
 app.listen(port);
