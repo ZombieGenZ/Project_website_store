@@ -10,7 +10,7 @@ CREATE TABLE Account (
 	password TEXT NOT NULL,
 	money DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(money >= 0),
 	revenue DECIMAL(15,3) NOT NULL DEFAULT 0 CHECK(revenue >= 0),
-	avatarpath TEXT NOT NULL DEFAULT "public\image\system\default_user.png",
+	avatarpath TEXT NOT NULL DEFAULT "public\\image\\system\\default_user.png",
 	Verify BOOLEAN NOT NULL DEFAULT false,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
 	permissionid VARCHAR(255) NOT NULL DEFAULT 'member',
@@ -192,9 +192,10 @@ VALUE ("developer", true, true, true, true);
 INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
 VALUE ("admin", true, true, true, true, true, true, true);
 
+
 DELIMITER //
 
-CREATE TRIGGER update_product_evaluate_star
+CREATE TRIGGER update_product_rating_after_insert
 AFTER INSERT ON Evaluate
 FOR EACH ROW
 BEGIN
@@ -203,59 +204,58 @@ BEGIN
         SELECT AVG(rating)
         FROM Evaluate
         WHERE productid = NEW.productid
-    )
+    ),
+    EvaluateTotal = EvaluateTotal + 1
     WHERE productid = NEW.productid;
-END//
+END //
 
 DELIMITER ;
 
 DELIMITER //
 
-CREATE TRIGGER update_product_evaluate_total
-AFTER INSERT ON Evaluate
-FOR EACH ROW
-BEGIN
-    UPDATE Product
-    SET evaluatetotal = (
-        SELECT COUNT(*)
-        FROM Evaluate
-        WHERE productid = NEW.productid
-    )
-    WHERE productid = NEW.productid;
-END//
-
-DELIMITER ;
-
-DELIMITER //
-
-CREATE TRIGGER update_product_evaluate_star_delete
+CREATE TRIGGER update_product_rating_after_delete
 AFTER DELETE ON Evaluate
 FOR EACH ROW
 BEGIN
     UPDATE Product
-    SET ratingstar = (
-        SELECT AVG(rating)
-        FROM Evaluate
-        WHERE productid = OLD.productid
-    )
+    SET ratingstar = COALESCE(
+        (SELECT AVG(rating)
+         FROM Evaluate
+         WHERE productid = OLD.productid),
+        0
+    ),
+    EvaluateTotal = GREATEST(EvaluateTotal - 1, 0)
     WHERE productid = OLD.productid;
-END//
+END //
+
 DELIMITER ;
 
 DELIMITER //
 
-CREATE TRIGGER update_product_evaluate_total_delete
-AFTER DELETE ON Evaluate
+CREATE TRIGGER update_product_rating_after_update
+AFTER UPDATE ON Evaluate
 FOR EACH ROW
 BEGIN
-    UPDATE Product
-    SET evaluatetotal = (
-        SELECT COUNT(*)
-        FROM Evaluate
-        WHERE productid = OLD.productid
-    )
-    WHERE productid = OLD.productid;
-END//
+    IF OLD.productid <> NEW.productid OR OLD.rating <> NEW.rating THEN
+        UPDATE Product
+        SET ratingstar = COALESCE(
+            (SELECT AVG(rating)
+             FROM Evaluate
+             WHERE productid = OLD.productid),
+            0
+        )
+        WHERE productid = OLD.productid;
+        
+        UPDATE Product
+        SET ratingstar = (
+            SELECT AVG(rating)
+            FROM Evaluate
+            WHERE productid = NEW.productid
+        )
+        WHERE productid = NEW.productid;
+    END IF;
+END //
+
 DELIMITER ;
 
 SELECT * FROM Account;
@@ -268,3 +268,4 @@ SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
 SELECT * FROM Evaluate;
+

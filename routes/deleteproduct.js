@@ -75,9 +75,12 @@ routes.post("/", async (req, res) => {
             });
           
             const success_delete_picture = await DeletePicture(productid);
+            const success_delete_evaluate = await DeleteEvaluate(productid);
+            const success_delete_cart = await DeleteCart(productid);
+            const success_delete_purchasehistory = await DeletePurchaseHistory(productid);
             const success_delete_product = await DeleteProduct(productid);
           
-            if (success_delete_picture && success_delete_product) {
+            if (success_delete_picture && success_delete_product && success_delete_cart && success_delete_purchasehistory && success_delete_evaluate) {
               res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
             } else {
               res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
@@ -116,9 +119,12 @@ routes.post("/", async (req, res) => {
               });
             
               const success_delete_picture = await DeletePicture(productid);
+              const success_delete_evaluate = await DeleteEvaluate(productid);
+              const success_delete_cart = await DeleteCart(productid);
+              const success_delete_purchasehistory = await DeletePurchaseHistory(productid);
               const success_delete_product = await DeleteProduct(productid);
             
-              if (success_delete_picture && success_delete_product) {
+              if (success_delete_picture && success_delete_product && success_delete_cart && success_delete_purchasehistory && success_delete_evaluate) {
                 res.status(200).json({ status: true, message: `Đã xóa sản phẩm thành công!` });
               } else {
                 res.status(200).json({ status: false, message: `Lỗi khi xóa sản phẩm` });
@@ -193,6 +199,39 @@ async function GetIconPath(productid) {
     catch (e) {
       return false;
     }
+}
+
+async function DeleteEvaluate(productid) {
+  try {
+    const result = await database.query(`DELETE FROM Evaluate WHERE productid = ?`, 
+      [ productid ]);
+      return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+async function DeleteCart(productid) {
+  try {
+    const result = await database.query(`DELETE FROM Cart WHERE productid = ?`, 
+      [ productid ]);
+      return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+async function DeletePurchaseHistory(productid) {
+  try {
+    const result = await database.query(`DELETE FROM Evaluate WHERE productid = ?`, 
+      [ productid ]);
+      return true;
+  }
+  catch (e) {
+    return false;
+  }
 }
 
   async function DeleteProduct(productid) {

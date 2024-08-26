@@ -23,7 +23,7 @@ routes.use(express.json());
 routes.use(bodyParser.urlencoded({ extended: true }));
 
 routes.get("/", async (req, res) => {
-    res.status(403).json( { message: "Bạn không có quyền truy cập vào ứng đường dẩn này" } );
+    res.status(403).json( { message: "Bạn không có quyền truy cập vào đường dẩn này" } );
 });
 
 routes.post("/", async (req, res) => {
@@ -32,68 +32,73 @@ routes.post("/", async (req, res) => {
     password = await normalizeString(password);
 
     try {
-      axios.post('http://localhost:3000/API/authenticationpermission', {
-        username: username,
-        password: password
-    }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-    })
-    .then(async responseUser => {
-      if (responseUser.data.status) {
-          axios.post('http://localhost:3000/API/getproductdata')
-          .then(async responseProduct => {
-            if (responseProduct.data.status) {
-              let success = false;
-              responseProduct.data.data.forEach(async items => {
-                  if(items.productid == productid) {
-                    const totalPrice = (quantity * items.price);
-                    if (responseUser.data.money >= totalPrice) {
-                      if ((items.quantity - quantity) >= 0) {
-                        const VAT = 15 / 100; // 15%
-                        const totalRevenue = totalPrice - (totalPrice * VAT);
-                        const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
-                        const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
-                        const success_updateproduct = await UpdateProductData(productid, quantity);
-                        const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
-                        if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
-                          res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
-                          return;
+        if (quantity > 0) {
+          axios.post('http://localhost:3000/API/authenticationpermission', {
+            username: username,
+            password: password
+        }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        .then(async responseUser => {
+          if (responseUser.data.status) {
+                axios.post('http://localhost:3000/API/getproductdata')
+                .then(async responseProduct => {
+                  if (responseProduct.data.status) {
+                    let success = false;
+                    responseProduct.data.data.forEach(async items => {
+                        if(items.productid == productid) {
+                          const totalPrice = (quantity * items.price);
+                          if (responseUser.data.money >= totalPrice) {
+                            if ((items.quantity - quantity) >= 0) {
+                              const VAT = 15 / 100; // 15%
+                              const totalRevenue = totalPrice - (totalPrice * VAT);
+                              const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
+                              const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
+                              const success_updateproduct = await UpdateProductData(productid, quantity);
+                              const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
+                              if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
+                                res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
+                                return;
+                              }
+                              else {
+                                res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
+                                return;
+                              }
+                            }
+                            else {
+                              res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
+                            }
+                          }
+                          else {
+                            res.status(200).json({ status: false, message: "Số dư không đủ" });
+                            return;
+                          }
                         }
-                        else {
-                          res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
-                          return;
-                        }
-                      }
-                      else {
-                        res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
-                      }
-                    }
-                    else {
-                      res.status(200).json({ status: false, message: "Số dư không đủ" });
-                      return;
-                    }
+                    });
                   }
-              });
+                  else {
+                      res.status(200).json({ status: false, message: "Không thể tìm thấy sản phẩm được chỉ định" });
+                  }
+                })
+                .catch(e => {
+                  console.error(e);
+                  res.status(200).json({ status: false, message: "Lỗi khi lấy dử liệu sản phẩm" });
+                });
             }
             else {
-                res.status(200).json({ status: false, message: "Không thể tìm thấy sản phẩm được chỉ định" });
+              res.status(200).json({ status: false, message: "Lỗi xác thực người dùng" });
             }
           })
           .catch(e => {
             console.error(e);
-            res.render("404notfound");
+            res.status(200).json({ status: false, message: e.toString() });
           });
-      }
-      else {
-        res.status(200).json({ status: false, message: "Lỗi xác thực người dùng" });
-      }
-    })
-    .catch(e => {
-      console.error(e);
-      res.status(200).json({ status: false, message: e.toString() });
-    });
+        }
+        else {
+          res.status(200).json({ status: false, message: "Số lượng phải lớn hơn 0" });
+        }
     }
     catch (e) {
       console.error(e);

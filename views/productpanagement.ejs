@@ -1943,64 +1943,108 @@
         }
     }
     function DeleteProduct(productid) {
-        Swal.fire({
-            title: "Bạn chắc chắn muống xóa?",
-            text: "Xóa sản phẩm thì bạn sẽ không thể khôi phục lại",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            confirmButtonText: "Hũy",
-            cancelButtonColor: "#3869d3",
-            confirmButtonText: "Xóa",
-            background: '#222338',
-            color: "white"
-          }).then((result) => {
-            if (result.isConfirmed) {
-                const data = {
-                    username: username,
-                    password: password,
-                    productid: productid
-                }
-                fetch('/API/deleteproduct', {
-                    method: 'POST',                
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                    credentials: 'include'
-                  })
-                  .then(res => res.json())
-                  .then(resData => {
-                    if (resData.status) {
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+
+        if (username !== undefined && username !== null && username !== "" && password !== undefined && password !== "" && password !== null) {
+            const data = {
+                username: username,
+                password: password
+            }
+            fetch('/API/authenticationpermission', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+              })
+              .then(res => res.json())
+              .then(resData => {
+                    if (resData.permission.acceptproductmanagement || resData.permission.acceptproductmanagementall) {
                         Swal.fire({
-                            icon: "success",
-                            title: "Chúc mừng",
-                            text: `${resData.message}`,
+                            title: "Bạn chắc chắn muống xóa?",
+                            text: "Xóa sản phẩm thì bạn sẽ không thể khôi phục lại",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            confirmButtonText: "Hũy",
+                            cancelButtonColor: "#3869d3",
+                            confirmButtonText: "Xóa",
                             background: '#222338',
-                            color: "white",
+                            color: "white"
                           }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.backdrop) {
-                              location.reload();
+                            if (result.isConfirmed) {
+                                const data = {
+                                    username: username,
+                                    password: password,
+                                    productid: productid
+                                }
+                                fetch('/API/deleteproduct', {
+                                    method: 'POST',                
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(data),
+                                    credentials: 'include'
+                                  })
+                                  .then(res => res.json())
+                                  .then(resData => {
+                                    if (resData.status) {
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Chúc mừng",
+                                            text: `${resData.message}`,
+                                            background: '#222338',
+                                            color: "white",
+                                          }).then((result) => {
+                                            if (result.dismiss === Swal.DismissReason.backdrop) {
+                                              location.reload();
+                                            }
+                                            else {
+                                                location.reload();
+                                            }
+                                          });;
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Oops...",
+                                            text: `${resData.message}`,
+                                            background: '#222338',
+                                            color: "white",
+                                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                          });
+                                        return;
+                                    }
+                                })
                             }
-                            else {
-                                location.reload();
-                            }
-                          });;
+                          });
                     }
                     else {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: `${resData.message}`,
+                            text: "Bạn không có quyền thực hiện điều này",
                             background: '#222338',
                             color: "white",
                             footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
                           });
                         return;
                     }
-                })
-            }
-          });
+              })
+        }
+        else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Bạn không có quyền thực hiện điều này",
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+              });
+            return;
+        }
     }
     function SearchProduct() {
         const username = localStorage.getItem("username");

@@ -81,6 +81,9 @@ const checkBuyAPIRoutes = require("./routes/checkbuy");
 const checkEvaluateAPIRoutes = require("./routes/checkevaluate");
 const createEvaluateAPIRoutes = require("./routes/createevaluate");
 const getEvaluateDataAPIRoutes = require("./routes/getevaluatedata");
+const editEvaluateAPIRoutes = require("./routes/editevaluate");
+const deleteEvaluateAPIRoutes = require("./routes/deleteevaluate");
+const addToCartAPIRoutes = require("./routes/addtocart");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -99,5 +102,8 @@ app.use('/API/checkbuy', checkBuyAPIRoutes);
 app.use('/API/checkevaluate', checkEvaluateAPIRoutes);
 app.use('/API/createevaluate', createEvaluateAPIRoutes);
 app.use('/API/getevaluatedata', getEvaluateDataAPIRoutes);
+app.use('/API/editevaluate', editEvaluateAPIRoutes);
+app.use('/API/deleteevaluate', deleteEvaluateAPIRoutes);
+app.use('/API/addtocart', addToCartAPIRoutes);
 
 app.listen(port);
