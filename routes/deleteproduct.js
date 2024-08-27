@@ -225,7 +225,7 @@ async function DeleteCart(productid) {
 
 async function DeletePurchaseHistory(productid) {
   try {
-    const result = await database.query(`DELETE FROM Evaluate WHERE productid = ?`, 
+    const result = await database.query(`DELETE FROM PurchaseHistory WHERE productid = ?`, 
       [ productid ]);
       return true;
   }

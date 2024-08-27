@@ -59,9 +59,14 @@ app.get("/product/:id", (req, res) => {
     });
 });
 
-app.get("/404", (req, res) => {
+app.get("/purchasedproducts", (req, res) => {
     res.status(200);
-    res.render("404notfound");
+    res.render("purchasedproducts");
+});
+
+app.get("/shoppingcart", (req, res) => {
+    res.status(200);
+    res.render("cart");
 });
 
 const registerAPIRoutes = require("./routes/register");
@@ -84,6 +89,11 @@ const getEvaluateDataAPIRoutes = require("./routes/getevaluatedata");
 const editEvaluateAPIRoutes = require("./routes/editevaluate");
 const deleteEvaluateAPIRoutes = require("./routes/deleteevaluate");
 const addToCartAPIRoutes = require("./routes/addtocart");
+const getPurchaseHistoryDataAPIRoutes = require("./routes/getpurchasehistorydata");
+const searchPurchaseHistoryDataAPIRoutes = require("./routes/searchpurchasehistorydata");
+const getCartDataAPIRoutes = require("./routes/getcartdata");
+const searchCartDataAPIRoutes = require("./routes/searchcartdata");
+const buyProductCartAPIRoutes = require("./routes/buyproductcart");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -105,5 +115,10 @@ app.use('/API/getevaluatedata', getEvaluateDataAPIRoutes);
 app.use('/API/editevaluate', editEvaluateAPIRoutes);
 app.use('/API/deleteevaluate', deleteEvaluateAPIRoutes);
 app.use('/API/addtocart', addToCartAPIRoutes);
+app.use('/API/getpurchasehistorydata', getPurchaseHistoryDataAPIRoutes);
+app.use('/API/searchpurchasehistorydata', searchPurchaseHistoryDataAPIRoutes);
+app.use('/API/getcartdata', getCartDataAPIRoutes);
+app.use('/API/searchcartdata', searchCartDataAPIRoutes);
+app.use('/API/buyproductcart', buyProductCartAPIRoutes);
 
 app.listen(port);

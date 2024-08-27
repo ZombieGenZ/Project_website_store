@@ -55,7 +55,6 @@ CREATE TABLE Cart (
 	cartid INT NOT NULL AUTO_INCREMENT UNIQUE,
 	userid INT NOT NULL,
 	productid VARCHAR(255) NOT NULL,
-	quantity INT NOT NULL DEFAULT 1,
 	PRIMARY KEY(cartid)
 );
 
@@ -268,4 +267,10 @@ SELECT * FROM PurchaseHistory;
 SELECT * FROM Apply;
 SELECT * FROM Recruitment;
 SELECT * FROM Evaluate;
+
+DELETE FROM Picture;
+DELETE FROM Evaluate;
+DELETE FROM Cart;
+DELETE FROM PurchaseHistory;
+DELETE FROM Product;
 

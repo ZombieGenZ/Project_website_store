@@ -51,18 +51,10 @@ routes.post("/", async (req, res) => {
                       if(items.productid == productid) {
                         const existCart = await GetCartData(items.productid, responseUser.data.userid);
                         if (existCart !== null) {
-                          const success = await EditCart(existCart.cartid, quantity);
-                          if (success) {
-                            res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
-                            return;
-                          }
-                          else {
-                            res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
-                            return;
-                          }
+                          res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
                         }
                         else {
-                          const success = await CreateCart(responseUser.data.userid, items.productid, quantity);
+                          const success = await CreateCart(responseUser.data.userid, items.productid);
                           if (success) {
                             res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
                             return;
@@ -111,10 +103,10 @@ function normalizeString(str) {
     .replace(/\s+/g, "");
 }
 
-async function CreateCart(userid, productid, quantity) {
+async function CreateCart(userid, productid) {
   try {
-    const result = await database.query(`INSERT INTO Cart (userid, productid, quantity) VALUE (?, ?, ?)`, 
-      [userid, productid, quantity]);
+    const result = await database.query(`INSERT INTO Cart (userid, productid) VALUE (?, ?)`, 
+      [userid, productid]);
       return true;
   }
   catch (e) {
@@ -136,17 +128,6 @@ async function GetCartData(productid, userid) {
       }
     });
   });
-}
-
-async function EditCart(cartid, quantity) {
-  try {
-    const result = await database.query(`UPDATE Cart SET quantity = quantity + ? WHERE cartid = ?`, 
-      [ quantity, cartid ]);
-      return true;
-  }
-  catch (e) {
-    return false;
-  }
 }
 
 module.exports = routes;
