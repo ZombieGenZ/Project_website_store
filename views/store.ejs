@@ -575,14 +575,14 @@
                         <div class="main-right-header-content-center-top-left"></div>
                         <div class="main-right-header-content-center-top-right">
                             <div class="search">
-                                <input type="text" placeholder="Tìm kiếm...">
-                                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <input type="text" placeholder="Tìm kiếm..." id="search-product">
+                                <button onclick="SearchProduct()"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </div>
                     </div>
                     <div class="none-store" id="none-store-product"></div>
                     <div class="main-right-header-content-center-bottom" id="storelist">
-                        <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                        <!-- <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
                             <div class="main-right-header-content-center-bottom-items-top">
                                 <img src="image/system/default_producticon.png" alt="">
                             </div>
@@ -749,7 +749,7 @@
                                     <span class="placeholder col-8 bg-light"></span>
                                 </p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -1132,6 +1132,9 @@
                     }
               })
         }
+    }
+    LoadFunction();
+    function LoadProduct() {
         fetch('/API/getproductdata', {
             method: 'POST',
             credentials: 'include'
@@ -1162,7 +1165,7 @@
               });
           });
     }
-    LoadFunction();
+    LoadProduct();
     function Logout() {
         localStorage.removeItem("username");
         localStorage.removeItem("password");
@@ -1188,6 +1191,415 @@
         }
     
         return result;
+    }
+    function SearchProduct() {
+        const input = document.getElementById("search-product").value;
+
+        if (input === "") {
+            document.getElementById("storelist").innerHTML = `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>`;
+            fetch('/API/getproductdata', {
+                method: 'POST',
+                credentials: 'include'
+              })
+              .then(res => res.json())
+              .then(resData => {
+                  document.getElementById("none-store-product").innerHTML = "";
+                  if (resData.data == null) {
+                      document.getElementById("storelist").innerHTML = "";
+                      document.getElementById("none-store-product").innerHTML = "<p>Không có sản phẩm nào hợp lệ</p>";
+                      return;
+                  }
+                  document.getElementById("storelist").innerHTML = "";
+                  resData.data.forEach(async items => {
+                      let iconPath = items.producticonpath.replace("public\\", "/").replace("\\", "/");
+                      let starIcon = await calculateStars(items.ratingstar);
+                      document.getElementById("storelist").innerHTML += `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                  <div class="main-right-header-content-center-bottom-items-top">
+                                                                      <img src="${iconPath}" alt="">
+                                                                  </div>
+                                                                  <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                      <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
+                                                                      <a href="/profile/${items.sellerid}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
+                                                                      <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
+                                                                      <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
+                                                                  </div>
+                                                              </div>`;
+                  });
+              });
+        }
+        else {
+            document.getElementById("storelist").innerHTML = `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                <div class="main-right-header-content-center-bottom-items-top">
+                                                                    <img src="image/system/default_producticon.png" alt="">
+                                                                </div>
+                                                                <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-12 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-6 bg-light"></span>
+                                                                        <span class="placeholder col-3 bg-light"></span>
+                                                                    </p>
+                                                                    <p class="placeholder-glow">
+                                                                        <span class="placeholder col-8 bg-light"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>`;
+            const data = {
+                keyword: input
+            }
+            fetch('/API/searchproductdata', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+              })
+              .then(res => res.json())
+              .then(resData => {
+                  document.getElementById("none-store-product").innerHTML = "";
+                  if (resData.data == null) {
+                      document.getElementById("storelist").innerHTML = "";
+                      document.getElementById("none-store-product").innerHTML = "<p>Không có sản phẩm nào hợp lệ</p>";
+                      return;
+                    }
+                    document.getElementById("storelist").innerHTML = "";
+                  resData.data.forEach(async items => {
+                      let iconPath = items.producticonpath.replace("public\\", "/").replace("\\", "/");
+                      let starIcon = await calculateStars(items.ratingstar);
+                      document.getElementById("storelist").innerHTML += `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
+                                                                  <div class="main-right-header-content-center-bottom-items-top">
+                                                                      <img src="${iconPath}" alt="">
+                                                                  </div>
+                                                                  <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                      <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
+                                                                      <a href="/profile/${items.sellerid}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
+                                                                      <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
+                                                                      <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
+                                                                  </div>
+                                                              </div>`;
+                  });
+              });
+        }
     }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>

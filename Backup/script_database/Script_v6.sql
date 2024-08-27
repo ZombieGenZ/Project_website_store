@@ -14,6 +14,7 @@ CREATE TABLE Account (
 	Verify BOOLEAN NOT NULL DEFAULT false,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
 	permissionid VARCHAR(255) NOT NULL DEFAULT 'member',
+	bio VARCHAR(255),
 	penalty INT,
 	PRIMARY KEY(userid)
 );

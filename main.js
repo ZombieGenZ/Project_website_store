@@ -94,6 +94,7 @@ const searchPurchaseHistoryDataAPIRoutes = require("./routes/searchpurchasehisto
 const getCartDataAPIRoutes = require("./routes/getcartdata");
 const searchCartDataAPIRoutes = require("./routes/searchcartdata");
 const buyProductCartAPIRoutes = require("./routes/buyproductcart");
+const SearchProductDataAPIRoutes = require("./routes/searchproductdata");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -120,5 +121,10 @@ app.use('/API/searchpurchasehistorydata', searchPurchaseHistoryDataAPIRoutes);
 app.use('/API/getcartdata', getCartDataAPIRoutes);
 app.use('/API/searchcartdata', searchCartDataAPIRoutes);
 app.use('/API/buyproductcart', buyProductCartAPIRoutes);
+app.use('/API/searchproductdata', SearchProductDataAPIRoutes);
+
+app.use((req, res, next) => {
+    res.status(404).render("404notfound");
+});
 
 app.listen(port);

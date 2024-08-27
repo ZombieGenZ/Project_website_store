@@ -14,7 +14,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API get purchase history data successfully connected to the server");
+  console.log("API get cart data successfully connected to the server");
 });
 
 const routes = express.Router();
