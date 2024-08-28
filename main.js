@@ -36,7 +36,7 @@ app.get("/product/:id", (req, res) => {
         if (response.data.data !== null) {
             let success = false;
             response.data.data.forEach(items => {
-                if(items.productpath == req.params.id) {
+                if(items.productpath == req.params.id || items.productid == req.params.id) {
                     success = true;
                     res.render("product", { productid: items.productid });
                 }
@@ -58,15 +58,49 @@ app.get("/product/:id", (req, res) => {
       res.render("404notfound");
     });
 });
-
 app.get("/purchasedproducts", (req, res) => {
     res.status(200);
     res.render("purchasedproducts");
 });
-
 app.get("/shoppingcart", (req, res) => {
     res.status(200);
     res.render("cart");
+});
+app.get("/profile", (req, res) => {
+    res.status(200);
+    res.render("profileme");
+});
+app.get("/profile/:id", (req, res) => {
+    res.status(200);
+    axios.post('http://localhost:3000/API/getalluserdata')
+    .then(async response => {
+      if (response.data.status) {
+        if (response.data.data !== null) {
+            let success = false;
+            response.data.data.forEach(items => {
+                console.log(items);
+                if(items.userid == req.params.id || items.username == req.params.id) {
+                    console.log(items.userid);
+                    success = true;
+                    res.render("profile", { userid: items.userid });
+                }
+            });
+            if (!success) {
+                res.render("404notfound");
+            }
+        }
+        else {
+            res.render("404notfound");
+        }
+      }
+      else {
+          res.render("404notfound");
+      }
+    })
+    .catch(e => {
+      console.error(e);
+      res.render("404notfound");
+    });
 });
 
 const registerAPIRoutes = require("./routes/register");
@@ -95,6 +129,15 @@ const getCartDataAPIRoutes = require("./routes/getcartdata");
 const searchCartDataAPIRoutes = require("./routes/searchcartdata");
 const buyProductCartAPIRoutes = require("./routes/buyproductcart");
 const SearchProductDataAPIRoutes = require("./routes/searchproductdata");
+const getUserAPIRoutes = require("./routes/getuser");
+const getUserDataAPIRoutes = require("./routes/getuserdata");
+const chanageAvatarAPIRoutes = require("./routes/chanageAvatar");
+const chanageUsernameAPIRoutes = require("./routes/chanageusername");
+const chanageEmailAPIRoutes = require("./routes/chanageemail");
+const chanagePasswordAPIRoutes = require("./routes/chanagepassword");
+const chanageBioAPIRoutes = require("./routes/chanagebio");
+const getAllUserDataAPIRoutes = require("./routes/getalluserdata");
+const getUserDataNonAccountAPIRoutes = require("./routes/getuserdatanonaccount");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -122,6 +165,15 @@ app.use('/API/getcartdata', getCartDataAPIRoutes);
 app.use('/API/searchcartdata', searchCartDataAPIRoutes);
 app.use('/API/buyproductcart', buyProductCartAPIRoutes);
 app.use('/API/searchproductdata', SearchProductDataAPIRoutes);
+app.use('/API/getuser', getUserAPIRoutes);
+app.use('/API/getuserdata', getUserDataAPIRoutes);
+app.use('/API/chanageavatar', chanageAvatarAPIRoutes);
+app.use('/API/chanageusername', chanageUsernameAPIRoutes);
+app.use('/API/chanageemail', chanageEmailAPIRoutes);
+app.use('/API/chanagepassword', chanagePasswordAPIRoutes);
+app.use('/API/chanagebio', chanageBioAPIRoutes);
+app.use('/API/getalluserdata', getAllUserDataAPIRoutes);
+app.use('/API/getuserdatanonaccount', getUserDataNonAccountAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");

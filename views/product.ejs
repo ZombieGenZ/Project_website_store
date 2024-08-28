@@ -1258,7 +1258,7 @@
                   .then(res => res.json())
                   .then(resDataPicture => {
                     if (resDataPicture.status) {
-                        document.getElementById("author").innerHTML = `<a href="/profile/${resData.data.sellerid}">${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a>`;
+                        document.getElementById("author").innerHTML = `<a href="/profile/${resData.data.username}">${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a>`;
                         document.getElementById("createtime").innerHTML = `${formatDate(resData.data.createtime)}`;
                         document.getElementById("totalsold").innerHTML = `${resData.data.totalsold}`;
                         document.getElementById("quantity").innerHTML = `${resData.data.quantity}`;
@@ -1437,7 +1437,7 @@
                                                                                             </div>
                                                                                             <div class="main-right-header-content-center-bottom-items-left-right">
                                                                                                 <h5>
-                                                                                                    <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                                    <div class="user-information"><a href="/profile/${items.username}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
                                                                                                     <div class="user-rating-star">${items.rating.toFixed(1)} ${calculateStars(items.rating)}</div>
                                                                                                 </h5>
                                                                                                 <p>${items.comment}</p>
@@ -1505,7 +1505,7 @@
                                                                                                 </div>
                                                                                                 <div class="main-right-header-content-center-bottom-items-left-right">
                                                                                                     <h5>
-                                                                                                        <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                                        <div class="user-information"><a href="/profile/${items.username}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
                                                                                                         <div class="user-rating-star">${items.rating.toFixed(1)} ${calculateStars(items.rating)}</div>
                                                                                                     </h5>
                                                                                                     <p>${items.comment}</p>
@@ -1525,7 +1525,7 @@
                                                                                                 </div>
                                                                                                 <div class="main-right-header-content-center-bottom-items-left-right">
                                                                                                     <h5>
-                                                                                                        <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                                        <div class="user-information"><a href="/profile/${items.username}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
                                                                                                         <div class="user-rating-star">${items.rating.toFixed(1)} ${calculateStars(items.rating)}</div>
                                                                                                     </h5>
                                                                                                     <p>${items.comment}</p>
@@ -1571,7 +1571,7 @@
                                                                                 </div>
                                                                                 <div class="main-right-header-content-center-bottom-items-left-right">
                                                                                     <h5>
-                                                                                        <div class="user-information"><a href="/profile/${items.userid}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
+                                                                                        <div class="user-information"><a href="/profile/${items.username}">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a></div>
                                                                                         <div class="user-rating-star">${items.rating.toFixed(1)} ${calculateStars(items.rating)}</div>
                                                                                     </h5>
                                                                                     <p>${items.comment}</p>
