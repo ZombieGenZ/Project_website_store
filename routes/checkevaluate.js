@@ -22,9 +22,7 @@ routes.use(cors());
 routes.use(express.json());
 routes.use(bodyParser.urlencoded({ extended: true }));
 
-routes.get("/", async (req, res) => {
-    res.status(403).json( { message: "Bạn không có quyền truy cập vào đường dẩn này" } );
-});
+
 
 routes.post("/", async (req, res) => {
     let { username, password, productid } = req.body;

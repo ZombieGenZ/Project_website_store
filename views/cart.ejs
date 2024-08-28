@@ -1034,11 +1034,6 @@
                                         <button><i class="fa-solid fa-diagram-successor"></i> Kiễm duyệt sản phẩm</button>
                                     </a>`;
                         }
-                        if (resData.permission.acceptcensorcooperate) {
-                            HTML += `<a href="/censorcooperate">
-                                        <button><i class="fa-solid fa-handshake"></i> Kiễm duyệt hợp tác</button>
-                                    </a>`;
-                        }
                         if (resData.permission.acceptaccountmanagement) {
                             HTML += `<a href="/accountmanagement">
                                         <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
@@ -1055,17 +1050,11 @@
                                     <a href="/profile">
                                         <button><i class="fa-solid fa-user"></i> Tài khoản</button>
                                     </a>
-                                    <a href="/changeinformation">
-                                        <button><i class="fa-solid fa-gear"></i> Thay đỏi thông tin</button>
-                                    </a>
                                     <a href="/paymentgateway">
                                         <button><i class="fa-solid fa-dollar-sign"></i> Nạp tiền</button>
                                     </a>
                                     <a href="/purchasedproducts">
                                         <button><i class="fa-solid fa-basket-shopping"></i> Đã mua</button>
-                                    </a>
-                                    <a href="/apply">
-                                        <button><i class="fa-solid fa-registered"></i> Hợp tác kinh doanh</button>
                                     </a>
                                 </div>`;
                             document.getElementById("v_menu").innerHTML = HTML;

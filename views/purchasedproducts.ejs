@@ -442,12 +442,116 @@
             display: grid;
             place-content: center;
         }
+        .check {
+            cursor: pointer;
+            position: relative;
+            margin: auto;
+            width: 18px;
+            height: 18px;
+            -webkit-tap-highlight-color: transparent;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .check:before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(34, 50, 84, 0.03);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .check svg {
+            position: relative;
+            z-index: 1;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: #c8ccd4;
+            stroke-width: 1.5;
+            transform: translate3d(0, 0, 0);
+            transition: all 0.2s ease;
+        }
+        
+        .check svg path {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 0;
+        }
+        
+        .check svg polyline {
+            stroke-dasharray: 22;
+            stroke-dashoffset: 66;
+        }
+        
+        .check:hover:before {
+            opacity: 1;
+        }
+        
+        .check:hover svg {
+            stroke: lime;
+        }
+        
+        .cbx:checked + .check svg {
+            stroke: lime;
+        }
+        
+        .cbx:checked + .check svg path {
+            stroke-dashoffset: 60;
+            transition: all 0.3s linear;
+        }
+        
+        .cbx:checked + .check svg polyline {
+            stroke-dashoffset: 42;
+            transition: all 0.2s linear;
+            transition-delay: 0.15s;
+        }
+        .bill {
+            color: white;
+        }
+        .bill-container {
+            display: grid;
+            grid-template-rows: 30px 1fr 55px;
+            row-gap: 10px;
+            padding: 10px;
+        }
+        .bill-container-top {
+            text-align: center;
+        }
+        .bill-container-center-items {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            column-gap: 5px;
+        }
+        .bill-container-center-items-right {
+            display: flex;
+            justify-content: center;
+        }
+        .bill-container-bottom {
+            text-align: right;
+        }
+        .buyall-selected {
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        }
+        .export-total {
+            text-align: center;
+        }
+        #temp {
+            display: none;
+        }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <title>Store</title>
 </head>
 <body>
+    <div id="temp"></div>
+    <div class="bill" id="show-bill"></div>
     <div class="madol" id="modal">
         <div class="modal fade" id="loginMadal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -943,11 +1047,6 @@
                                         <button><i class="fa-solid fa-diagram-successor"></i> Kiễm duyệt sản phẩm</button>
                                     </a>`;
                         }
-                        if (resData.permission.acceptcensorcooperate) {
-                            HTML += `<a href="/censorcooperate">
-                                        <button><i class="fa-solid fa-handshake"></i> Kiễm duyệt hợp tác</button>
-                                    </a>`;
-                        }
                         if (resData.permission.acceptaccountmanagement) {
                             HTML += `<a href="/accountmanagement">
                                         <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
@@ -964,17 +1063,11 @@
                                     <a href="/profile">
                                         <button><i class="fa-solid fa-user"></i> Tài khoản</button>
                                     </a>
-                                    <a href="/changeinformation">
-                                        <button><i class="fa-solid fa-gear"></i> Thay đỏi thông tin</button>
-                                    </a>
                                     <a href="/paymentgateway">
                                         <button><i class="fa-solid fa-dollar-sign"></i> Nạp tiền</button>
                                     </a>
                                     <a href="/purchasedproducts" class="main-left-logo-content-group-bottom-active">
                                         <button><i class="fa-solid fa-basket-shopping"></i> Đã mua</button>
-                                    </a>
-                                    <a href="/apply">
-                                        <button><i class="fa-solid fa-registered"></i> Hợp tác kinh doanh</button>
                                     </a>
                                 </div>`;
                             document.getElementById("v_menu").innerHTML = HTML;
@@ -1035,12 +1128,23 @@
                                 return;
                             }
                             if (resData.data.length > 0) {
-                                let count = 1;
                                 let HTML = `<h3>Sản phẩm đã mua</h3>                        
                                             <table class="table table-dark">
                                             <thead>
                                                 <tr>
-                                                    <th class="tb-col1" scope="col">#</th>
+                                                    <th class="tb-col1" scope="col">
+                                                        <div class="container">
+                                                        <input style="display: none;" id="cbx" class="cbx" type="checkbox" onclick="AllSelect()" />
+                                                        <label class="check" for="cbx">
+                                                            <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                            <path
+                                                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                            ></path>
+                                                            <polyline points="1 9 7 14 15 4"></polyline>
+                                                            </svg>
+                                                        </label>
+                                                        </div>
+                                                    </th>
                                                     <th class="tb-col2" scope="col">Tên sản phẩm</th>
                                                     <th class="tb-col3" scope="col">Giá bán</th>
                                                     <th class="tb-col4" scope="col">Số lượng</th>
@@ -1049,19 +1153,71 @@
                                                 </tr>
                                             </thead>
                                             <tbody>`;
+                                let count = 1;
                                 resData.data.forEach(items => {
+                                    let billModal = `<div class="modal fade" id="bill-${count}" tabindex="-1" aria-labelledby="bill-${count}-Label" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="bill-${count}-Label">Hóa đơn điện tử</h1>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-bod y">
+                                                            <div class="bill-container export-bill-${count}">
+                                                                <div class="bill-container-top">
+                                                                    <h5>Hóa đơn</h5>
+                                                                </div>
+                                                                <div class="bill-container-center">
+                                                                    <div class="bill-container-center-items">
+                                                                        <div class="bill-container-center-items-left">
+                                                                            <p>x<span>${items.totalquantity}</span> ${items.producttitle}</p>
+                                                                        </div>
+                                                                        <div class="bill-container-center-items-right">
+                                                                            <p><span>${items.totalprice.toLocaleString("de-DE")}</span> đ</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bill-container-bottom export-total">
+                                                                    <h6>Người dùng: ${username}</h6>
+                                                                    <h5>Tổng tiền: <span>${items.totalprice.toLocaleString("de-DE")}</span> đ</h5>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            <button type="button" class="btn btn-primary" onclick="ExportBill(${count})">Xuất hóa đơn</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>`;
+                                    document.getElementById("show-bill").innerHTML += billModal;
                                     HTML += `<tr>
-                                                <td class="tb-col1" scope="row">${count}</td>
+                                                <td class="tb-col1" scope="row">
+                                                    <div class="container">
+                                                    <input style="display: none;" id="cbx-${count}" type="checkbox" data-productid="${items.productid}" data-productname="${items.producttitle}" data-price="${items.totalprice}" data-quantity="${items.totalquantity}" class="select-bill cbx" onchange="CheckAllSelect()" />
+                                                    <label class="check" for="cbx-${count}">
+                                                        <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                        <path
+                                                            d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                        ></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                        </svg>
+                                                    </label>
+                                                    </div>
+                                                </td>
                                                 <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button></td>
+                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });
                                 HTML += `</tbody>
                                             </table>`;
+                                HTML += `<div class="buyall-selected">
+                                            <button type="button" class="btn btn-success" onclick="GetBill()">Xuất hóa đơn</button>
+                                        </div>`;
                                 document.getElementById("productlist").innerHTML = HTML;
                             }
                         }
@@ -1115,12 +1271,23 @@
                                 return;
                             }
                             if (resData.data.length > 0) {
-                                let count = 1;
                                 let HTML = `<h3>Sản phẩm đã mua</h3>                        
                                             <table class="table table-dark">
                                             <thead>
                                                 <tr>
-                                                    <th class="tb-col1" scope="col">#</th>
+                                                    <th class="tb-col1" scope="col">
+                                                        <div class="container">
+                                                        <input style="display: none;" id="cbx" class="cbx" type="checkbox" onclick="AllSelect()" />
+                                                        <label class="check" for="cbx">
+                                                            <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                            <path
+                                                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                            ></path>
+                                                            <polyline points="1 9 7 14 15 4"></polyline>
+                                                            </svg>
+                                                        </label>
+                                                        </div>
+                                                    </th>
                                                     <th class="tb-col2" scope="col">Tên sản phẩm</th>
                                                     <th class="tb-col3" scope="col">Giá bán</th>
                                                     <th class="tb-col4" scope="col">Số lượng</th>
@@ -1129,19 +1296,71 @@
                                                 </tr>
                                             </thead>
                                             <tbody>`;
+                                let count = 1;
                                 resData.data.forEach(items => {
+                                    let billModal = `<div class="modal fade" id="bill-${count}" tabindex="-1" aria-labelledby="bill-${count}-Label" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="bill-${count}-Label">Hóa đơn điện tử</h1>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-bod y">
+                                                            <div class="bill-container export-bill-${count}">
+                                                                <div class="bill-container-top">
+                                                                    <h5>Hóa đơn</h5>
+                                                                </div>
+                                                                <div class="bill-container-center">
+                                                                    <div class="bill-container-center-items">
+                                                                        <div class="bill-container-center-items-left">
+                                                                            <p>x<span>${items.totalquantity}</span> ${items.producttitle}</p>
+                                                                        </div>
+                                                                        <div class="bill-container-center-items-right">
+                                                                            <p><span>${items.totalprice.toLocaleString("de-DE")}</span> đ</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bill-container-bottom export-total">
+                                                                    <h6>Người dùng: ${username}</h6>
+                                                                    <h5>Tổng tiền: <span>${items.totalprice.toLocaleString("de-DE")}</span> đ</h5>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            <button type="button" class="btn btn-primary" onclick="ExportBill(${count})">Xuất hóa đơn</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>`;
+                                    document.getElementById("show-bill").innerHTML += billModal;
                                     HTML += `<tr>
-                                                <td class="tb-col1" scope="row">${count}</td>
+                                                <td class="tb-col1" scope="row">
+                                                    <div class="container">
+                                                    <input style="display: none;" id="cbx-${count}" type="checkbox" data-productid="${items.productid}" data-productname="${items.producttitle}" data-price="${items.totalprice}" data-quantity="${items.totalquantity}" class="select-bill cbx" onchange="CheckAllSelect()" />
+                                                    <label class="check" for="cbx-${count}">
+                                                        <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                        <path
+                                                            d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                        ></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                        </svg>
+                                                    </label>
+                                                    </div>
+                                                </td>
                                                 <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button></td>
+                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });
                                 HTML += `</tbody>
                                             </table>`;
+                                HTML += `<div class="buyall-selected">
+                                            <button type="button" class="btn btn-success" onclick="GetBill()">Xuất hóa đơn</button>
+                                        </div>`;
                                 document.getElementById("productlist").innerHTML = HTML;
                             }
                         }
@@ -1185,12 +1404,23 @@
                                 return;
                             }
                             if (resData.data.length > 0) {
-                                let count = 1;
                                 let HTML = `<h3>Sản phẩm đã mua</h3>                        
                                             <table class="table table-dark">
                                             <thead>
                                                 <tr>
-                                                    <th class="tb-col1" scope="col">#</th>
+                                                    <th class="tb-col1" scope="col">
+                                                        <div class="container">
+                                                        <input style="display: none;" id="cbx" class="cbx" type="checkbox" onclick="AllSelect()" />
+                                                        <label class="check" for="cbx">
+                                                            <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                            <path
+                                                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                            ></path>
+                                                            <polyline points="1 9 7 14 15 4"></polyline>
+                                                            </svg>
+                                                        </label>
+                                                        </div>
+                                                    </th>
                                                     <th class="tb-col2" scope="col">Tên sản phẩm</th>
                                                     <th class="tb-col3" scope="col">Giá bán</th>
                                                     <th class="tb-col4" scope="col">Số lượng</th>
@@ -1199,19 +1429,71 @@
                                                 </tr>
                                             </thead>
                                             <tbody>`;
+                                let count = 1;
                                 resData.data.forEach(items => {
+                                    let billModal = `<div class="modal fade" id="bill-${count}" tabindex="-1" aria-labelledby="bill-${count}-Label" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="bill-${count}-Label">Hóa đơn điện tử</h1>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-bod y">
+                                                            <div class="bill-container export-bill-${count}">
+                                                                <div class="bill-container-top">
+                                                                    <h5>Hóa đơn</h5>
+                                                                </div>
+                                                                <div class="bill-container-center">
+                                                                    <div class="bill-container-center-items">
+                                                                        <div class="bill-container-center-items-left">
+                                                                            <p>x<span>${items.totalquantity}</span> ${items.producttitle}</p>
+                                                                        </div>
+                                                                        <div class="bill-container-center-items-right">
+                                                                            <p><span>${items.totalprice.toLocaleString("de-DE")}</span> đ</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bill-container-bottom export-total">
+                                                                    <h6>Người dùng: ${username}</h6>
+                                                                    <h5>Tổng tiền: <span>${items.totalprice.toLocaleString("de-DE")}</span> đ</h5>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            <button type="button" class="btn btn-primary" onclick="ExportBill(${count})">Xuất hóa đơn</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>`;
+                                    document.getElementById("show-bill").innerHTML += billModal;
                                     HTML += `<tr>
-                                                <td class="tb-col1" scope="row">${count}</td>
+                                                <td class="tb-col1" scope="row">
+                                                    <div class="container">
+                                                    <input style="display: none;" id="cbx-${count}" type="checkbox" data-productid="${items.productid}" data-productname="${items.producttitle}" data-price="${items.totalprice}" data-quantity="${items.totalquantity}" class="select-bill cbx" onchange="CheckAllSelect()" />
+                                                    <label class="check" for="cbx-${count}">
+                                                        <svg viewBox="0 0 18 18" height="18px" width="18px">
+                                                        <path
+                                                            d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+                                                        ></path>
+                                                        <polyline points="1 9 7 14 15 4"></polyline>
+                                                        </svg>
+                                                    </label>
+                                                    </div>
+                                                </td>
                                                 <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button></td>
+                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });
                                 HTML += `</tbody>
                                             </table>`;
+                                HTML += `<div class="buyall-selected">
+                                            <button type="button" class="btn btn-success" onclick="GetBill()">Xuất hóa đơn</button>
+                                        </div>`;
                                 document.getElementById("productlist").innerHTML = HTML;
                             }
                         }
@@ -1233,7 +1515,162 @@
                 location.href = "/";
             }
         }
+        function AllSelect() {
+            const btn = document.getElementById("cbx").checked;
+            const allCheckBox = document.querySelectorAll(".select-bill");
+            if (btn) {
+                Array.from(allCheckBox).forEach(items => items.checked = true);
+            }
+            else {
+                Array.from(allCheckBox).forEach(items => items.checked = false);
+            }
+        }
+        function CheckAllSelect() {
+            const allCheckBox = document.querySelectorAll(".select-bill");
+            let allChecked = true;
+            Array.from(allCheckBox).forEach(items => {
+                if (!items.checked) {
+                    allChecked = false;
+                }
+            })
+            if (allChecked) {
+                document.getElementById("cbx").checked = true;
+            }
+            else {
+                document.getElementById("cbx").checked = false;
+            }
+        }
+        function ExportBill(id) {
+            const username = localStorage.getItem("username");
+            const now = new Date();
+            
+            const year = now.getFullYear().toString().padStart(4, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hour = now.getHours().toString().padStart(2, '0');
+            const minute = now.getMinutes().toString().padStart(2, '0');
+            const second = now.getSeconds().toString().padStart(2, '0');
+            
+            const time = `${hour}-${minute}-${second}_${day}-${month}-${year}`;
+            
+            try {
+                const element = document.querySelector(`.export-bill-${id}`);
+                if (!element) {
+                    throw new Error(`Element with class 'export-bill-${id}' not found`);
+                }
+        
+                setTimeout(() => {
+                    html2canvas(element, {
+                        logging: true,
+                        useCORS: true,
+                        scale: window.devicePixelRatio,
+                        backgroundColor: "#222338"
+                    }).then(canvas => {
+                        const link = document.createElement("a");
+                        link.download = `${username}-bill-${time}.jpg`;
+                        link.href = canvas.toDataURL();
+                        link.click();
+                    }).catch(error => {
+                        console.error("Error in html2canvas: ", error);
+                    });
+                }, 500);
+            } catch (error) {
+                console.error("Error in ExportBill function: ", error);
+            }
+        }
+        async function GetBill() {
+            const username = localStorage.getItem("username");
+            const allCheckBox = document.querySelectorAll(".select-bill");
+            const data = [];
+            Array.from(allCheckBox).forEach(items => {
+                if (items.checked) {
+                    const existingItem = data.find(item => item.productid === items.dataset.productid);
+                    if (existingItem) {
+                        existingItem.price += Number(items.dataset.price);
+                        existingItem.quantity += Number(items.dataset.quantity);
+                    }
+                    else {
+                        const billData = {
+                            productid: items.dataset.productid,
+                            productname: items.dataset.productname,
+                            price: Number(items.dataset.price),
+                            quantity: Number(items.dataset.quantity)
+                        }
+                        data.push(billData);
+                    }
+                }
+            });
+            console.log(data)
+            
+            if (data.length < 1) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Bạn phải chọn sản phẩm cần mua",
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                  });
+                return;
+            }
+
+            const id = String(Math.round(Math.random() * 1e9));
+
+            let billTotal = 0;
+            data.forEach(items => { 
+                billTotal += items.price;
+            });
+            let billItem = "";
+            data.forEach(items => {
+                billItem += `<div class="bill-container-center-items">
+                                <div class="bill-container-center-items-left">
+                                    <p>x<span>${items.quantity}</span> ${items.productname}</p>
+                                </div>
+                                <div class="bill-container-center-items-right">
+                                    <p><span>${items.price.toLocaleString("de-DE")}</span> đ</p>
+                                </div>
+                            </div>`;
+            })
+
+            const bill = `<div class="modal fade" id="bill-${id}" tabindex="-1" aria-labelledby="bill-${id}-Label" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="bill-${id}-Label">Hóa đơn điện tử</h1>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-bod y">
+                                <div class="bill-container export-bill-${id}">
+                                    <div class="bill-container-top">
+                                        <h5>Hóa đơn</h5>
+                                    </div>
+                                    <div class="bill-container-center">
+                                        ${billItem}
+                                    </div>
+                                    <div class="bill-container-bottom export-total">
+                                        <h6>Người dùng: ${username}</h6>
+                                        <h5>Tổng tiền: <span>${billTotal.toLocaleString("de-DE")}</span> đ</h5>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" onclick="ExportBill(${id})">Xuất hóa đơn</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>`;
+            
+
+            document.getElementById("show-bill").innerHTML += bill;
+
+            const temp = document.getElementById("temp");
+            temp.innerHTML = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bill-${id}" id="temp-bill-${id}"></button>`;
+            const btn = document.getElementById(`temp-bill-${id}`);
+            btn.click();
+        }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
