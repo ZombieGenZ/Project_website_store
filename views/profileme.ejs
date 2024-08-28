@@ -953,7 +953,27 @@
               .then(resData => {
                 if (resData.status) {
                     document.getElementById("modal").innerHTML = "";
-                    let HTML = `<div class="main-left-logo-content-group">
+                    let HTML_offcanvas = `<div class="center-money-offset">
+                                    <button type="button" class="btn btn-warning overflow-1 btn-money">
+                                        <i class="fa-solid fa-money-bill-1"></i>
+                                        <span id="money">${resData.money.toLocaleString("de-DE")}</span>
+                                        đ
+                                </button>
+                            </div>`;
+                    HTML_offcanvas += `<div class="main-left-logo-content-group">
+                        <div class="main-left-logo-content-group-top">
+                            <p>Cửa hàng</p>
+                        </div>
+                        <div class="main-left-logo-content-group-bottom">
+                            <a href="/">
+                                <button><i class="fa-solid fa-bag-shopping"></i> Cửa hàng</button>
+                            </a>
+                            <a href="/shoppingcart">
+                                <button><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</button>
+                            </a>
+                        </div>
+                    </div>`;
+                    let HTML_vmenu = `<div class="main-left-logo-content-group">
                         <div class="main-left-logo-content-group-top">
                             <p>Cửa hàng</p>
                         </div>
@@ -967,44 +987,63 @@
                         </div>
                     </div>`;
                     if (resData.permission.acceptproductmanagement || resData.permission.acceptproductmanagementall || resData.permission.acceptvouchermanagementall || resData.permission.acceptcensorproduct || resData.permission.acceptviewchart || resData.permission.acceptviewchartall) {
-                        HTML += `<div class="main-left-logo-content-group">
+                        HTML_offcanvas += `<div class="main-left-logo-content-group">
                                         <div class="main-left-logo-content-group-top">
                                             <p>Người bán</p>
                                         </div>
                                         <div class="main-left-logo-content-group-bottom">`;
+                        HTML_vmenu += `<div class="main-left-logo-content-group">
+                            <div class="main-left-logo-content-group-top">
+                                <p>Người bán</p>
+                            </div>
+                            <div class="main-left-logo-content-group-bottom">`;
                         if (resData.permission.acceptproductmanagement || resData.permission.acceptproductmanagementall) {
-                            HTML += `<a href="/productpanagement">
+                            HTML_offcanvas += `<a href="/productpanagement">
                                         <button><i class="fa-brands fa-product-hunt"></i> Quản lý sản phẩm</button>
                                     </a>`;
+                            HTML_vmenu += `<a href="/productpanagement">
+                                <button><i class="fa-brands fa-product-hunt"></i> Quản lý sản phẩm</button>
+                            </a>`;
+                                    
                         }
-                        if (resData.permission.acceptviewchart || resData.permission.acceptviewchartall) {
-                            HTML += `<a href="/statistical">
-                                        <button><i class="fa-solid fa-chart-simple"></i> Thống kê</button>
-                                    </a>`;
-                        }
-                        HTML += `</div>
+                        HTML_offcanvas += `</div>
+                            </div>`;
+                        HTML_vmenu += `</div>
                             </div>`;
                     }
                     if (resData.permission.acceptcensorproduct || resData.permission.acceptcensorcooperate || resData.permission.acceptaccountmanagement) {
-                        HTML += `<div class="main-left-logo-content-group">
+                        HTML_offcanvas += `<div class="main-left-logo-content-group">
                                         <div class="main-left-logo-content-group-top">
                                             <p>Quản trị viên</p>
                                         </div>
                                         <div class="main-left-logo-content-group-bottom">`;
+                        HTML_vmenu += `<div class="main-left-logo-content-group">
+                            <div class="main-left-logo-content-group-top">
+                                <p>Quản trị viên</p>
+                            </div>
+                            <div class="main-left-logo-content-group-bottom">`;
                         if (resData.permission.acceptcensorproduct) {
-                            HTML += `<a href="/censorproduct">
+                            HTML_offcanvas += `<a href="/censorproduct">
                                         <button><i class="fa-solid fa-diagram-successor"></i> Kiễm duyệt sản phẩm</button>
                                     </a>`;
+                            HTML_vmenu += `<a href="/censorproduct">
+                                <button><i class="fa-solid fa-diagram-successor"></i> Kiễm duyệt sản phẩm</button>
+                            </a>`;
                         }
                         if (resData.permission.acceptaccountmanagement) {
-                            HTML += `<a href="/accountmanagement">
+                            HTML_offcanvas += `<a href="/accountmanagement">
                                         <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
                                     </a>`;
+                            HTML_vmenu += `<a href="/accountmanagement">
+                                <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
+                            </a>`;
                         }
-                        HTML += `</div>
+                        HTML_offcanvas += `</div>
                             </div>`;
+                            HTML_vmenu += `</div>
+                        </div>`;
                     }
-                    HTML += `<div class="main-left-logo-content-group">
+                    HTML_offcanvas += `<div class="main-left-logo-content-group">
                                 <div class="main-left-logo-content-group-top">
                                     <p>Tài khoản</p>
                                 </div>
@@ -1019,8 +1058,23 @@
                                         <button><i class="fa-solid fa-basket-shopping"></i> Đã mua</button>
                                     </a>
                                 </div>`;
-                            document.getElementById("v_menu").innerHTML = HTML;
-                            document.getElementById("menu_offcanvas").innerHTML = HTML;
+                        HTML_vmenu += `<div class="main-left-logo-content-group">
+                            <div class="main-left-logo-content-group-top">
+                                <p>Tài khoản</p>
+                            </div>
+                            <div class="main-left-logo-content-group-bottom">
+                                <a href="/profile" class="main-left-logo-content-group-bottom-active">
+                                    <button><i class="fa-solid fa-user"></i> Tài khoản</button>
+                                </a>
+                                <a href="/paymentgateway">
+                                    <button><i class="fa-solid fa-dollar-sign"></i> Nạp tiền</button>
+                                </a>
+                                <a href="/purchasedproducts">
+                                    <button><i class="fa-solid fa-basket-shopping"></i> Đã mua</button>
+                                </a>
+                            </div>`;
+                            document.getElementById("v_menu").innerHTML = HTML_vmenu;
+                            document.getElementById("menu_offcanvas").innerHTML = HTML_offcanvas;
 
                             let dropdown = `<a class="btn btn-secondary dropdown-toggle btn-color-menu-account" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${resData.username}`;
                             if (resData.verify) {
@@ -1030,10 +1084,8 @@
                             dropdown += `</ul>
                                             <ul class="dropdown-menu dropdown-menu-end btn-color-menu-account-background">
                                                 <li><a class="dropdown-item btn-color-menu-account-items" href="/profile/">Tài khoản</a></li>
-                                                <li><a class="dropdown-item btn-color-menu-account-items" href="/changeinformation">Thay đổi thông tin</a></li>
                                                 <li><a class="dropdown-item btn-color-menu-account-items" href="/shoppingcart">Giỏ hàng</a></li>
                                                 <li><a class="dropdown-item btn-color-menu-account-items" href="/purchasedproducts">Sản phẩm đã mua</a></li>
-                                                <li><a class="dropdown-item btn-color-menu-account-items" href="/apply">Hợp tác kinh doanh</a></li>
                                                 <li><a class="dropdown-item btn-color-menu-account-items" href="" onclick="Logout()">Đăng xuất</a></li>
                                             </ul>`;
                             document.getElementById("dropdown_menu").innerHTML = dropdown;
@@ -1072,6 +1124,7 @@
                   .then(resData => {
                         if (resData.status) {
                             if (resData.data !== null) {
+                                document.title = `Trang cá nhân của ${resData.data.username}`;
                                 document.getElementById("username-left").innerHTML = `${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}`;
                                 document.getElementById("username-right").innerHTML = `${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}`;
                                 document.getElementById("chanageinformation").innerHTML = `<div class="modal fade" id="chanageInformationModal" tabindex="-1" aria-labelledby="chanageInformationLabel" aria-hidden="true">
@@ -1216,7 +1269,7 @@
             case "developer":
                 return "Nhà phát triển";
             case "admin":
-                return "quản trị viên";
+                return "Quản trị viên";
             default:
                 return "Người mua";
         }

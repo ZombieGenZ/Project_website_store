@@ -102,6 +102,10 @@ app.get("/profile/:id", (req, res) => {
       res.render("404notfound");
     });
 });
+app.get("/accountmanagement", (req, res) => {
+    res.status(200);
+    res.render("accountpanagement");
+});
 
 const registerAPIRoutes = require("./routes/register");
 const authenticationAccountAPIRoutes = require("./routes/authentication");
@@ -138,6 +142,7 @@ const chanagePasswordAPIRoutes = require("./routes/chanagepassword");
 const chanageBioAPIRoutes = require("./routes/chanagebio");
 const getAllUserDataAPIRoutes = require("./routes/getalluserdata");
 const getUserDataNonAccountAPIRoutes = require("./routes/getuserdatanonaccount");
+const getAllAccountDataAPIRoutes = require("./routes/getallaccountdata");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -174,6 +179,7 @@ app.use('/API/chanagepassword', chanagePasswordAPIRoutes);
 app.use('/API/chanagebio', chanageBioAPIRoutes);
 app.use('/API/getalluserdata', getAllUserDataAPIRoutes);
 app.use('/API/getuserdatanonaccount', getUserDataNonAccountAPIRoutes);
+app.use('/API/getallaccountdata', getAllAccountDataAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");

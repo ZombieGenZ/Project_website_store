@@ -26,10 +26,7 @@ CREATE TABLE Permission (
 	acceptproductmanagement BOOLEAN NOT NULL DEFAULT false,
 	acceptproductmanagementall BOOLEAN NOT NULL DEFAULT false,
 	acceptcensorproduct BOOLEAN NOT NULL DEFAULT false,
-	acceptcensorcooperate BOOLEAN NOT NULL DEFAULT false,
 	acceptaccountmanagement BOOLEAN NOT NULL DEFAULT false,
-	acceptviewchart BOOLEAN NOT NULL,
-	acceptviewchartall BOOLEAN NOT NULL,
 	PRIMARY KEY(permissionname)
 );
 
@@ -42,7 +39,7 @@ CREATE TABLE Product (
 	productcontent TEXT NOT NULL,
 	price DECIMAL(15,3) NOT NULL CHECK(price > 0),
 	quantity INT NOT NULL CHECK(quantity >= 0),
-	producticonpath TEXT NOT NULL,
+	producticonpath TEXT(255) NOT NULL,
 	productpath VARCHAR(255) NOT NULL,
 	createtime DATETIME NOT NULL DEFAULT NOW(),
 	status VARCHAR(255) NOT NULL,
@@ -127,20 +124,20 @@ INSERT INTO Permission (permissionname)
 VALUE ("member");
 
 -- seller permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptviewchart)
-VALUE ("seller", true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement)
+VALUE ("seller", true);
 
 -- active moderator permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptcensorproduct, acceptviewchart, acceptviewchartall)
-VALUE ("moderator", true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptcensorproduct)
+VALUE ("moderator", true, true);
 
 -- developer permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall)
-VALUE ("developer", true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall)
+VALUE ("developer", true, true);
 
 -- active admim permission
-INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptcensorcooperate, acceptaccountmanagement)
-VALUE ("admin", true, true, true, true, true, true, true);
+INSERT INTO Permission (permissionname, acceptproductmanagement, acceptproductmanagementall, acceptviewchart, acceptviewchartall, acceptcensorproduct, acceptaccountmanagement)
+VALUE ("admin", true, true, true, true, true, true);
 
 
 DELIMITER //
@@ -215,8 +212,6 @@ SELECT * FROM Product;
 SELECT * FROM Cart;
 SELECT * FROM Penalty;
 SELECT * FROM PurchaseHistory;
-SELECT * FROM Apply;
-SELECT * FROM Recruitment;
 SELECT * FROM Evaluate;
 
 DELETE FROM Picture;
@@ -225,3 +220,6 @@ DELETE FROM Cart;
 DELETE FROM PurchaseHistory;
 DELETE FROM Product;
 
+UPDATE Account
+SET avatarpath = "public\\image\\system\\default_user.png"
+WHERE username = "ZombieGenZ";
