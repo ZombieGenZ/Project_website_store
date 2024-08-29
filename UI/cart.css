@@ -317,8 +317,10 @@
     padding: 10px;
     display: grid;
     grid-template-columns: minmax(0px, auto) minmax(auto, 1200px) minmax(0px, auto);
+    
 }
 .main-right-header-content-center {
+    
     grid-column: 2;
     display: grid;
     grid-template-rows: 50px 1fr;

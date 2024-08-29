@@ -78,11 +78,32 @@ app.get("/profile/:id", (req, res) => {
         if (response.data.data !== null) {
             let success = false;
             response.data.data.forEach(items => {
-                console.log(items);
                 if(items.userid == req.params.id || items.username == req.params.id) {
-                    console.log(items.userid);
+                    if (items.penalty === null) {
+                        res.render("profile", { userid: items.userid });
+                    }
+                    else {
+                        axios.post('http://localhost:3000/API/getpenalty', {
+                            penaltyid: items.penalty
+                            }, {
+                                headers: {
+                                'Content-Type': 'application/json'
+                                }
+                            })
+                            .then(async responsegetPenalty => {
+                                if (responsegetPenalty.data.status) {
+                                    res.render("profilepunish", { userid: items.userid, message: `<p class="overflow-1">Người dùng <b>${items.username}</b> đã bị khóa tài khoản bở <a href="${responsegetPenalty.data.data.username}"><b>${responsegetPenalty.data.data.username}</b></a> vì lý do <span>${responsegetPenalty.data.data.penaltyreason}</span></p><p>lệnh trừng phạt #${responsegetPenalty.data.data.penaltyid} có hiệu lực từ <b>${formatDate(responsegetPenalty.data.data.penaltystart)}</b> đến <b>${formatDate(responsegetPenalty.data.data.penaltyend)}</b></p>` });
+                                }
+                                else {
+                                    res.render("profile", { userid: items.userid });
+                                }
+                        })
+                        .catch(e => {
+                          console.error(e);
+                          res.status(200).json({ status: false, message: e.toString() });
+                        });
+                    }
                     success = true;
-                    res.render("profile", { userid: items.userid });
                 }
             });
             if (!success) {
@@ -143,6 +164,11 @@ const chanageBioAPIRoutes = require("./routes/chanagebio");
 const getAllUserDataAPIRoutes = require("./routes/getalluserdata");
 const getUserDataNonAccountAPIRoutes = require("./routes/getuserdatanonaccount");
 const getAllAccountDataAPIRoutes = require("./routes/getallaccountdata");
+const chanageMoneyAPIRoutes = require("./routes/chanagemoney");
+const chanagePermissionAPIRoutes = require("./routes/chanagepermission");
+const getPenaltyAPIRoutes = require("./routes/getpenalty");
+const createPenaltyAPIRoutes = require("./routes/createpenalty");
+const deletePenaltyAPIRoutes = require("./routes/deletepenalty");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -180,9 +206,26 @@ app.use('/API/chanagebio', chanageBioAPIRoutes);
 app.use('/API/getalluserdata', getAllUserDataAPIRoutes);
 app.use('/API/getuserdatanonaccount', getUserDataNonAccountAPIRoutes);
 app.use('/API/getallaccountdata', getAllAccountDataAPIRoutes);
+app.use('/API/chanagemoney', chanageMoneyAPIRoutes);
+app.use('/API/chanagepermission', chanagePermissionAPIRoutes);
+app.use('/API/getpenalty', getPenaltyAPIRoutes);
+app.use('/API/createpenalty', createPenaltyAPIRoutes);
+app.use('/API/deletepenalty', deletePenaltyAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");
 });
+
+function formatDate(date) {
+    const now = new Date(date);
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+  
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+  }
 
 app.listen(port);
