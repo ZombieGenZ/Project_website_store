@@ -169,6 +169,7 @@ const chanagePermissionAPIRoutes = require("./routes/chanagepermission");
 const getPenaltyAPIRoutes = require("./routes/getpenalty");
 const createPenaltyAPIRoutes = require("./routes/createpenalty");
 const deletePenaltyAPIRoutes = require("./routes/deletepenalty");
+const sendEmailAPIRoutes = require("./routes/sendemail");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -211,6 +212,7 @@ app.use('/API/chanagepermission', chanagePermissionAPIRoutes);
 app.use('/API/getpenalty', getPenaltyAPIRoutes);
 app.use('/API/createpenalty', createPenaltyAPIRoutes);
 app.use('/API/deletepenalty', deletePenaltyAPIRoutes);
+app.use('/API/sendemail', sendEmailAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");

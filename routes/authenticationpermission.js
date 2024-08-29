@@ -41,7 +41,7 @@ routes.post("/", async (req, res) => {
   .then(async response => {
     if (response.data.status) {
       const permission = await GetPermission(response.data.user.permissionid);
-      res.status(200).json({ status: true, userid: response.data.user.userid, username: response.data.user.username, money: response.data.user.money, verify: response.data.user.Verify, permission: permission });
+      res.status(200).json({ status: true, userid: response.data.user.userid, username: response.data.user.username, money: response.data.user.money, verify: response.data.user.Verify, permission: permission, email: response.data.user.email });
     }
     else {
       res.status(200).json({ status: false, data: null });

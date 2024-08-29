@@ -56,6 +56,7 @@ routes.post("/", async (req, res) => {
                               const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
                               const success_updateproduct = await UpdateProductData(productid, quantity);
                               const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
+                              await SendEmail(responseUser.data.email, quantity, items.producttitle, totalPrice)
                               if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
                                 res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
                                 return;
@@ -151,6 +152,62 @@ async function UpdateUserRevenue(total, userid) {
     const result = await database.query(`UPDATE Account SET revenue = revenue + ? WHERE userid = ?`, 
       [total, userid]);
       return true;
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+async function SendEmail(email, productquantity, productname, productprice) {
+  try {
+    let text = `HÓA ĐƠN\n==============================\n\nTên | Giá\n------------------------------\nx${productquantity} ${productname} | ${productprice.toLocaleString('de-DE')} VND\n------------------------------\nTỔNG TIỀN: 300.000 VND\n\n==============================\n\nXin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ:\nEmail: galaxyvirusteam@hotmail.com | SĐT: 0783504540\n`;
+    let HTML = `<div style="text-align: center; padding: 20px 0;">
+                      <h1 style="margin: 0; font-size: 24px; font-weight: bold;">HÓA ĐƠN</h1>
+                  </div>
+
+                  <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 10px;">
+                      <table style="width: 100%; border-collapse: collapse;">
+                          <thead>
+                              <tr>
+                                  <th style="text-align: left; padding: 10px; border-bottom: 2px solid #dddddd;">Sản phẩm</th>
+                                  <th style="text-align: right; padding: 10px; border-bottom: 2px solid #dddddd;">Giá</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td style="padding: 10px; border-bottom: 1px solid #dddddd;">x${productquantity} ${productname}</td>
+                                  <td style="padding: 10px; text-align: right; border-bottom: 1px solid #dddddd;">${productprice.toLocaleString('de-DE')} VND</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+
+                  <div style="text-align: center; padding: 20px 0;">
+                      <h2 style="margin: 0; font-size: 20px; font-weight: bold;">TỔNG TIỀN: ${productprice.toLocaleString('de-DE')} VND</h2>
+                  </div>
+
+                  <div style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background-color: #ffffff; border-radius: 10px;">
+                      <p style="margin: 0;">Xin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!</p>
+                      <p style="margin: 0;">Nếu quý khách hàng có bất kỳ câu hỏi nào, xin vui lòng liên hệ:</p>
+                      <p style="margin: 0;">Email: galaxyvirusteam@hotmail.com | SĐT: 0783504540</p>
+                  </div>`;
+    axios.post('http://localhost:3000/API/sendemail', {
+      to: email,
+      subject: `Hóa đơn giao dịch khi mua sản phẩm ${productname}`,
+      text: text,
+      html: HTML
+  }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+  })
+    .then(async responseEmail => {
+    return true;
+  })
+  .catch(e => {
+    console.error(e);
+    res.status(200).json({ status: false, message: e.toString() });
+  });
   }
   catch (e) {
     return false;

@@ -1222,6 +1222,14 @@
                                 <button><i class="fa-solid fa-diagram-successor"></i> Kiễm duyệt sản phẩm</button>
                             </a>`;
                         }
+                        if (resData.permission.acceptaccountmanagement) {
+                            HTML_offcanvas += `<a href="/accountmanagement">
+                                        <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
+                                    </a>`;
+                            HTML_vmenu += `<a href="/accountmanagement">
+                                <button><i class="fa-solid fa-shield-halved"></i> Quản lý tài khoản</button>
+                            </a>`;
+                        }
                         HTML_offcanvas += `</div>
                             </div>`;
                             HTML_vmenu += `</div>
