@@ -10,45 +10,46 @@ Nhưng dù sao nó cũng đã góp một phần trong hành trình học lập t
 **Đáp ứng đa thiết bị**
 ---
 Dạn cho máy tính
-![](.Preview/home-destop.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/home-destop.png)
 Dạn cho điện thoại
-![](.Preview/home-mobile.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/home-mobile.png)
 ---
 **Giao diện sản phẩm**
 ----
-![](.Preview/product.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/product.png)
 ---
 **Giao diện giỏ hàng**
 ---
-![](.Preview/cart.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/cart.png)
 ---
 **Giao diện quản lý sản phẩm**
 ---
-![](.Preview/productmanagement.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/productmanagement.png)
 ---
 **Giao diện kiểm duyệt sản phẩm**
 ---
-![](.Preview/censorproduct.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/censorproduct.png)
 ---
 **Giao diện quản lý tài khoản**
 ---
-![](.Preview/accountmanagement.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/accountmanagement.png)
+---
 **Giao diện tài khoản của mình**
 ---
-![](.Preview/profileme.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/profileme.png)
 ---
 **Giao diện tài khoản**
 ---
-![](.Preview/profile.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/profile.png)
 ---
 **Giao diện sản phẩm đã mua**
 ---
-![](.Preview/purchasedproducts.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/purchasedproducts.png)
 ---
 **Hóa đơn**
 ---
-![](.Preview/bill.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/bill.jpg)
 ---
 **Email hóa đơn**
 ---
-![](.Preview/email.png)
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/email.png)
