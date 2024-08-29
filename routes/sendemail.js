@@ -5,8 +5,8 @@ const axios = require("axios");
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 
-const email = `galaxyvirusteam@hotmail.com`;
-const pass = `PhanTheKietZombieGenZ_19062007@`;
+const email = `your_email`;
+const pass = `your_password`;
 
 const database = mysql.createConnection({
     host: "localhost",

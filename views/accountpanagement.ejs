@@ -936,7 +936,7 @@
                       </button>
                 </div>
                 <div class="main-right-header-title">
-                    <h1 class="overflow-1">Quản lý sản phẩm</h1>
+                    <h1 class="overflow-1">Quản lý tài khoản</h1>
                 </div>
                 <div class="main-right-header-money">
                     <button type="button" class="btn btn-warning overflow-1 btn-money">
@@ -963,7 +963,7 @@
                         <div class="main-right-header-content-center-top-left"></div>
                         <div class="main-right-header-content-center-top-right">
                             <div class="search">
-                                <input type="text" placeholder="Tìm kiếm..." id="product-search">
+                                <input type="text" placeholder="Tìm kiếm..." id="user-search">
                                 <button onclick="SearchProduct()"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </div>
@@ -1231,6 +1231,8 @@
                                         return;
                                     }
                                     document.getElementById("currentcy-profile-modal").innerHTML = "";
+                                    document.getElementById("permission-profile-modal").innerHTML = "";
+                                    document.getElementById("punish-profile-modal").innerHTML = "";
                                     if (resData.data.length > 0) {
                                         let HTML = `<h3>Sản phẩm</h3>                        
                                                     <table class="table table-dark">
@@ -1366,7 +1368,7 @@
         const username = localStorage.getItem("username");
         const password = localStorage.getItem("password");
         if (username !== undefined && username !== null && password !== undefined && password !== null) {
-            const input = document.getElementById("product-search").value;
+            const input = document.getElementById("user-search").value;
             if (input === "") {
                 document.getElementById("productlist").innerHTML = `<div class="loading-product placeholder-glow">
                                                                         <span class="placeholder col-4"></span>
@@ -1388,211 +1390,149 @@
                 fetch('/API/authenticationpermission', {
                     method: 'POST',
                     headers: {
-                      'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data),
                     credentials: 'include'
-                  })
-                  .then(res => res.json())
-                  .then(resData => {
+                    })
+                    .then(res => res.json())
+                    .then(resData => {
                         if (resData.status) {
-                            fetch('/API/getallproductdata', {
+                            fetch('/API/getallaccountdata', {
                                 method: 'POST',
                                 headers: {
-                                  'Content-Type': 'application/json',
+                                    'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify(data),
                                 credentials: 'include'
-                              })
-                              .then(res => res.json())
-                              .then(resData => {
+                                })
+                                .then(res => res.json())
+                                .then(resData => {
                                 if (resData.status) {
-                                    document.getElementById("productlist").innerHTML = "";
-                                    document.getElementById("view-product-modal").innerHTML = "";
-                                    document.getElementById("edit-product-modal").innerHTML = "";
                                     if (resData.data === null) {
                                         document.getElementById("productlist").innerHTML = `<div class="none-items">
                                             <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
                                         </div>`;
                                         return;
                                     }
+                                    document.getElementById("currentcy-profile-modal").innerHTML = "";
+                                    document.getElementById("permission-profile-modal").innerHTML = "";
+                                    document.getElementById("punish-profile-modal").innerHTML = "";
                                     if (resData.data.length > 0) {
-                                        let count = 1;
                                         let HTML = `<h3>Sản phẩm</h3>                        
                                                     <table class="table table-dark">
                                                     <thead>
                                                     <tr>
-                                                        <th class="tb-col1" scope="col">#</th>
-                                                        <th class="tb-col2" scope="col">Tên sản phẩm</th>
-                                                        <th class="tb-col3" scope="col">Người bán</th>
-                                                        <th class="tb-col4" scope="col">Giá bán</th>
-                                                        <th class="tb-col5" scope="col">Trạng thái</th>
+                                                        <th class="tb-col1" scope="col">ID</th>
+                                                        <th class="tb-col2" scope="col">Tên người dùng</th>
+                                                        <th class="tb-col3" scope="col">Email</th>
+                                                        <th class="tb-col4" scope="col">Tiền</th>
+                                                        <th class="tb-col5" scope="col">Doanh thu</th>
                                                         <th class="tb-col6" scope="col">Chức năng</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>`;
                                         resData.data.forEach(items => {
-                                            let viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-scrollable">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
-                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                <div class="create-product-form">
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-name">Tên sản phẩm</label>
-                                                                        <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                        <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-description">Mô tả sản phẩm</label>
-                                                                        <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-price">Giá tiền</label>
-                                                                        <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
-                                                                    </div>
-                                                                    <div class="create-product-form-group">
-                                                                        <label for="product-quantity">Số lượng sản phẩm còn lại</label>
-                                                                        <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Chi tiết sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        ${items.information}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Thông tin sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Liên kết: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                            </div>
+                                            let currencyModal = `<div class="modal fade" id="${items.userid}-CurrentcyModal" tabindex="-1" aria-labelledby="${items.userid}-CurrentcyModalLable" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5" id="${items.userid}-CurrentcyModalLabel">Thay đổi tiền tệ</h1>
+                                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Bán bởi: </h>
+                                                                        <div class="modal-body">
+                                                                        <div class="create-product-form">
+                                                                            <div class="create-product-form-group">
+                                                                                <label for="user-currentcy-${items.userid}">Tiền tệ</label>
+                                                                                <input type="number" id="user-currentcy-${items.userid}" placeholder="Tiền tệ" value="${items.money}">
                                                                             </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/profile/${items.username}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Trạng thái</h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1">${items.status}</p>
+                                                                                <div class="accoutn-auth-group-btn">
+                                                                                <button type="button" onclick="ChanageCurrentcy('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            </div>
-                                                            </div>
-                                                        </div>`;
-                                            document.getElementById("view-product-modal").innerHTML += viewModal;
-                                            let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
-                                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                    <div class="create-product-form">
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-name">Tên sản phẩm</label>
-                                                                            <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                            <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-description">Mô tả sản phẩm</label>
-                                                                            <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${items.productcontent}</textarea>
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-price">Giá tiền</label>
-                                                                            <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
-                                                                        </div>
-                                                                        <div class="create-product-form-group">
-                                                                            <label for="product-quantity">Số lượng sản phẩm còn </label>
-                                                                            <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Chi tiết sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        ${items.information}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center">
-                                                                    <div class="main-right-header-content-center-center-top">
-                                                                        <h3>Thông tin sản phẩm</h3>
-                                                                    </div>
-                                                                    <div class="main-right-header-content-center-center-center">
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Liên kết: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Bán bởi: </h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1"><a href="/profile/${items.username}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="main-right-header-content-center-center-center-items">
-                                                                            <div class="main-right-header-content-center-center-center-items-left">
-                                                                                <h class="overflow-1">Trạng thái</h>
-                                                                            </div>
-                                                                            <div class="main-right-header-content-center-center-center-items-right">
-                                                                                <p class="overflow-1">${items.status}</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="accoutn-auth-group-btn">
-                                                                            <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    </div>
-                                                                </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
                                                             </div>`;
-                                            document.getElementById("edit-product-modal").innerHTML += EditModal;
-                                            HTML += `<tr>
-                                                <td class="tb-col1" scope="row">${count}</td>
-                                                <td class="tb-col2"><a href="/product/${items.productpath}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
-                                                <td class="tb-col3"><a href="/profile/${items.sellerid}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                                <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
-                                                <td class="tb-col5">${items.status}</td>
-                                                <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
-                                            </tr>`;
-                                            count++;
+                                            document.getElementById("currentcy-profile-modal").innerHTML += currencyModal;
+                                            let permissionModal = `<div class="modal fade" id="${items.userid}-PermissionModal" tabindex="-1" aria-labelledby="${items.userid}-PermissionModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5" id="${items.userid}-PermissionModalLabel">Thay đổi quyền hạn</h1>
+                                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="create-product-form">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label="Large select" id="user-permission-${items.userid}">
+                                                                                        <option value="member" ${items.permissionid === "member" ? "selected disabled " : ""}>Người mua</option>
+                                                                                        <option value="seller" ${items.permissionid === "seller" ? "selected disabled" : ""}>Người bán</option>
+                                                                                        <option value="moderator" ${items.permissionid === "moderator" ? "selected disabled" : ""}>Người kiễm duyệt</option>
+                                                                                        <option value="developer" ${items.permissionid === "developer" ? "selected disabled" : ""}>Nhà phát triển</option>
+                                                                                        <option value="admin" ${items.permissionid === "admin" ? "selected disabled" : ""}>Quản trị viên</option>
+                                                                                    </select>
+                                                                                    <div class="form-check form-switch form-check-reverse">
+                                                                                        <input class="form-check-input" type="checkbox" id="verify-${items.userid}" ${items.Verify ? "checked" : ""}>
+                                                                                        <label class="form-check-label" for="verify-${items.userid}">Xác minh</label>
+                                                                                    </div>
+                                                                                    <div class="accoutn-auth-group-btn">
+                                                                                        <button type="button" onclick="ChanagePermission('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`;
+                                                document.getElementById("permission-profile-modal").innerHTML += permissionModal;
+                                                if (items.penalty == null) {
+                                                    let punishModal = `<div class="modal fade" id="${items.userid}-punishModal" tabindex="-1" aria-labelledby="${items.userid}-punishLable" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5" id="${items.userid}-punishLabel">Trừng phạt</h1>
+                                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                <div class="create-product-form">
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-reason-${items.userid}">Lý do</label>
+                                                                                        <input type="text" id="user-punish-reason-${items.userid}" placeholder="Lý do">
+                                                                                    </div>
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-startime-${items.userid}">Thời gian bắt đầu</label>
+                                                                                        <input type="datetime-local" id="user-punish-startime-${items.userid}" placeholder="Thời gian bắt đầ">
+                                                                                    </div>
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-endime-${items.userid}">Thời gian kết thúc</label>
+                                                                                        <input type="datetime-local" id="user-punish-endime-${items.userid}" placeholder="Thời gian kết thúc">
+                                                                                    </div>
+                                                                                    <div class="accoutn-auth-group-btn">
+                                                                                        <button type="button" onclick="ChanagePunish('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`;
+                                                    document.getElementById("punish-profile-modal").innerHTML += punishModal;
+                                                }
+                                                if (items.penalty == null) {
+                                                    HTML += `<tr>
+                                                        <td class="tb-col1" scope="row">${items.userid}</td>
+                                                        <td class="tb-col2"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                        <td class="tb-col3">${items.email}</td>
+                                                        <td class="tb-col4">${items.money.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col5">${items.revenue.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col6"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${items.userid}-CurrentcyModal">Tiền tệ</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#${items.userid}-PermissionModal">Chức vụ</button><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#${items.userid}-punishModal">Trừng phạt</button></td>
+                                                    </tr>`;
+                                                }
+                                                else {
+                                                    HTML += `<tr>
+                                                        <td class="tb-col1" scope="row">${items.userid}</td>
+                                                        <td class="tb-col2"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                        <td class="tb-col3">${items.email}</td>
+                                                        <td class="tb-col4">${items.money.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col5">${items.revenue.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col6"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${items.userid}-CurrentcyModal">Tiền tệ</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#${items.userid}-PermissionModal">Chức vụ</button><button type="button" class="btn btn-danger" onclick="RemovePunish('${items.userid}', '${items.penalty}')">Trừng phạt</button></td>
+                                                    </tr>`;
+                                                }
                                         });
                                         HTML += `</tbody>
                                                     </table>`;
@@ -1620,223 +1560,163 @@
                 const data = {
                     username: username,
                     password: password,
-                    keyword: input,
+                    keyword: input
                 }
-                fetch('/API/searchproductmanagement', {
-                    method: 'POST',                
+                fetch('/API/authenticationpermission', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data),
                     credentials: 'include'
-                  })
-                  .then(res => res.json())
-                  .then(resData => {
-                    if (resData.status) {
-                        document.getElementById("productlist").innerHTML = "";
-                        document.getElementById("view-product-modal").innerHTML = "";
-                        document.getElementById("edit-product-modal").innerHTML = "";
-                        if (resData.data === null) {
-                            document.getElementById("productlist").innerHTML = `<div class="none-items">
-                                <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
-                            </div>`;
-                            return;
+                    })
+                    .then(res => res.json())
+                    .then(resData => {
+                        if (resData.status) {
+                            fetch('/API/searchallaccountdata', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(data),
+                                credentials: 'include'
+                                })
+                                .then(res => res.json())
+                                .then(resData => {
+                                if (resData.status) {
+                                    if (resData.data === null) {
+                                        document.getElementById("productlist").innerHTML = `<div class="none-items">
+                                            <p>Hiện không có bất cứ sản phẩm nào hợp lệ</p>
+                                        </div>`;
+                                        return;
+                                    }
+                                    document.getElementById("currentcy-profile-modal").innerHTML = "";
+                                    document.getElementById("permission-profile-modal").innerHTML = "";
+                                    document.getElementById("punish-profile-modal").innerHTML = "";
+                                    if (resData.data.length > 0) {
+                                        let HTML = `<h3>Sản phẩm</h3>                        
+                                                    <table class="table table-dark">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="tb-col1" scope="col">ID</th>
+                                                        <th class="tb-col2" scope="col">Tên người dùng</th>
+                                                        <th class="tb-col3" scope="col">Email</th>
+                                                        <th class="tb-col4" scope="col">Tiền</th>
+                                                        <th class="tb-col5" scope="col">Doanh thu</th>
+                                                        <th class="tb-col6" scope="col">Chức năng</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>`;
+                                        resData.data.forEach(items => {
+                                            let currencyModal = `<div class="modal fade" id="${items.userid}-CurrentcyModal" tabindex="-1" aria-labelledby="${items.userid}-CurrentcyModalLable" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5" id="${items.userid}-CurrentcyModalLabel">Thay đổi tiền tệ</h1>
+                                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                        <div class="create-product-form">
+                                                                            <div class="create-product-form-group">
+                                                                                <label for="user-currentcy-${items.userid}">Tiền tệ</label>
+                                                                                <input type="number" id="user-currentcy-${items.userid}" placeholder="Tiền tệ" value="${items.money}">
+                                                                            </div>
+                                                                                <div class="accoutn-auth-group-btn">
+                                                                                <button type="button" onclick="ChanageCurrentcy('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>`;
+                                            document.getElementById("currentcy-profile-modal").innerHTML += currencyModal;
+                                            let permissionModal = `<div class="modal fade" id="${items.userid}-PermissionModal" tabindex="-1" aria-labelledby="${items.userid}-PermissionModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5" id="${items.userid}-PermissionModalLabel">Thay đổi quyền hạn</h1>
+                                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="create-product-form">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label="Large select" id="user-permission-${items.userid}">
+                                                                                        <option value="member" ${items.permissionid === "member" ? "selected disabled " : ""}>Người mua</option>
+                                                                                        <option value="seller" ${items.permissionid === "seller" ? "selected disabled" : ""}>Người bán</option>
+                                                                                        <option value="moderator" ${items.permissionid === "moderator" ? "selected disabled" : ""}>Người kiễm duyệt</option>
+                                                                                        <option value="developer" ${items.permissionid === "developer" ? "selected disabled" : ""}>Nhà phát triển</option>
+                                                                                        <option value="admin" ${items.permissionid === "admin" ? "selected disabled" : ""}>Quản trị viên</option>
+                                                                                    </select>
+                                                                                    <div class="form-check form-switch form-check-reverse">
+                                                                                        <input class="form-check-input" type="checkbox" id="verify-${items.userid}" ${items.Verify ? "checked" : ""}>
+                                                                                        <label class="form-check-label" for="verify-${items.userid}">Xác minh</label>
+                                                                                    </div>
+                                                                                    <div class="accoutn-auth-group-btn">
+                                                                                        <button type="button" onclick="ChanagePermission('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`;
+                                                document.getElementById("permission-profile-modal").innerHTML += permissionModal;
+                                                if (items.penalty == null) {
+                                                    let punishModal = `<div class="modal fade" id="${items.userid}-punishModal" tabindex="-1" aria-labelledby="${items.userid}-punishLable" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5" id="${items.userid}-punishLabel">Trừng phạt</h1>
+                                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                <div class="create-product-form">
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-reason-${items.userid}">Lý do</label>
+                                                                                        <input type="text" id="user-punish-reason-${items.userid}" placeholder="Lý do">
+                                                                                    </div>
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-startime-${items.userid}">Thời gian bắt đầu</label>
+                                                                                        <input type="datetime-local" id="user-punish-startime-${items.userid}" placeholder="Thời gian bắt đầ">
+                                                                                    </div>
+                                                                                    <div class="create-product-form-group">
+                                                                                        <label for="user-punish-endime-${items.userid}">Thời gian kết thúc</label>
+                                                                                        <input type="datetime-local" id="user-punish-endime-${items.userid}" placeholder="Thời gian kết thúc">
+                                                                                    </div>
+                                                                                    <div class="accoutn-auth-group-btn">
+                                                                                        <button type="button" onclick="ChanagePunish('${items.userid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>`;
+                                                    document.getElementById("punish-profile-modal").innerHTML += punishModal;
+                                                }
+                                                if (items.penalty == null) {
+                                                    HTML += `<tr>
+                                                        <td class="tb-col1" scope="row">${items.userid}</td>
+                                                        <td class="tb-col2"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                        <td class="tb-col3">${items.email}</td>
+                                                        <td class="tb-col4">${items.money.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col5">${items.revenue.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col6"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${items.userid}-CurrentcyModal">Tiền tệ</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#${items.userid}-PermissionModal">Chức vụ</button><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#${items.userid}-punishModal">Trừng phạt</button></td>
+                                                    </tr>`;
+                                                }
+                                                else {
+                                                    HTML += `<tr>
+                                                        <td class="tb-col1" scope="row">${items.userid}</td>
+                                                        <td class="tb-col2"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
+                                                        <td class="tb-col3">${items.email}</td>
+                                                        <td class="tb-col4">${items.money.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col5">${items.revenue.toLocaleString("de-DE")} đ</td>
+                                                        <td class="tb-col6"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${items.userid}-CurrentcyModal">Tiền tệ</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#${items.userid}-PermissionModal">Chức vụ</button><button type="button" class="btn btn-danger" onclick="RemovePunish('${items.userid}', '${items.penalty}')">Trừng phạt</button></td>
+                                                    </tr>`;
+                                                }
+                                        });
+                                        HTML += `</tbody>
+                                                    </table>`;
+                                        document.getElementById("productlist").innerHTML = HTML;
+                                    }
+                                }
+                            })
                         }
-                        if (resData.data.length > 0) {
-                            let count = 1;
-                            let HTML = `<h3>Sản phẩm</h3>                        
-                                        <table class="table table-dark">
-                                        <thead>
-                                        <tr>
-                                            <th class="tb-col1" scope="col">#</th>
-                                            <th class="tb-col2" scope="col">Tên sản phẩm</th>
-                                            <th class="tb-col3" scope="col">Người bán</th>
-                                            <th class="tb-col4" scope="col">Giá bán</th>
-                                            <th class="tb-col5" scope="col">Trạng thái</th>
-                                            <th class="tb-col6" scope="col">Chức năng</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>`;
-                            resData.data.forEach(items => {
-                                let viewModal = `<div class="modal fade" id="${items.productid}-ViewProductModal" tabindex="-1" aria-labelledby="${items.productid}-ViewProductLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="${items.productid}-ViewProductLabel">Chi tiết sản phẩm</h1>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    <div class="create-product-form">
-                                                        <div class="create-product-form-group">
-                                                            <label for="product-name">Tên sản phẩm</label>
-                                                            <input type="text" id="product-name" placeholder="Tên sản phẩm" value="${items.producttitle}" readonly>
-                                                        </div>
-                                                        <div class="create-product-form-group">
-                                                            <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                            <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}" readonly>
-                                                        </div>
-                                                        <div class="create-product-form-group">
-                                                            <label for="product-description">Mô tả sản phẩm</label>
-                                                            <textarea id="product-description" placeholder="Mô tả sản phẩm" readonly>${items.productcontent}</textarea>
-                                                        </div>
-                                                        <div class="create-product-form-group">
-                                                            <label for="product-price">Giá tiền</label>
-                                                            <input type="text" id="product-price" placeholder="Giá bán sản phẩm" value="${items.price.toLocaleString("de-DE")} đ" readonly>
-                                                        </div>
-                                                        <div class="create-product-form-group">
-                                                            <label for="product-quantity">Số lượng sản phẩm còn lại</label>
-                                                            <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="main-right-header-content-center-center">
-                                                        <div class="main-right-header-content-center-center-top">
-                                                            <h3>Chi tiết sản phẩm</h3>
-                                                        </div>
-                                                        <div class="main-right-header-content-center-center-center">
-                                                            ${items.information}
-                                                        </div>
-                                                    </div>
-                                                    <div class="main-right-header-content-center-center">
-                                                        <div class="main-right-header-content-center-center-top">
-                                                            <h3>Thông tin sản phẩm</h3>
-                                                        </div>
-                                                        <div class="main-right-header-content-center-center-center">
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Liên kết: </h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Bán bởi: </h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1"><a href="/profile/${items.username}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Trạng thái</h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1">${items.status}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                            </div>`;
-                                document.getElementById("view-product-modal").innerHTML += viewModal;
-                                let EditModal = `<div class="modal fade" id="${items.productid}-EditProduct" tabindex="-1" aria-labelledby="${items.productid}-EditProductLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-scrollable">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="${items.productid}-EditProductLabel">Chỉnh sửa sản phẩm</h1>
-                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <div class="create-product-form">
-                                                            <div class="create-product-form-group">
-                                                                <label for="product-name">Tên sản phẩm</label>
-                                                                <input type="text" id="product-name-${items.productid}" placeholder="Tên sản phẩm" value="${items.producttitle}">
-                                                            </div>
-                                                            <div class="create-product-form-group">
-                                                                <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                                                                <input type="text" id="product-sub-title-${items.productid}" placeholder="Mô tả ngắn về sản phẩm" value="${items.productsubtitle}">
-                                                            </div>
-                                                            <div class="create-product-form-group">
-                                                                <label for="product-description">Mô tả sản phẩm</label>
-                                                                <textarea id="product-description-${items.productid}" placeholder="Mô tả sản phẩm">${items.productcontent}</textarea>
-                                                            </div>
-                                                            <div class="create-product-form-group">
-                                                                <label for="product-price">Giá tiền</label>
-                                                                <input type="number" id="product-price-${items.productid}" placeholder="Giá bán sản phẩm" value="${items.price}">
-                                                            </div>
-                                                            <div class="create-product-form-group">
-                                                                <label for="product-quantity">Số lượng sản phẩm còn </label>
-                                                                <input type="number" id="product-quantity-${items.productid}" placeholder="Số lượng sản phẩm còn lại" value="${items.quantity}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="main-right-header-content-center-center">
-                                                        <div class="main-right-header-content-center-center-top">
-                                                            <h3>Chi tiết sản phẩm</h3>
-                                                        </div>
-                                                        <div class="main-right-header-content-center-center-center">
-                                                            ${items.information}
-                                                        </div>
-                                                    </div>
-                                                    <div class="main-right-header-content-center-center">
-                                                        <div class="main-right-header-content-center-center-top">
-                                                            <h3>Thông tin sản phẩm</h3>
-                                                        </div>
-                                                        <div class="main-right-header-content-center-center-center">
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Liên kết: </h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1"><a href="/product/${items.productpath}" target="_blank">Xem tại đây</a></p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Bán bởi: </h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1"><a href="/profile/${items.username}" target="_blank">${items.username} ${items.Verify ? `<i class="fa-solid fa-circle-check verified"></i>` : ""}</a></p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="main-right-header-content-center-center-center-items">
-                                                                <div class="main-right-header-content-center-center-center-items-left">
-                                                                    <h class="overflow-1">Trạng thái</h>
-                                                                </div>
-                                                                <div class="main-right-header-content-center-center-center-items-right">
-                                                                    <p class="overflow-1">${items.status}</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="accoutn-auth-group-btn">
-                                                                <button type="button" onclick="EditProduct(this, '${items.productid}')" class="btn btn-success form-auth-btn">Xác nhận</button>
-                                                            </div>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                </div>`;
-                                document.getElementById("edit-product-modal").innerHTML += EditModal;
-                                HTML += `<tr>
-                                    <td class="tb-col1" scope="row">${count}</td>
-                                    <td class="tb-col2"><a href="/product/${items.productpath}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
-                                    <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                    <td class="tb-col4">${Number(items.price).toLocaleString('de-DE')} đ</td>
-                                    <td class="tb-col5">${items.status}</td>
-                                    <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-EditProduct" class="btn btn-warning">Sửa</button><button type="button" class="btn btn-danger" onclick="DeleteProduct('${items.productid}')">Xóa</button></td>
-                                </tr>`;
-                                count++;
-                            });
-                            HTML += `</tbody>
-                                        </table>`;
-                            document.getElementById("productlist").innerHTML = HTML;
-                        }
-                    }
-                    else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: `${resData.message}`,
-                            background: '#222338',
-                            color: "white",
-                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                          });
-                        return;
-                    }
-                })
+                    })
             }
         }
         else {

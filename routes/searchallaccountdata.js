@@ -14,7 +14,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API get all account data successfully connected to the server");
+  console.log("API search all account data successfully connected to the server");
 });
 
 const routes = express.Router();
@@ -25,7 +25,7 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 
 
 routes.post("/", async (req, res) => {
-    let { username, password } = req.body;
+    let { username, password, keywork } = req.body;
 
     username = await normalizeString(username);
     password = await normalizeString(password);
@@ -41,7 +41,7 @@ routes.post("/", async (req, res) => {
   .then(async response => {
     if (response.data.status) {
       if (Boolean(response.data.permission.acceptaccountmanagement)) {
-          let accountData = await GetAllAccountData();
+          let accountData = await GetAllAccountData(keywork);
           res.status(200).json({ status: true, data: accountData });
       }
       else {
@@ -66,9 +66,9 @@ function normalizeString(str) {
       .replace(/\s+/g, "");
   }
 
-  async function GetAllAccountData() {
+  async function GetAllAccountData(keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT userid, username, email, money, revenue, avatarpath, Verify, createtime, permissionid, bio, penalty FROM Account`, (err, res) => {
+      database.query(`SELECT userid, username, email, money, revenue, avatarpath, Verify, createtime, permissionid, bio, penalty FROM Account WHERE username = '%${keyword}%'`, (err, res) => {
         if (err) {
           reject(err);
         } else {
