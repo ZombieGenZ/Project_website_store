@@ -13,7 +13,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API get product data successfully connected to the server");
+  console.log("API get picture data successfully connected to the server");
 });
 
 const routes = express.Router();
@@ -25,16 +25,17 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 
 routes.post("/", async (req, res) => {
     try {
-      let productData = await GetAllProductData();
-      res.status(200).json({ status: true, data: productData });
-    } catch (e) {
-      res.status(200).json({ status: false, data: null, message: e.toString(), });
+      const buyLogData = await GetPurchaseHistoryData();
+      res.status(200).json({ status: true, data: buyLogData });
+    }
+    catch (e) {
+      res.status(200).json({ status: false, data: null, message: e.toString() });
     }
 });
 
-  async function GetAllProductData() {
+  async function GetPurchaseHistoryData() {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, totalsold, ratingstar, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE status LIKE '<span class="badge text-bg-success">Đã được duyệt</span>'`, (err, res) => {
+      database.query(`SELECT Account.username, Product.producttitle, Product.productpath, PurchaseHistory.totalquantity, PurchaseHistory.totalprice FROM PurchaseHistory JOIN Account ON Account.userid = PurchaseHistory.userid JOIN Product ON Product.productid = PurchaseHistory.productid ORDER BY PurchaseHistory.createtime DESC`, (err, res) => {
         if (err) {
           reject(err);
         } else {

@@ -72,7 +72,7 @@ function normalizeString(str) {
 
   async function GetProductData(userid) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ?`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -88,7 +88,7 @@ function normalizeString(str) {
 
   async function GetAllProductData() {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid`, (err, res) => {
         if (err) {
           reject(err);
         } else {

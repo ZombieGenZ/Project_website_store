@@ -72,7 +72,7 @@ function normalizeString(str) {
 
   async function SearchGetProductData(userid, keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ? AND (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, [userid], (err, res) => {
+      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE sellerid = ? AND (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -88,7 +88,7 @@ function normalizeString(str) {
 
   async function SearchGetAllProductData(keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, (err, res) => {
+      database.query(`SELECT DISTINCT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE (producttitle LIKE "%${keyword}%" OR producttitle LIKE "%${keyword}%" OR productcontent LIKE "%${keyword}%")`, (err, res) => {
         if (err) {
           reject(err);
         } else {

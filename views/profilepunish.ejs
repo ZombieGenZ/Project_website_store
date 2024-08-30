@@ -544,12 +544,12 @@
                         <input type="text" id="forget-email" placeholder="Nhập địa chỉ email của bạn">
                     </div>
                     <div class="accoutn-auth-group-btn">
-                        <button type="button" class="btn btn-success form-auth-btn">Xác nhận</button>
+                        <button type="button" class="btn btn-success form-auth-btn" onclick="forgetPassword()">Xác nhận</button>
                     </div>
                 </div>
               </div>
             </div>
-          </div>  
+          </div>   
     </div>
     <div class="main">
         <div class="main-left">
@@ -902,7 +902,75 @@
                 }
             })
         }
+    }
+    function forgetPassword() {
+        const input = document.getElementById("forget-email").value;
+
+        if (input !== "" && input !== undefined && input !== null) {
+            const isEmail = checkEmail(input);
+            if (isEmail) {
+				const data = {
+					email: input
+				}
+				fetch('/API/createotp', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+				  .then(res => res.json())
+				  .then(resData => {
+                    if (resData.status) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Chúc mừng",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white"
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.backdrop) {
+                              location.reload();
+                            }
+                            else {
+                                location.reload();
+                            }
+                          });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white",
+                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                        });
+                    }
+				  })
+             }
+             else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Email không đúng định dạn`,
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                });
+             }
         }
+        else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Vui lòng điền đầy đủ thông tin`,
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+            });
+        }
+    }
     function checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);

@@ -765,134 +765,12 @@
                         <input type="text" id="forget-email" placeholder="Nhập địa chỉ email của bạn">
                     </div>
                     <div class="accoutn-auth-group-btn">
-                        <button type="button" class="btn btn-success form-auth-btn">Xác nhận</button>
+                        <button type="button" class="btn btn-success form-auth-btn" onclick="forgetPassword()">Xác nhận</button>
                     </div>
                 </div>
               </div>
             </div>
           </div>  
-          <div class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="createProductLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="createProductLabel">Tạo sản phẩm</h1>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="create-product-form">
-                    <div class="alert-create-product">
-                        <p>Lưu ý: Hãy xem kỹ mọi thông tin trước khi xác nhận vì khi bạn xác nhận và gửi sản phẩm đến quản trị viên bạn sẽ không thể tự thay đổi một số thông tin nhất định</p>
-                    </div>
-                    <div class="create-product-form-group">
-                        <label for="product-name">Tên sản phẩm</label>
-                        <input type="text" id="product-name" placeholder="Tên sản phẩm">
-                    </div>
-                    <div class="create-product-form-group">
-                        <label for="product-sub-title">Mô tả ngắn về sản phẩm</label>
-                        <input type="text" id="product-sub-title" placeholder="Mô tả ngắn về sản phẩm">
-                    </div>
-                    <div class="create-product-form-group">
-                        <label for="product-description">Mô tả sản phẩm</label>
-                        <textarea id="product-description" placeholder="Mô tả sản phẩm"></textarea>
-                    </div>
-                    <div class="accordion" id="suggest">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Các cách bài trí đặt biệt (chỉ áp dụng cho phần mô tả)
-                              </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <p>[header] {text} [/header]: <h4>để làm tiêu đề</h4></p>
-                                    <p>[subheader] {text} [/subheader]: <h5>để làm tiêu đề nhỏ</h5></p>
-                                    <p>[list] {text} [/list]: <li>để làm danh sách</li></p>
-                                    <p>[red] {text} [/red]: <p class="red">để làm chử màu đỏ</p></p>
-                                    <p>[green] {text} [/green]: <p class="green">để làm chử màu đỏ</p></p>
-                                    <p>[blue] {text} [/blue]: <p class="blue">để làm chử màu đỏ</p></p>
-                                    <p>[aqua] {text} [/aqua]: <p class="aqua">để làm chử màu đỏ</p></p>
-                                    <p>[pink] {text} [/pink]: <p class="pink">để làm chử màu đỏ</p></p>
-                                    <p>[yellow] {text} [/yellow]: <p class="yellow">để làm chử màu đỏ</p></p>
-                                    <p>[black] {text} [/black]: <p class="black">để làm chử màu đỏ</p></p>
-                                    <p>Bạn cũng có thể kết hợp nhiều thẻ lại với nhau để tạo hiệu ứng mình thích</p>
-                                    <p>ví dụ: [aqua][subheader]Product[/subheader][/aqua] <p class="aqua"><h4>Product</h4></p></p>
-                                  </div>
-                          </div>
-                      </div>
-                    <div class="create-product-form-group">
-                        <label for="product-price">Giá tiền</label>
-                        <input type="number" id="product-price" placeholder="Giá bán sản phẩm">
-                    </div>
-                    <div class="create-product-form-group">
-                        <label for="product-quantity">Số lượng sản phẩm còn </label>
-                        <input type="number" id="product-quantity" placeholder="Số lượng sản phẩm còn lại">
-                    </div>
-                  </div>
-                  <h5 class="overflow-1">Thông tin chi tiết về sản phẩm</h5>
-                  <div class="create-product-form-group-information">
-                        <div class="create-product-form-group-information-group" id="information-group">
-                            <div class="create-product-form-group-information-group-items">
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Thông tin</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Thông tin" class="information-title">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Giá trị</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Giá tri" class="information-value">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <button id="information-delete" onclick="deleteFiedInformation(this)">Xóa</button>
-                                </div>
-                            </div>
-                            <div class="create-product-form-group-information-group-items">
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Thông tin</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Thông tin" class="information-title">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Giá trị</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Giá tri" class="information-value">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <button id="information-delete" onclick="deleteFiedInformation(this)">Xóa</button>
-                                </div>
-                            </div>
-                            <div class="create-product-form-group-information-group-items">
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Thông tin</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Thông tin" class="information-title">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <label for="">Giá trị</label>
-                                    <input type="text" style="border: 1px solid red;" onchange="chanageFied(this)" placeholder="Giá tri" class="information-value">
-                                </div>
-                                <div class="create-product-form-group-information-group-items-items">
-                                    <button id="information-delete" onclick="deleteFiedInformation(this)">Xóa</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="create-product-form-group-information-create">
-                            <button type="button" class="btn btn-primary" onclick="addfied()">Thêm thông tin</button>
-                        </div>
-                  </div>
-                  <div class="create-product-form-group">
-                    <label for="product-icon" class="custom_fileinput">Ảnh đại diện</label>
-                    <input type="file" id="product-icon" accept=".jpg, .png" placeholder="Ảnh đại diện">
-                    <div class="input-file-upload" id="file-list_icon"></div>
-                </div>
-                <div class="create-product-form-group">
-                    <label for="product-picture" class="custom_fileinput">Ảnh giới thiệu về sản phẩm</label>
-                    <input type="file" id="product-picture" accept=".jpg, .png" placeholder="Ảnh giới thiệu về sản phẩm" multiple>
-                    <div class="input-file-upload" id="file-list_picture"></div>
-                </div>
-                  <div class="accoutn-auth-group-btn">
-                    <button type="button" onclick="CreateProduct()" class="btn btn-success form-auth-btn">Xác nhận</button>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
     </div>
     <div class="currentcy-profile-modal" id="currentcy-profile-modal"></div>
     <div class="permission-profile-modal" id="permission-profile-modal"></div>
@@ -1023,6 +901,296 @@
           </div>
     </div>
     <script>
+        async function RegisterAccount() {
+            let username = document.getElementById("register-username").value;
+            let email = document.getElementById("register-email").value;
+            let password = document.getElementById("register-password").value;
+            let comfirmpassword = document.getElementById("register-comfirmpassword").value;
+    
+            username = normalizeString(username);
+            email = normalizeString_Email(email);
+            password = normalizeString(password);
+            comfirmpassword = normalizeString(comfirmpassword);
+    
+            if (username === "" || email === "" || password === "" || comfirmpassword === "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Bạn cần điền đầy đủ thông tin để tiếp tục",
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                    });
+                return;
+            }
+            else {
+                    if (username.length < 4 || username.length > 20) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Tên người dùng chỉ có thể dài từ 4 đến 20 ký tự",
+                            background: '#222338',
+                            color: "white",
+                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                          });
+                        return;
+                    }
+                    else {
+                        const accpetUsername = checkAlphanumeric(username);
+                        if (accpetUsername === false) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Tên người dùng không đựa chứa các ký tự đặt biệt",
+                                background: '#222338',
+                                color: "white",
+                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                              });
+                            return;
+                        }
+                        else {
+                            const isEmail = checkEmail(email);
+                            if (!isEmail) {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Email không hợp lệ",
+                                    background: '#222338',
+                                    color: "white",
+                                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                  });
+                                return;
+                            }
+                            else {
+                                if (password !== comfirmpassword) {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "Hai mật khẩu không trùng khớp",
+                                        background: '#222338',
+                                        color: "white",
+                                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                      });
+                                    return;
+                                }
+                                else {
+                                    if (password.length < 8 || password.length > 50) {
+                                        Swal.fire({
+                                            icon: "error",
+                                            title: "Oops...",
+                                            text: "Mật khẩu chỉ có thể dài 8 đến 50 ký tự",
+                                            background: '#222338',
+                                            color: "white",
+                                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                          });
+                                        return;
+                                    }
+                                    else {
+                                        const data = {
+                                            username: username,
+                                            email: email,
+                                            password: password,
+                                            comfirmpassword: comfirmpassword
+                                        }
+                                        fetch('/API/register', {
+                                            method: 'POST',
+                                            headers: {
+                                              'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify(data),
+                                            credentials: 'include'
+                                          })
+                                          .then(res => res.json())
+                                          .then(resData => {
+                                            if (resData.status) {
+                                                localStorage.setItem("username", resData.username);
+                                                localStorage.setItem("password", resData.password);
+                                                Swal.fire({
+                                                    icon: "success",
+                                                    title: "Chúc mừng",
+                                                    text: `${resData.message}`,
+                                                    background: '#222338',
+                                                    color: "white"
+                                                }).then((result) => {
+                                                    if (result.dismiss === Swal.DismissReason.backdrop) {
+                                                      location.reload();
+                                                    }
+                                                    else {
+                                                        location.reload();
+                                                    }
+                                                  });;
+                                            } else {
+                                                Swal.fire({
+                                                    icon: "error",
+                                                    title: "Oops...",
+                                                    text: `${resData.message}`,
+                                                    background: '#222338',
+                                                    color: "white",
+                                                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                                });
+                                            }
+                                          })
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+        function LoginAccount(){
+            let username = document.getElementById("login-username").value;
+            let password = document.getElementById("login-password").value;
+    
+            username = normalizeString(username);
+            password = normalizeString(password);
+    
+            if (username === "" || password === "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Vui lòng điền đầy đủ thông tin",
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                  });
+                return;
+            }
+            else {
+                const data = {
+                    username: username,
+                    password: password
+                }
+                fetch('/API/authentication', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+                  .then(res => res.json())
+                  .then(resData => {
+                    if (resData.status) {
+                        localStorage.setItem("username", resData.user.username);
+                        localStorage.setItem("password", resData.user.password);
+                        Swal.fire({
+                            icon: "success",
+                            title: "Chúc mừng",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white"
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.backdrop) {
+                              location.reload();
+                            }
+                            else {
+                                location.reload();
+                            }
+                          });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white",
+                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                        });
+                    }
+                })
+            }
+        }
+        function forgetPassword() {
+            const input = document.getElementById("forget-email").value;
+    
+            if (input !== "" && input !== undefined && input !== null) {
+                const isEmail = checkEmail(input);
+                if (isEmail) {
+                    const data = {
+                        email: input
+                    }
+                    fetch('/API/createotp', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                        credentials: 'include'
+                      })
+                      .then(res => res.json())
+                      .then(resData => {
+                        if (resData.status) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Chúc mừng",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white"
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.backdrop) {
+                                  location.reload();
+                                }
+                                else {
+                                    location.reload();
+                                }
+                              });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: `${resData.message}`,
+                                background: '#222338',
+                                color: "white",
+                                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                            });
+                        }
+                      })
+                 }
+                 else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Email không đúng định dạn`,
+                        background: '#222338',
+                        color: "white",
+                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                    });
+                 }
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Vui lòng điền đầy đủ thông tin`,
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                });
+            }
+        }
+        function checkEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        function checkAlphanumeric(str) {
+            const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+            return alphanumericRegex.test(str);
+        }
+        function normalizeString(str) {
+            return String(str)
+                .trim()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "");
+            }
+        function normalizeString_Email(str) {
+            return String(str)
+                .trim()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "")
+                .toLowerCase();
+        }
         function LoadFunction() {
             const username = localStorage.getItem("username");
             const password = localStorage.getItem("password");

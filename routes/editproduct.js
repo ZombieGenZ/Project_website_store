@@ -51,7 +51,7 @@ routes.post("/", async (req, res) => {
   .then(async response => {
     if (response.data.status) {
       if (response.data.permission.acceptproductmanagement || response.data.permission.acceptproductmanagementall) {
-        if (productname === "" || productsubtitle === "" || productdescription === "" || productprice === ""  || productquantity === "") {
+        if (productid == "" || productname === "" || productsubtitle === "" || productdescription === "" || productprice === ""  || productquantity === "") {
           res.status(200).json({ status: false, message: "Bạn cần điền đầy đủ thông tin" });
           return;
         }
@@ -70,7 +70,6 @@ routes.post("/", async (req, res) => {
                   let productpath = "";
                   const productData = await GetProducteData(productid);
                   productpath = await productname !== productData.producttitle ? await removeDiacritics(productname.replace(" ", "-") + "-" + String(Math.round(Math.random() * 1e9))) : "";
-                  console.log(productpath);
                   let productdescriptionHTML = await parseMarkup(productdescription);
                   if (productpath !== "") {
                     const success = await EditProduct(productid, productname, productsubtitle, productdescriptionHTML, productprice, productquantity, productpath);

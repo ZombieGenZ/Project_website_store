@@ -47,32 +47,37 @@ routes.post("/", async (req, res) => {
                     let success = false;
                     responseProduct.data.data.forEach(async items => {
                         if(items.productid == productid) {
-                          const totalPrice = (quantity * items.price);
-                          if (responseUser.data.money >= totalPrice) {
-                            if ((items.quantity - quantity) >= 0) {
-                              const VAT = 15 / 100; // 15%
-                              const totalRevenue = totalPrice - (totalPrice * VAT);
-                              const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
-                              const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
-                              const success_updateproduct = await UpdateProductData(productid, quantity);
-                              const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
-                              await SendEmail(responseUser.data.email, quantity, items.producttitle, totalPrice)
-                              if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
-                                res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
-                                return;
+                          if (items.discount !== 0 && (items.discountcount - quantity) >= 0) {
+                            const totalPrice = (items.price - ((items.price / 100) * items.discount)) * quantity;
+                            if (responseUser.data.money >= totalPrice) {
+                              if ((items.quantity - quantity) >= 0) {
+                                const TAX = 15 / 100; // 15%
+                                const totalRevenue = totalPrice - (totalPrice * TAX);
+                                const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
+                                const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
+                                const success_updateproduct = await UpdateProductData(productid, quantity);
+                                const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
+                                await SendEmail(responseUser.data.email, quantity, items.producttitle, totalPrice)
+                                if (success && success_updatemoney && success_updateproduct && success_updaterevenue) {
+                                  res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
+                                  return;
+                                }
+                                else {
+                                  res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
+                                  return;
+                                }
                               }
                               else {
-                                res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
-                                return;
+                                res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
                               }
                             }
                             else {
-                              res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
+                              res.status(200).json({ status: false, message: "Số dư không đủ" });
+                              return;
                             }
                           }
                           else {
-                            res.status(200).json({ status: false, message: "Số dư không đủ" });
-                            return;
+                            res.status(200).json({ status: false, message: "Số lượng sản phẩm giảm giá không đủ" });
                           }
                         }
                     });
@@ -126,8 +131,8 @@ async function CreatePurchaseHistory(userid, productid, totalprice, totalquantit
 
 async function UpdateProductData(productid, quantity) {
   try {
-    const result = await database.query(`UPDATE Product SET quantity = quantity - ?, totalsold = totalsold + ? WHERE productid = ?`, 
-      [quantity, quantity, productid]);
+    const result = await database.query(`UPDATE Product SET quantity = quantity - ?, totalsold = totalsold + ?, discountcount = discountcount - ? WHERE productid = ?`, 
+      [quantity, quantity, quantity, productid]);
       return true;
   }
   catch (e) {
@@ -161,36 +166,38 @@ async function UpdateUserRevenue(total, userid) {
 async function SendEmail(email, productquantity, productname, productprice) {
   try {
     let text = `HÓA ĐƠN\n==============================\n\nTên | Giá\n------------------------------\nx${productquantity} ${productname} | ${productprice.toLocaleString('de-DE')} VND\n------------------------------\nTỔNG TIỀN: 300.000 VND\n\n==============================\n\nXin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ:\nEmail: galaxyvirusteam@hotmail.com | SĐT: 0783504540\n`;
-    let HTML = `<div style="text-align: center; padding: 20px 0;">
-                      <h1 style="margin: 0; font-size: 24px; font-weight: bold; color: #5c115c;">HÓA ĐƠN</h1>
+    let HTML = `<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                  <div style="background-color: #4a154b; color: #ffffff; text-align: center; padding: 20px;">
+                      <h1 style="margin: 0; font-size: 28px; letter-spacing: 2px;">HÓA ĐƠN</h1>
                   </div>
-
-                  <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 10px;">
+                  <div style="padding: 20px;">
                       <table style="width: 100%; border-collapse: collapse;">
                           <thead>
                               <tr>
-                                  <th style="text-align: left; padding: 10px; border-bottom: 2px solid #dddddd; color: #5c115c;">Sản phẩm</th>
-                                  <th style="text-align: right; padding: 10px; border-bottom: 2px solid #dddddd; color: #5c115c;">Giá</th>
+                                  <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; background-color: #f5f5f5; font-weight: bold; color: #4a154b;">Sản phẩm</th>
+                                  <th style="padding: 12px; text-align: right; border-bottom: 1px solid #e0e0e0; background-color: #f5f5f5; font-weight: bold; color: #4a154b;">Giá</th>
                               </tr>
                           </thead>
                           <tbody>
                               <tr>
-                                  <td style="padding: 10px; border-bottom: 1px solid #dddddd; color: #5c115c;">x${productquantity} ${productname}</td>
-                                  <td style="padding: 10px; text-align: right; border-bottom: 1px solid #dddddd; color: #5c115c;">${productprice.toLocaleString('de-DE')} VND</td>
+                                  <td style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">x${productquantity} ${productname}</td>
+                                  <td style="padding: 12px; text-align: right; border-bottom: 1px solid #e0e0e0;">${productprice.toLocaleString('de-DE')} VND</td>
                               </tr>
                           </tbody>
                       </table>
+                      <div style="text-align: right; font-weight: bold; font-size: 18px; color: #4a154b; margin-top: 20px;">
+                          TỔNG TIỀN: ${productprice.toLocaleString('de-DE')} VND
+                      </div>
                   </div>
-
-                  <div style="text-align: center; padding: 20px 0;">
-                      <h2 style="margin: 0; font-size: 20px; font-weight: bold; color: #5c115c;">TỔNG TIỀN: ${productprice.toLocaleString('de-DE')} VND</h2>
+                  <div style="background-color: #f5f5f5; text-align: center; padding: 15px; font-size: 14px; color: #666;">
+                      <p style="margin: 5px 0;">Xin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!</p>
+                      <p style="margin: 5px 0;">Nếu quý khách hàng có bất kỳ câu hỏi nào, xin vui lòng liên hệ:</p>
+                      <p style="margin: 5px 0;">
+                          Email: <a href="mailto:galaxyvirusteam@hotmail.com" style="color: #4a154b; text-decoration: none;">galaxyvirusteam@hotmail.com</a> | 
+                          SĐT: <a href="tel:0783504540" style="color: #4a154b; text-decoration: none;">0783504540</a>
+                      </p>
                   </div>
-
-                  <div style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background-color: #ffffff; border-radius: 10px;">
-                      <p style="margin: 0; color: #5c115c;">Xin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!</p>
-                      <p style="margin: 0; color: #5c115c;">Nếu quý khách hàng có bất kỳ câu hỏi nào, xin vui lòng liên hệ:</p>
-                      <p style="margin: 0; color: #5c115c;">Email: galaxyvirusteam@hotmail.com | SĐT: 0783504540</p>
-                  </div>`;
+              </div>`;
     axios.post('http://localhost:3000/API/sendemail', {
       to: email,
       subject: `Hóa đơn giao dịch khi mua sản phẩm ${productname}`,

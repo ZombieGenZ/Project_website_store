@@ -55,7 +55,7 @@ routes.post("/", async (req, res) => {
 
   async function GetCartData(userid) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT cartid, userid, Cart.productid, producttitle, price, productpath FROM Cart JOIN Product ON Product.productid = Cart.productid WHERE userid = ?`, [userid], (err, res) => {
+      database.query(`SELECT cartid, userid, Cart.productid, producttitle, price, productpath, discount FROM Cart JOIN Product ON Product.productid = Cart.productid WHERE userid = ?`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {

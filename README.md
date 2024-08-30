@@ -53,3 +53,7 @@ Dạn cho điện thoại
 **Email hóa đơn**
 ---
 ![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/email.png)
+---
+**Cơ sở dử liệu**
+---
+![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/database.png)

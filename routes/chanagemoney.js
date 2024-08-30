@@ -14,7 +14,7 @@ const database = mysql.createConnection({
 
 database.connect((err) => {
   if (err) throw err;
-  console.log("API chanaga username successfully connected to the server");
+  console.log("API chanaga money successfully connected to the server");
 });
 
 const routes = express.Router();

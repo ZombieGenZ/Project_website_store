@@ -127,6 +127,36 @@ app.get("/accountmanagement", (req, res) => {
     res.status(200);
     res.render("accountpanagement");
 });
+app.get("/forgetpassword/chanagepassword/:id", (req, res) => {
+    res.status(200);
+    axios.post('http://localhost:3000/API/getotpdata')
+    .then(async response => {
+      if (response.data.status) {
+        if (response.data.data !== null) {
+            let success = false;
+            response.data.data.forEach(items => {
+                if(items.otpcode == req.params.id) {
+                    success = true;
+                    res.render("forgetpassword", { OTP: items.otpcode });
+                }
+            });
+            if (!success) {
+                res.render("404notfound");
+            }
+        }
+        else {
+            res.render("404notfound");
+        }
+      }
+      else {
+          res.render("404notfound");
+      }
+    })
+    .catch(e => {
+      console.error(e);
+      res.render("404notfound");
+    });
+});
 
 const registerAPIRoutes = require("./routes/register");
 const authenticationAccountAPIRoutes = require("./routes/authentication");
@@ -171,6 +201,11 @@ const createPenaltyAPIRoutes = require("./routes/createpenalty");
 const deletePenaltyAPIRoutes = require("./routes/deletepenalty");
 const sendEmailAPIRoutes = require("./routes/sendemail");
 const searchAllAccountDataAPIRoutes = require("./routes/searchallaccountdata");
+const createOTPAPIRoutes = require("./routes/createotp");
+const getOTPDataOTPAPIRoutes = require("./routes/getotpdata");
+const chanagePasswordOTPAPIRoutes = require("./routes/chanagepasswordotp");
+const getBuyLogAPIRoutes = require("./routes/getbuylog");
+const editProductDiscountAPIRoutes = require("./routes/editproductdiscount");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -215,6 +250,11 @@ app.use('/API/createpenalty', createPenaltyAPIRoutes);
 app.use('/API/deletepenalty', deletePenaltyAPIRoutes);
 app.use('/API/sendemail', sendEmailAPIRoutes);
 app.use('/API/searchallaccountdata', searchAllAccountDataAPIRoutes);
+app.use('/API/createotp', createOTPAPIRoutes);
+app.use('/API/getotpdata', getOTPDataOTPAPIRoutes);
+app.use('/API/chanagepasswordotp', chanagePasswordOTPAPIRoutes);
+app.use('/API/getbuylog', getBuyLogAPIRoutes);
+app.use('/API/editproductdiscount', editProductDiscountAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");

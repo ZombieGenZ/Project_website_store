@@ -325,7 +325,7 @@
         .main-right-header-content-center {
             grid-column: 2;
             display: grid;
-            grid-template-rows: 80px minmax(0px, 50px) auto;
+            grid-template-rows: 40px 80px minmax(0px, 50px) auto;
         }
         .main-right-header-content-center-top {
             background-color: var(--prominentColor);
@@ -368,6 +368,7 @@
             grid-template-rows: 1fr 1fr;
             transition: 0.3s;
             gap: 10px;
+            position: relative;
         }
         .main-right-header-content-center-bottom-items:hover {
             box-shadow: 0 0 20px #46497b;
@@ -399,6 +400,7 @@
             font-size: 0.8em;
             text-decoration: line-through;
         }
+
         @media (max-width: 600px) {
             .main-right-header-content-center-top {
                 background-color: var(--prominentColor);
@@ -419,6 +421,16 @@
             display: grid;
             place-content: center;
             background-color: var(--prominentColor);
+        }
+        .main-right-header-content-center-buylog {
+            background-color: var(--prominentColor);
+            display: flex;
+            padding: 8px;
+            justify-content: center;
+        }
+        .main-right-header-content-center-buylog a {
+            color: orangered;
+            text-decoration: none;
         }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
@@ -502,7 +514,7 @@
                         <input type="text" id="forget-email" placeholder="Nhập địa chỉ email của bạn">
                     </div>
                     <div class="accoutn-auth-group-btn">
-                        <button type="button" class="btn btn-success form-auth-btn">Xác nhận</button>
+                        <button type="button" class="btn btn-success form-auth-btn" onclick="forgetPassword()">Xác nhận</button>
                     </div>
                 </div>
               </div>
@@ -571,6 +583,9 @@
             </div>
             <div class="main-right-header-content">
                 <div class="main-right-header-content-center">
+                    <div class="main-right-header-content-center-buylog" id="buylog">
+                        <span class="placeholder col-11"></span>
+                    </div>
                     <div class="main-right-header-content-center-top">
                         <div class="main-right-header-content-center-top-left"></div>
                         <div class="main-right-header-content-center-top-right">
@@ -989,7 +1004,75 @@
                 }
             })
         }
+    }
+    function forgetPassword() {
+        const input = document.getElementById("forget-email").value;
+
+        if (input !== "" && input !== undefined && input !== null) {
+            const isEmail = checkEmail(input);
+            if (isEmail) {
+				const data = {
+					email: input
+				}
+				fetch('/API/createotp', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                  })
+				  .then(res => res.json())
+				  .then(resData => {
+                    if (resData.status) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Chúc mừng",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white"
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.backdrop) {
+                              location.reload();
+                            }
+                            else {
+                                location.reload();
+                            }
+                          });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white",
+                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                        });
+                    }
+				  })
+             }
+             else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Email không đúng định dạn`,
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                });
+             }
         }
+        else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Vui lòng điền đầy đủ thông tin`,
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+            });
+        }
+    }
     function checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -1200,8 +1283,9 @@
                                                                   <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
                                                                   <a href="/profile/${items.username}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
                                                                   <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
-                                                                  <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
+                                                                  <h5 class="overflow-1">${items.discount !== 0 ? `<span>${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</span> <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span>` : `<span>${items.price.toLocaleString("de-DE")} đ</span>`}</h5>
                                                               </div>
+                                                              ${items.discount !== 0 ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Giảm ${items.discount}%<span class="visually-hidden">unread messages</span></span>` : ""}
                                                           </div>`;
               });
           });
@@ -1422,16 +1506,17 @@
                       let iconPath = items.producticonpath.replace("public\\", "/").replace("\\", "/");
                       let starIcon = await calculateStars(items.ratingstar);
                       document.getElementById("storelist").innerHTML += `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                                                                  <div class="main-right-header-content-center-bottom-items-top">
-                                                                      <img src="${iconPath}" alt="">
-                                                                  </div>
-                                                                  <div class="main-right-header-content-center-bottom-items-bottom">
-                                                                      <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
-                                                                      <a href="/profile/${items.username}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
-                                                                      <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
-                                                                      <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
-                                                                  </div>
-                                                              </div>`;
+                                                                            <div class="main-right-header-content-center-bottom-items-top">
+                                                                                <img src="${iconPath}" alt="">
+                                                                            </div>
+                                                                            <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                                <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
+                                                                                <a href="/profile/${items.username}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
+                                                                                <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
+                                                                                <h5 class="overflow-1">${items.discount !== 0 ? `<span>${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</span> <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span>` : `<span>${items.price.toLocaleString("de-DE")} đ</span>`}</h5>
+                                                                            </div>
+                                                                            ${items.discount !== 0 ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Giảm ${items.discount}%<span class="visually-hidden">unread messages</span></span>` : ""}
+                                                                        </div>`;
                   });
               });
         }
@@ -1628,20 +1713,42 @@
                       let iconPath = items.producticonpath.replace("public\\", "/").replace("\\", "/");
                       let starIcon = await calculateStars(items.ratingstar);
                       document.getElementById("storelist").innerHTML += `<div class="main-right-header-content-center-bottom-items" aria-hidden="true">
-                                                                  <div class="main-right-header-content-center-bottom-items-top">
-                                                                      <img src="${iconPath}" alt="">
-                                                                  </div>
-                                                                  <div class="main-right-header-content-center-bottom-items-bottom">
-                                                                      <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
-                                                                      <a href="/profile/${items.username}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
-                                                                      <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
-                                                                      <h5 class="overflow-1"><span>${items.price.toLocaleString("de-DE")} đ</span></h5>
-                                                                  </div>
-                                                              </div>`;
+                                                                            <div class="main-right-header-content-center-bottom-items-top">
+                                                                                <img src="${iconPath}" alt="">
+                                                                            </div>
+                                                                            <div class="main-right-header-content-center-bottom-items-bottom">
+                                                                                <a href="/product/${items.productpath}" class="overflow-2"><h4>${items.producttitle}</h4></a>
+                                                                                <a href="/profile/${items.username}" class="overflow-1">${items.username} ${items.Verify ? '<i class="fa-solid fa-circle-check verified">' : ""}</i></a>
+                                                                                <p>${items.ratingstar.toFixed(1)} ${starIcon} (Đã bán ${items.totalsold})</p>
+                                                                                <h5 class="overflow-1">${items.discount !== 0 ? `<span>${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</span> <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span>` : `<span>${items.price.toLocaleString("de-DE")} đ</span>`}</h5>
+                                                                            </div>
+                                                                            ${items.discount !== 0 ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Giảm ${items.discount}%<span class="visually-hidden">unread messages</span></span>` : ""}
+                                                                        </div>`;
                   });
               });
         }
     }
+    function LoadBuyLog() {
+        fetch('/API/getbuylog', {
+            method: 'POST',
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .then(resData => {
+              document.getElementById("buylog").innerHTML = "";
+              if (resData.status) {
+                  if (resData.data !== null) {
+                      let HTML = `<marquee class="marquee" behavior="scroll" direction="left">`;
+                          resData.data.forEach(items => { 
+                              HTML += `<b><a href="/profile/${items.username}">${items.username}</a></b> đã mua <b>x${items.totalquantity} <a href="/product/${items.productpath}">${items.producttitle}</a></b> với giá <b>${items.totalprice.toLocaleString("de-DE")}đ</b> `;
+                            });
+                        HTML += `</marquee>`
+                        document.getElementById("buylog").innerHTML = HTML;
+                }
+            }
+          })
+    }
+    LoadBuyLog();
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
