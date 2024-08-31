@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const axios = require("axios");
 const cors = require('cors');
 const fs = require('fs');
+const config = require('./config');
 
 const database = mysql.createConnection({
   host: "localhost",

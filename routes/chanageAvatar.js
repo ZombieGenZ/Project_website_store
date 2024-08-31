@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const multer = require("multer");
 const fs = require('fs');
+const config = require('./config');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

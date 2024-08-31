@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const axios = require("axios");
 const cors = require('cors');
+const config = require('./config');
 
 const database = mysql.createConnection({
     host: "localhost",

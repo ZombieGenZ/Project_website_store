@@ -7,6 +7,7 @@ const path = require('path');
 const multer = require("multer");
 const { v4 } = require('uuid');
 const crypto = require('crypto');
+const config = require('./config');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const cors = require('cors');
 const cron = require('node-cron');
+const config = require('./config');
 
 const database = mysql.createConnection({
   host: "localhost",
