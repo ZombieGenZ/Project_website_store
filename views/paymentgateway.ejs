@@ -3,6 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const username = localStorage.getItem("username");
+        const password = localStorage.getItem("password");
+        if (username !== undefined && username !== null && password !== undefined && password !== null) {
+            const data = {
+                username: username,
+                password: password,
+            }
+            fetch('/API/authenticationpermission', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include'
+              })
+              .then(res => res.json())
+              .then(resData => {
+                    if (!resData.status) {
+                        location.href = "/";
+                    }
+                })
+            }
+            else {
+                location.href = "/";
+            }
+    </script>
     <style>
         :root {
             --brightColor: #1b1c30;
@@ -323,130 +350,204 @@
             grid-template-columns: minmax(0px, auto) minmax(auto, 1200px) minmax(0px, auto);
         }
         .main-right-header-content-center {
-            padding: 10px;
             grid-column: 2;
             display: grid;
-            grid-template-columns: minmax(auto, 200px) minmax(200px, auto);
-            background-color: var(--prominentColor);
-            padding: 30px;
-            column-gap: 20px;
-            display: grid;
-        }
-        .main-right-header-content-center-left {
-            display: grid;
-            grid-template-rows: 200px;
-            row-gap: 20px;
-        }
-        .main-right-header-content-center-left-top {
-            display: flex;
-            justify-content: center;
-        }
-        .main-right-header-content-center-left-top img {
-            max-width: 200px;
-            min-width: 200px;
-            max-height: 200px;
-            min-height: 200px;
-        }
-        .main-right-header-content-center-left-bottom {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .username-left {
-            display: none !important;
-        }
-        .main-right-header-content-center-right {
-            display: grid;
-            grid-template-rows: minmax(30px, 30px) minmax(0px, 50px) minmax(50px, auto);
-            row-gap: 10px;
-        }
-        .main-right-header-content-center-right-center {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            grid-auto-rows: 65px;
-            gap: 5px;
-        }
-        .main-right-header-content-center-right-center-items {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            row-gap: 5px;
-            text-align: center;
-            padding: 5px;
-        }
-        @media (max-width: 600px) {
-            .main-right-header-content-center {
-                padding: 10px;
-                grid-column: 2;
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-template-rows: minmax(auto, 220px) minmax(200px, auto);
-                background-color: var(--prominentColor);
-                padding: 30px;
-                column-gap: 20px;
-                display: grid;
-            }
-            .username-left {
-                display: block !important;
-            }
-            .username-right {
-                display: none !important;
-            }
-            .main-right-header-content-center-right {
-                display: grid;
-                grid-template-rows: 40px minmax(0px, 50px) minmax(50px, auto);
-                row-gap: 10px;
-            }
-            .main-right-header-content-center-right-center {
-                display: grid;
-                grid-template-columns: 1fr;
-                grid-auto-rows: 65px;
-                gap: 5px;
-            }
-            .main-right-header-content-center-right-top {
-                display: grid;
-                place-content: center;
-            }
-        }
-        @media (max-width: 320px) {
-            .main-right-header-content-center-left-top img {
-                max-width: 150px;
-                min-width: 100px;
-                max-height: 150px;
-                min-height: 100px;
-            }
-            .main-right-header-content-center-left-top {
-                display: grid;
-                place-content: center;
-            }
-        }
-        .chanageInformationGUI {
-            color: white;
-        }
-        .accordion-item {
-            background-color: var(--prominentColor) !important;
-            color: white !important;
+            grid-template-rows: 75px auto;
         }
         .accordion-button {
             color: white !important;
-            background-color: var(--brightColor) !important;
-        }
-        .avatar-group input {
-            color: white !important;
             background-color: var(--prominentColor) !important;
         }
-        .comfirm-group {
+        .accordion-item {
+            color: white !important;
+            background-color: var(--brightColor) !important;
+        }
+        .paymentgateway-card {
+            padding: 10px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-auto-rows: 75px;
+            column-gap: 50px;
+            row-gap: 10px;
+        }
+        .paymentgateway-card-group label {
+            margin-bottom: 5px;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .paymentgateway-card-btn {
+            display: grid;
+            place-content: center;
+            grid-column: 1 / 3;
+        }
+        @media (max-width: 400px) {
+            .paymentgateway-card {
+                padding: 10px 20px;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-auto-rows: 75px;
+                column-gap: 50px;
+                row-gap: 10px;
+            }
+            .paymentgateway-card-btn {
+                display: grid;
+                place-content: center;
+                grid-column: 1;
+            }
+        }
+        .paymentgateway-bank-top {
+            background-color: var(--prominentColor);
+        }
+        .paymentgateway-bank-top {
+            display: grid;
+            grid-template-columns: 1fr 540px 1fr;
+        }
+        .paymentgateway-bank-top-center {
+            grid-column: 2;
+        }
+        .paymentgateway-bank-top-center img {
+            width: 540px;
+            height: 640px;
+        }
+        .paymentgateway-bank-center {
+            display: grid;
+            grid-template-columns: 1fr 540px 1fr;
+            background-color: var(--prominentColor);
+            padding: 10px 0;
+        }
+        .paymentgateway-bank-center-input {
+            grid-column: 2;
+            text-align: center;
+        }
+        .paymentgateway-bank-center-input input {
+            text-align: center;
+            width: 100%;
+            height: 35px;
+            background-color: var(--brightColor);
+            box-shadow: 0 0 15px gray;
+            border: none;
+            outline: none;
+            padding: 0 10px;
+            color: white;
+            transition: 0.3s;
+        }
+        .paymentgateway-bank-center-input input:focus {
+            box-shadow: 0 0 30px gray;
+        }
+        #amount::-webkit-inner-spin-button,
+        #amount::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        @media (max-width: 600px) {
+            .paymentgateway-bank {
+                grid-column: 2;
+                display: grid;
+                grid-template-rows: 400px 100px auto;
+            }
+            .paymentgateway-bank-top {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+            .paymentgateway-bank-top-center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                grid-column: 1;
+            }
+            .paymentgateway-bank-top-center img {
+                width:70%;
+                height: 80%;
+            }
+            .paymentgateway-bank-center {
+                display: grid;
+                grid-template-columns: 1fr;
+                background-color: var(--prominentColor);
+                padding: 10px 0;
+            }
+            .paymentgateway-bank-center-input {
+                grid-column: 1;
+                text-align: center;
+            }
+        }
+        @media (max-width: 408px) {
+            .paymentgateway-bank-top-center img {
+                width: 100%;
+                height: 80%;
+            }
+        }
+        .no-hostory {
+            text-align: center;
+        }
+        .paymentgateway-bank-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            padding: 10px 20px;
+        }
+        .paymentgateway-bank-group-left {
             display: grid;
             place-content: center;
         }
-        .input-group input {
-            color: white !important;
-            background-color: var(--prominentColor) !important;
+        .paymentgateway-bank-group-left img {
+            width: 400px;
+            height: 474px;
+        }
+        .paymentgateway-bank-group-right label {
+            margin-bottom: 5px;
+        }
+        @media (max-width: 560px) {
+            .col-2 {
+                display: none;
+            }
+        }
+        @media (max-width: 420px) {
+            .col-5 {
+                display: none;
+            }
+        }
+        @media (max-width: 350px) {
+            .col-3 {
+                display: none;
+            }
+        }
+        @media (max-width: 800px) {
+            .paymentgateway-bank-group {
+                display: grid;
+                grid-template-columns: 1fr;
+                column-gap: 20px;
+                row-gap: 20px;
+                padding: 10px 20px;
+            }
+        }
+        @media (max-width: 500px) {
+            .paymentgateway-bank-group-left img {
+                width: 300px;
+                height: 355px;
+            }
+        }
+        @media (max-width: 380px) {
+            .paymentgateway-bank-group-left img {
+                width: 200px;
+                height: 237px;
+            }
+        }
+        @media (max-width: 280px) {
+            .paymentgateway-bank-group-left img {
+                width: 150px;
+                height: 178px;
+            }
+        }
+        .no-history {
+            text-align: center;
         }
     </style>
     <link rel="icon" href="image/system/favourite.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <title>Store</title>
+    <title>Nạp tiền</title>
 </head>
 <body>
     <div class="madol" id="modal">
@@ -535,7 +636,7 @@
     <div class="main">
         <div class="main-left">
             <div class="main-left-logo">
-                <img src="/image/system/logo.png" alt="Logo">
+                <img src="image/system/logo.png" alt="Logo">
             </div>
             <div class="main-left-logo-content" id="v_menu">
                 <div class="main-left-logo-content-group">
@@ -571,7 +672,7 @@
                       </button>
                 </div>
                 <div class="main-right-header-title">
-                    <h1 class="overflow-1">Tài khoản</h1>
+                    <h1 class="overflow-1">Thanh toán</h1>
                 </div>
                 <div class="main-right-header-money">
                     <button type="button" class="btn btn-warning overflow-1 btn-money">
@@ -594,53 +695,121 @@
             </div>
             <div class="main-right-header-content">
                 <div class="main-right-header-content-center">
-                    <div class="main-right-header-content-center-left">
-                        <div class="main-right-header-content-center-left-top">
-                            <img src="/image/system/default_user.png" alt="" id="avatar">
-                        </div>
-                        <div class="main-right-header-content-center-left-bottom" id="profile-left">
-                            <h4 class="overflow-1 username-left" id="username-left"><span class="placeholder col-6"></span><h4/>
-                        </div>
-                    </div>
-                    <div class="main-right-header-content-center-right">
-                        <div class="main-right-header-content-center-right-top" id="profile-right">
-                            <h4 class="overflow-1 username-right" id="username-right"><span class="placeholder col-3"></span></h4>
-                        </div>
-                        <div class="main-right-header-content-center-medium" id="bie">
-                            <span class="placeholder col-6"></span>
-                            <span class="placeholder col-4"></span>
-                            <span class="placeholder col-2"></span>
-                            <span class="placeholder col-6"></span>
-                            <span class="placeholder col-2"></span>
-                            <hr>
-                        </div>
-                        <div class="main-right-header-content-center-right-center">
-                            <div class="main-right-header-content-center-right-center-items">
-                                <div class="main-right-header-content-center-right-center-items-top overflow-1">
-                                    UID
+                    <div class="alert alert-warning" role="alert">
+                        Hiện tại cách chức năng hiện không thể thực hiện được vì web chưa được upload lên hosting hay VPS nên không thể gọi API của các dịch vụ thanh toán trực tuyến
+                      </div>
+                    <div class="accordion" id="paymentgatewaymenu">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#paymentgateway-card" aria-expanded="true" aria-controls="paymentgateway-card">
+                              Thanh toán qua thẻ cào
+                            </button>
+                          </h2>
+                          <div id="paymentgateway-card" class="accordion-collapse collapse show" data-bs-parent="#paymentgatewaymenu">
+                            <div class="accordion-body paymentgateway-card">
+                                <div class="paymentgateway-card-group">
+                                    <label for="card_type">Loại thẻ</label>
+                                    <select id="card_type" class="form-select">
+                                        <option value="" selected disabled>--Chọn Loại Thẻ--</option>
+                                        <option value="Viettel">Viettel</option>
+                                        <option value="Vinaphone">Vinaphone</option>
+                                        <option value="Mobifone">Mobifone</option>
+                                        <option value="Vietnamobile">Vietnamobile</option>
+                                        <option value="Vcoin">Vcoin</option>
+                                        <option value="Zing">Zing</option>
+                                        <option value="Gate">Gate</option>
+                                        <option value="Garena">Garena</option>
+                                    </select>
                                 </div>
-                                <div class="main-right-header-content-center-right-center-items-bottom overflow-1" id="id">
-                                    <span class="placeholder col-6"></span>
+                                <div class="paymentgateway-card-group">
+                                    <label for="amount">Mệnh gá</label>
+                                    <select name="amount" class="form-control">
+                                        <option value="" selected disabled>--Chọn mệnh giá--</option>
+                                        <option value="10000">10.000đ</option>
+                                        <option value="20000">20.000đ</option>
+                                        <option value="30000">30.000đ</option>
+                                        <option value="50000">50.000đ</option>
+                                        <option value="100000">100.000đ</option>
+                                        <option value="200000">200.000đ</option>
+                                        <option value="300000">300.000đ</option>
+                                        <option value="500000">500.000đ</option>
+                                        <option value="1000000">1.000.000đ</option>
+                                    </select>
+                                </div>
+                                <div class="paymentgateway-card-group">
+                                    <label for="pin">Mệnh gá</label>
+                                    <input type="number" class="form-control" id="pin" placeholder="Mã thẻ">
+                                </div>
+                                <div class="paymentgateway-card-group">
+                                    <label for="serial">Số serial</label>
+                                    <input type="number" class="form-control" id="serial" placeholder="Số serial">
+                                </div>
+                                <div class="paymentgateway-card-btn">
+                                    <button type="button" class="btn btn-success">Xác nhận</button>
                                 </div>
                             </div>
-                            <div class="main-right-header-content-center-right-center-items">
-                                <div class="main-right-header-content-center-right-center-items-top overflow-1">
-                                    Chức vụ
-                                </div>
-                                <div class="main-right-header-content-center-right-center-items-bottom overflow-1" id="rank">
-                                    <span class="placeholder col-6"></span>
-                                </div>
-                            </div>
-                            <div class="main-right-header-content-center-right-center-items">
-                                <div class="main-right-header-content-center-right-center-items-top overflow-1">
-                                    Thời gian tạo tài khoản
-                                </div>
-                                <div class="main-right-header-content-center-right-center-items-bottom overflow-1" id="createtime">
-                                    <span class="placeholder col-6"></span>
-                                </div>
-                            </div>
+                          </div>
                         </div>
-                    </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paymentgateway-bank" aria-expanded="false" aria-controls="paymentgateway-bank">
+                                Nạp thẻ qua ngân hàng
+                              </button>
+                            </h2>
+                            <div id="paymentgateway-bank" class="accordion-collapse collapse" data-bs-parent="#paymentgatewaymenu">
+                              <div class="accordion-body paymentgateway-bank-group">
+                                <div class="paymentgateway-bank-group-left">
+                                    <img src="https://via.placeholder.com/540x640" alt="" id="qr">
+                                </div>
+                                <div class="paymentgateway-bank-group-right">
+                                    <label for="bank_amount">Số tiền</label>
+                                    <input type="number" class="form-control" id="bank_amount" placeholder="Số tiền" value="100000" onchange="ChanageAmount()">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paymenthistory" aria-expanded="false" aria-controls="paymenthistory">
+                              Lịch sử giao dịch
+                            </button>
+                          </h2>
+                          <div id="paymenthistory" class="accordion-collapse collapse" data-bs-parent="#paymentgatewaymenu">
+                            <div class="accordion-body">
+                                <div class="no-history">
+                                    <p>Hiện chưa có bất cứ giao dịch hợp lệ</p>
+                                </div>
+                                <!-- <table class="table table-dark table-striped table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="col-1">ID</th>
+                                        <th scope="col" class="col-2">Loại</th>
+                                        <th scope="col" class="col-3">Số tiền</th>
+                                        <th scope="col" class="col-4">Trạng thái</th>
+                                        <th scope="col" class="col-5">Thời gian</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th class="col-1" scope="row">#1</th>
+                                        <td class="col-2">CARD</td>
+                                        <td class="col-3">1.000.000.000đ</td>
+                                        <td class="col-4"><span class="badge rounded-pill text-bg-success">Thành công</span></td>
+                                        <td class="col-5">00:00:00 00/00/0000</td>
+                                      </tr>
+                                      <tr>
+                                        <th class="col-1" scope="row">#2</th>
+                                        <td class="col-2">CARD</td>
+                                        <td class="col-3">1.000.000.000đ</td>
+                                        <td class="col-4"><span class="badge rounded-pill text-bg-danger">Thất bại</span></td>
+                                        <td class="col-5">00:00:00 00/00/0000</td>
+                                      </tr>
+                                    </tbody>
+                                  </table> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>
@@ -681,7 +850,6 @@
           </div>
     </div>
     <script>
-    const USERID = "<%= userid %>";
     async function RegisterAccount() {
         let username = document.getElementById("register-username").value;
         let email = document.getElementById("register-email").value;
@@ -1087,10 +1255,10 @@
                                     <p>Tài khoản</p>
                                 </div>
                                 <div class="main-left-logo-content-group-bottom">
-                                    <a href="/profile" class="main-left-logo-content-group-bottom-active">
+                                    <a href="/profile">
                                         <button><i class="fa-solid fa-user"></i> Tài khoản</button>
                                     </a>
-                                    <a href="/paymentgateway">
+                                    <a href="/paymentgateway" class="main-left-logo-content-group-bottom-active">
                                         <button><i class="fa-solid fa-dollar-sign"></i> Nạp tiền</button>
                                     </a>
                                     <a href="/purchasedproducts">
@@ -1102,10 +1270,10 @@
                                 <p>Tài khoản</p>
                             </div>
                             <div class="main-left-logo-content-group-bottom">
-                                <a href="/profile" class="main-left-logo-content-group-bottom-active">
+                                <a href="/profile">
                                     <button><i class="fa-solid fa-user"></i> Tài khoản</button>
                                 </a>
-                                <a href="/paymentgateway">
+                                <a href="/paymentgateway" class="main-left-logo-content-group-bottom-active">
                                     <button><i class="fa-solid fa-dollar-sign"></i> Nạp tiền</button>
                                 </a>
                                 <a href="/purchasedproducts">
@@ -1139,68 +1307,44 @@
         localStorage.removeItem("password");
         location.reload();
     }
-    document.addEventListener("DOMContentLoaded", () => {
-        function LoadUser() {
-            const data = {
-                userid: USERID
-            }
-            fetch('/API/getuserdatanonaccount', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-                credentials: 'include'
-              })
-              .then(res => res.json())
-              .then(resData => {
-                    if (resData.status) {
-                        if (resData.data !== null) {
-                            document.title = `Trang cá nhân của ${resData.data.username}`;
-                            document.getElementById("username-left").innerHTML = `${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}`;
-                            document.getElementById("username-right").innerHTML = `${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}`;
-                            let avatarPath = resData.data.avatarpath.replace("public\\", "/").replaceAll("\\", "/");
-                            document.getElementById("avatar").src = `${avatarPath}`;
-                            document.getElementById("bie").innerHTML = `${resData.data.bio === null || resData.data.bio === undefined || resData.data.bio === "" ? "" : resData.data.bio}`;
-                            document.getElementById("id").textContent = `${resData.data.userid}`;
-                            document.getElementById("rank").textContent = `${GetPermissionName(resData.data.permissionid)}`;
-                            document.getElementById("createtime").textContent = `${formatDate(resData.data.createtime)}`;
-                        }
-                        else {
-                            location.href = "/";
-                        }
-                    }
-              })
+    function LoadQR(amount) {
+        const data = {
+            amount: amount
         }
-        LoadUser();
-    });
-    function GetPermissionName(permissionid) {
-        switch (permissionid) {
-            case "member":
-                return "Người mua";
-            case "seller":
-                return "Người bán";
-            case "moderator":
-                return "Người kiểm duyệt";
-            case "developer":
-                return "Nhà phát triển";
-            case "admin":
-                return "Quản trị viên";
-            default:
-                return "Người mua";
+        fetch('/API/getqr', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .then(resData => {
+                if (resData.status) {
+                    document.getElementById("qr").src = resData.url;
+                }
+          })
+    }
+    LoadQR(10000);
+    function ChanageAmount() {
+        let amount = document.getElementById("bank_amount").value;
+
+        if (amount > 0 && amount !== "") {
+            LoadQR(amount);
+        }
+        else {
+            document.getElementById("amount").value = 100000;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Số tiền phải lớn hơn 0`,
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+            });
         }
     }
-    function formatDate(date) {
-        const now = new Date(date);
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const seconds = now.getSeconds().toString().padStart(2, '0');
-        const day = now.getDate().toString().padStart(2, '0');
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const year = now.getFullYear();
-      
-        return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
-      }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

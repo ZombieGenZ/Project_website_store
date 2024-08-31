@@ -1,10 +1,10 @@
 # Về dự án
 ---
-Mất khoản 18 ngày để hoàn thiện
+Với gần **28.000 dòng code**, dự án mất khoản 20 ngày để hoàn thành
 # Chia sẽ cá nhân
-Dự án cá nhân thứ hai về chủ đề cửa hàng
-Dự án này tuy không được nhiều chức năng như dự kiến và cũng còn rất nhiều thiếu sót trong dự án
-Nhưng dù sao nó cũng đã góp một phần trong hành trình học lập trình của mình
+Đây là dự án cá nhân thứ hai của mình, tập trung vào chủ đề cửa hàng.
+Dù vẫn chưa đạt được hoàn toàn cách các chức năng như dự kiến và vẫn còn nhiều điểm cần cải thiện, 
+nhưng dự án này vẫn là một bước tiến quan trọng trong hành trình học lập trình của mình.
 # Một số hình ảnh về dự án
 ---
 **Đáp ứng đa thiết bị**
@@ -57,3 +57,5 @@ Dạn cho điện thoại
 **Cơ sở dử liệu**
 ---
 ![](https://github.com/ZombieGenZ/Project_website_store/blob/main/Prview/database.png)
+---
+Cảm ơn mọi người đã xem qua dự án của mình

@@ -27,7 +27,6 @@ routes.post("/", async (req, res) => {
     const { penaltyid } = req.body;
     try {
       const penaltyData = await GetPenaltyData(penaltyid);
-      console.log(penaltyData);
       if (penaltyData !== null) {
         res.status(200).json({ status: true, data: penaltyData });
       }

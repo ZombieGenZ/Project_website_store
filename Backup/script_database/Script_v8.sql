@@ -240,7 +240,3 @@ SELECT * FROM Penalty;
 SELECT * FROM PurchaseHistory;
 SELECT * FROM Evaluate;
 SELECT * FROM OTP;
-
--- DELETE FROM PurchaseHistory WHERE userid = 10000005;
-
--- DELETE FROM account WHERE username = 'PigChannelVN';

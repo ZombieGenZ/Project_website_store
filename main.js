@@ -157,6 +157,10 @@ app.get("/forgetpassword/chanagepassword/:id", (req, res) => {
       res.render("404notfound");
     });
 });
+app.get("/paymentgateway", (req, res) => {
+    res.status(200);
+    res.render("paymentgateway");
+});
 
 const registerAPIRoutes = require("./routes/register");
 const authenticationAccountAPIRoutes = require("./routes/authentication");
@@ -206,6 +210,8 @@ const getOTPDataOTPAPIRoutes = require("./routes/getotpdata");
 const chanagePasswordOTPAPIRoutes = require("./routes/chanagepasswordotp");
 const getBuyLogAPIRoutes = require("./routes/getbuylog");
 const editProductDiscountAPIRoutes = require("./routes/editproductdiscount");
+const getQRAPIRoutes = require("./routes/getqr");
+const checkPenaltyAPIRoutes = require("./routes/checkpenalty");
 
 app.use('/API/register', registerAPIRoutes);
 app.use('/API/authentication', authenticationAccountAPIRoutes);
@@ -255,6 +261,8 @@ app.use('/API/getotpdata', getOTPDataOTPAPIRoutes);
 app.use('/API/chanagepasswordotp', chanagePasswordOTPAPIRoutes);
 app.use('/API/getbuylog', getBuyLogAPIRoutes);
 app.use('/API/editproductdiscount', editProductDiscountAPIRoutes);
+app.use('/API/getqr', getQRAPIRoutes);
+app.use('/API/checkpenalty', checkPenaltyAPIRoutes);
 
 app.use((req, res, next) => {
     res.status(404).render("404notfound");

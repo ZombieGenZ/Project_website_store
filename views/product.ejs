@@ -1389,7 +1389,7 @@
                   .then(res => res.json())
                   .then(resDataPicture => {
                     if (resDataPicture.status) {
-                        document.title = `${resData.data.producttitle} - ${location.host}`;
+                        document.title = `Sản phẩm: ${resData.data.producttitle}`;
                         document.getElementById("author").innerHTML = `<a href="/profile/${resData.data.username}">${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}</a>`;
                         document.getElementById("createtime").innerHTML = `${formatDate(resData.data.createtime)}`;
                         document.getElementById("totalsold").innerHTML = `${resData.data.totalsold}`;
