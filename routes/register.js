@@ -170,7 +170,6 @@ function normalizeString(str) {
         }
     })
       .then(async responseEmail => {
-        console.log(responseEmail);
       return true;
     })
     .catch(e => {
