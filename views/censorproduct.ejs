@@ -1481,7 +1481,7 @@
                                         <td class="tb-col1" scope="row">${count_unprocessed}</td>
                                         <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                         <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                         <td class="tb-col5">${items.status}</td>
                                         <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                     </tr>`;
@@ -1661,7 +1661,7 @@
                                         <td class="tb-col1" scope="row">${count_processed}</td>
                                         <td class="tb-col2"><a href="/product/${items.productpath}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                         <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                         <td class="tb-col5">${items.status}</td>
                                         <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                     </tr>`;
@@ -1815,7 +1815,7 @@
                                             <td class="tb-col1" scope="row">${count_unprocessed}</td>
                                             <td class="tb-col2"><a href="/product/${items.productpath}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                             <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                            ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                            ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                             <td class="tb-col5">${items.status}</td>
                                             <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                         </tr>`;
@@ -1995,7 +1995,7 @@
                                             <td class="tb-col1" scope="row">${count_processed}</td>
                                             <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                             <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                            ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                            ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                             <td class="tb-col5">${items.status}</td>
                                             <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                         </tr>`;
@@ -2138,7 +2138,7 @@
                                         <td class="tb-col1" scope="row">${count_unprocessed}</td>
                                         <td class="tb-col2"><a href="/product/${items.productpath}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                         <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                         <td class="tb-col5">${items.status}</td>
                                         <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                     </tr>`;
@@ -2318,7 +2318,7 @@
                                         <td class="tb-col1" scope="row">${count_processed}</td>
                                         <td class="tb-col2"><a href="/product/${items.productid}" class="overflow-1" target="_blank">${items.producttitle}</a></td>
                                         <td class="tb-col3"><a href="/profile/${items.username}" class="overflow-1" target="_blank">${items.username}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE')} đ <soan class="price-hide">${items.price.toLocaleString('de-DE')}</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col4">${(items.price - ((items.price / 100) * items.discount)) == 0 ? "Miễn phí " : (items.price - ((items.price / 100) * items.discount)).toLocaleString('de-DE') + " đ "}<soan class="price-hide">${items.price.toLocaleString('de-DE')} đ</span></td>` : `<td class="tb-col4">${items.price.toLocaleString('de-DE')} đ</td>`}
                                         <td class="tb-col5">${items.status}</td>
                                         <td class="tb-col6"><button type="button" data-bs-toggle="modal" data-bs-target="#${items.productid}-ViewProductModal" class="btn btn-primary">Xem</button></td>
                                     </tr>`;

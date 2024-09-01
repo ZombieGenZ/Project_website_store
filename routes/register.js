@@ -153,12 +153,12 @@ function normalizeString(str) {
 
   async function SendEmail(email, username) {
     try {
-      let text = `Xin chào ${username},\n\nCảm ơn bạn đã đăng ký dịch vụ của chúng tôi và chào mừng bạn đến với GALAXY VIRUS STORE. Chúng tôi rất vui mừng được chào đón bạn và hy vọng bạn sẽ có trải nghiệm tuyệt vời với các sản phẩm và dịch vụ của chúng tôi.\n\nNếu bạn có bất cứ thắc mắc hoặc cần hỗ trợ, đừng ngần ngại liên hệ với chúng tôi qua email galaxyvirusteam@hotmail.com hoặc số điện thoại 0783504540.\n\nTrân trọng,\nGALAXY VIRUS STORE\n`;
+      let text = `Xin chào ${username},\n\nCảm ơn bạn đã đăng ký dịch vụ của chúng tôi và chào mừng bạn đến với ${config.brandname}. Chúng tôi rất vui mừng được chào đón bạn và hy vọng bạn sẽ có trải nghiệm tuyệt vời với các sản phẩm và dịch vụ của chúng tôi.\n\nNếu bạn có bất cứ thắc mắc hoặc cần hỗ trợ, đừng ngần ngại liên hệ với chúng tôi qua email ${config.contact_email} hoặc số điện thoại ${config.contact_mobile}.\n\nTrân trọng,\n${config.brandname}\n`;
       let HTML = `<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.15); font-family: Arial, sans-serif;">
                     <p style="font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 20px;">Xin chào <b>${username}</b>,</p>
                     <p style="font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 20px;">Cảm ơn bạn đã đăng ký dịch vụ của chúng tôi và chào mừng bạn đến với <strong>GALAXY VIRUS STORE</strong>. Chúng tôi rất vui mừng được chào đón bạn và hy vọng bạn sẽ có trải nghiệm tuyệt vời với các sản phẩm và dịch vụ của chúng tôi.</p>
-                    <p style="font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 20px;">Nếu bạn có bất cứ thắc mắc hoặc cần hỗ trợ thì đừng ngần ngại liên hệ với chúng tôi qua email <a href="mailto:galaxyvirusteam@hotmail.com" style="color: #28a745; text-decoration: none; font-weight: bold;">galaxyvirusteam@hotmail.com</a> hoặc số điện thoại <a href="tel:0783504540" style="color: #28a745; text-decoration: none; font-weight: bold;">0783504540</a>.</p>
-                    <p style="font-size: 16px; line-height: 1.8; color: #333333; text-align: center; margin-top: 30px;">Trân trọng,<br><b>GALAXY VIRUS STORE</b></p>
+                    <p style="font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 20px;">Nếu bạn có bất cứ thắc mắc hoặc cần hỗ trợ thì đừng ngần ngại liên hệ với chúng tôi qua email <a href="mailto:${config.contact_email}" style="color: #28a745; text-decoration: none; font-weight: bold;">${config.contact_email}</a> hoặc số điện thoại <a href="tel:${config.contact_mobile}" style="color: #28a745; text-decoration: none; font-weight: bold;">${config.contact_mobile}</a>.</p>
+                    <p style="font-size: 16px; line-height: 1.8; color: #333333; text-align: center; margin-top: 30px;">Trân trọng,<br><b>${config.brandname}</b></p>
                 </div>`;
       axios.post(config.server_url + '/API/sendemail', {
         to: email,

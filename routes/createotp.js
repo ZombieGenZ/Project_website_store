@@ -44,7 +44,7 @@ routes.post("/", async (req, res) => {
                   if (items.email === email) {
                       exitEmail = true;
                       const OTP = await GeneratorUUID() + "-" + String(Math.round(Math.random() * 1e9));
-                      const url = `http://localhost:3000/forgetpassword/chanagepassword/${OTP}`;
+                      const url = `${config.server_url}/forgetpassword/chanagepassword/${OTP}`;
                       await CreateOTP(OTP, email);
                       await SendEmail(items.email, items.username, url);
                       res.status(200).json({ status: true, message: `Đã gửi email thành công! Vui lòng kiểm tra hộp thư của email ${email}` });
@@ -113,7 +113,7 @@ function GeneratorUUID() {
 
 async function SendEmail(email, username, url) {
     try {
-      let text = `ĐẶT LẠI MẬT KHẨU\nXin chào ${username},\n\nChúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.\n\nĐể đặt lại mật khẩu, vui lòng truy cập vào liên kết sau:\n${url}\n\nVì lý do bảo mật, vui lòng không chia sẻ liên kết này với bất kỳ ai.\n\nNếu bạn gặp sự cố khi truy cập liên kết trên, hãy sao chép và dán URL vào trình duyệt của bạn.\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi:\n\nEmail: galaxyvirusteam@hotmail.com\nĐiện thoại: 0783504540\n\nTrân trọng,\nĐội ngũ hỗ trợ của chúng tôi\n`;
+      let text = `ĐẶT LẠI MẬT KHẨU\nXin chào ${username},\n\nChúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn. Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.\n\nĐể đặt lại mật khẩu, vui lòng truy cập vào liên kết sau:\n${url}\n\nVì lý do bảo mật, vui lòng không chia sẻ liên kết này với bất kỳ ai.\n\nNếu bạn gặp sự cố khi truy cập liên kết trên, hãy sao chép và dán URL vào trình duyệt của bạn.\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi:\n\nEmail: ${config.contact_email}\nĐiện thoại: ${config.contact_mobile}\n\nTrân trọng,\nĐội ngũ hỗ trợ của chúng tôi\n`;
       let HTML = `<table cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
                     <tr>
                         <td style="padding: 40px 30px; text-align: center; background-color: #007bff; border-radius: 8px 8px 0 0;">
@@ -139,8 +139,8 @@ async function SendEmail(email, username, url) {
                         <td style="padding: 30px; background-color: #f8f8f8; border-radius: 0 0 8px 8px; text-align: center;">
                             <p style="margin: 0; font-size: 14px; color: #666666;">Nếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi:</p>
                             <p style="margin: 10px 0 0; font-size: 14px;">
-                                Email: <a href="mailto:support@example.com" style="color: #007bff; text-decoration: none;">galaxyvirusteam@hotmail.com</a> | 
-                                Điện thoại: <a href="tel:0123456789" style="color: #007bff; text-decoration: none;">0783504540</a>
+                                Email: <a href="mailto:${config.contact_email}" style="color: #007bff; text-decoration: none;">${config.contact_email}</a> | 
+                                Điện thoại: <a href="tel:${config.contact_mobile}" style="color: #007bff; text-decoration: none;">${config.contact_mobile}</a>
                             </p>
                         </td>
                     </tr>

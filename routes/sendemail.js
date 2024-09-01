@@ -5,8 +5,8 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const config = require('./config');
 
-const email = `your_email`;
-const pass = `your_password`;
+const email = config.email_email;
+const pass = config.email_password;
 
 const database = mysql.createConnection({
     host: config.database_host,

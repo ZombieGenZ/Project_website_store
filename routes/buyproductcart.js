@@ -205,7 +205,7 @@ async function DeleteCart(cartid) {
 
 async function SendEmail(email, productquantity, productname, productprice) {
   try {
-    let text = `HÓA ĐƠN\n==============================\n\nTên | Giá\n------------------------------\nx${productquantity} ${productname} | ${productprice.toLocaleString('de-DE')} VND\n------------------------------\nTỔNG TIỀN: 300.000 VND\n\n==============================\n\nXin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ:\nEmail: galaxyvirusteam@hotmail.com | SĐT: 0783504540\n`;
+    let text = `HÓA ĐƠN\n==============================\n\nTên | Giá\n------------------------------\nx${productquantity} ${productname} | ${productprice.toLocaleString('de-DE')} VND\n------------------------------\nTỔNG TIỀN: ${productprice.toLocaleString('de-DE')} VND\n\n==============================\n\nXin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!\n\nNếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ:\nEmail: ${config.contact_email} | SĐT: ${config.contact_mobile}\n`;
     let HTML = `<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
                   <div style="background-color: #4a154b; color: #ffffff; text-align: center; padding: 20px;">
                       <h1 style="margin: 0; font-size: 28px; letter-spacing: 2px;">HÓA ĐƠN</h1>
@@ -233,8 +233,8 @@ async function SendEmail(email, productquantity, productname, productprice) {
                       <p style="margin: 5px 0;">Xin chân thành cảm ơn quý khách đã tin tưởng và ủng hộ chúng tôi!</p>
                       <p style="margin: 5px 0;">Nếu quý khách hàng có bất kỳ câu hỏi nào, xin vui lòng liên hệ:</p>
                       <p style="margin: 5px 0;">
-                          Email: <a href="mailto:galaxyvirusteam@hotmail.com" style="color: #4a154b; text-decoration: none;">galaxyvirusteam@hotmail.com</a> | 
-                          SĐT: <a href="tel:0783504540" style="color: #4a154b; text-decoration: none;">0783504540</a>
+                          Email: <a href="mailto:${config.contact_email}" style="color: #4a154b; text-decoration: none;">${config.contact_email}</a> | 
+                          SĐT: <a href="tel:${config.contact_mobile}" style="color: #4a154b; text-decoration: none;">${config.contact_mobile}</a>
                       </p>
                   </div>
               </div>`;

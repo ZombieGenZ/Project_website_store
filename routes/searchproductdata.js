@@ -36,7 +36,7 @@ routes.post("/", async (req, res) => {
 
   async function GetProductData(keyword) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, totalsold, ratingstar FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE status LIKE '<span class="badge text-bg-success">Đã được duyệt</span>' AND (producttitle LIKE '%${keyword}%' OR productsubtitle LIKE '%${keyword}%' OR productcontent LIKE '%${keyword}%')`, (err, res) => {
+      database.query(`SELECT productid, sellerid, username, producttitle, productsubtitle, information, productcontent, price, quantity, producticonpath, productpath, status, Verify, totalsold, ratingstar, discount, discountcount FROM Product JOIN Account ON Product.sellerid = Account.userid WHERE status LIKE '<span class="badge text-bg-success">Đã được duyệt</span>' AND (producttitle LIKE '%${keyword}%' OR productsubtitle LIKE '%${keyword}%' OR productcontent LIKE '%${keyword}%')`, (err, res) => {
         if (err) {
           reject(err);
         } else {

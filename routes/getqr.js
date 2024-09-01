@@ -11,11 +11,11 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 
 
 routes.post("/", async (req, res) => {
-    const BANK_ID = "YOUR_BANK_ID";
-    const ACCOUNT_NO = "YOUR_ACCOUNT_NO";
-    const TEMPLATE = "YOUR_TEMPLATE";
-    const DESCRIPTION = "YOUR_DESCRIPTION";
-    const ACCOUNT_NAME = "YOUR_ACCOUNT_NAME";
+    const BANK_ID = config.bank_bankid;
+    const ACCOUNT_NO = config.bank_accountno;
+    const TEMPLATE = config.bank_template;
+    const DESCRIPTION = config.bank_description;
+    const ACCOUNT_NAME = config.bank_accountname;
 
     let { amount } = req.body;
     try {

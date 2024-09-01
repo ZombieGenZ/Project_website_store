@@ -1,4 +1,5 @@
 module.exports = {
+    brandname: "GALAXY VIRUS STORE",
     server_url: 'http://localhost:3000',
     database_host: 'localhost',
     database_port: 3307,
