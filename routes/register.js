@@ -160,7 +160,7 @@ function normalizeString(str) {
                     <p style="font-size: 16px; line-height: 1.8; color: #333333; margin-bottom: 20px;">Nếu bạn có bất cứ thắc mắc hoặc cần hỗ trợ thì đừng ngần ngại liên hệ với chúng tôi qua email <a href="mailto:galaxyvirusteam@hotmail.com" style="color: #28a745; text-decoration: none; font-weight: bold;">galaxyvirusteam@hotmail.com</a> hoặc số điện thoại <a href="tel:0783504540" style="color: #28a745; text-decoration: none; font-weight: bold;">0783504540</a>.</p>
                     <p style="font-size: 16px; line-height: 1.8; color: #333333; text-align: center; margin-top: 30px;">Trân trọng,<br><b>GALAXY VIRUS STORE</b></p>
                 </div>`;
-      axios.post('http://localhost:3000/API/sendemail', {
+      axios.post(config.server_url + '/API/sendemail', {
         to: email,
         subject: `Chào mừng ${username} đến với GALAXY VIRUS STORE`,
         text: text,

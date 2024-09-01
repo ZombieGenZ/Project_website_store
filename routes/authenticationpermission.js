@@ -31,7 +31,7 @@ routes.post("/", async (req, res) => {
     username = await normalizeString(username);
     password = await normalizeString(password);
 
-    axios.post('http://localhost:3000/API/authentication', {
+    axios.post(config.server_url + '/API/authentication', {
       username: username,
       password: password
   }, {

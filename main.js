@@ -31,7 +31,7 @@ app.get("/product", (req, res) => {
 });
 app.get("/product/:id", (req, res) => {
     res.status(200);
-    axios.post('http://localhost:3000/API/getproductdata')
+    axios.post(config.server_url + '/API/getproductdata')
     .then(async response => {
       if (response.data.status) {
         if (response.data.data !== null) {
@@ -73,7 +73,7 @@ app.get("/profile", (req, res) => {
 });
 app.get("/profile/:id", (req, res) => {
     res.status(200);
-    axios.post('http://localhost:3000/API/getalluserdata')
+    axios.post(config.server_url + '/API/getalluserdata')
     .then(async response => {
       if (response.data.status) {
         if (response.data.data !== null) {
@@ -84,7 +84,7 @@ app.get("/profile/:id", (req, res) => {
                         res.render("profile", { userid: items.userid });
                     }
                     else {
-                        axios.post('http://localhost:3000/API/getpenalty', {
+                        axios.post(config.server_url + '/API/getpenalty', {
                             penaltyid: items.penalty
                             }, {
                                 headers: {
@@ -130,7 +130,7 @@ app.get("/accountmanagement", (req, res) => {
 });
 app.get("/forgetpassword/chanagepassword/:id", (req, res) => {
     res.status(200);
-    axios.post('http://localhost:3000/API/getotpdata')
+    axios.post(config.server_url + '/API/getotpdata')
     .then(async response => {
       if (response.data.status) {
         if (response.data.data !== null) {

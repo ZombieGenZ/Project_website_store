@@ -31,7 +31,7 @@ routes.post("/", async (req, res) => {
     password = await normalizeString(password);
 
     try {
-      axios.post('http://localhost:3000/API/authenticationpermission', {
+      axios.post(config.server_url + '/API/authenticationpermission', {
         username: username,
         password: password
     }, {
@@ -41,7 +41,7 @@ routes.post("/", async (req, res) => {
     })
     .then(async responseUser => {
       if (responseUser.data.status) {
-          axios.post('http://localhost:3000/API/getproductdata')
+          axios.post(config.server_url + '/API/getproductdata')
           .then(async responseProduct => {
             if (responseProduct.data.status) {
                 const success = await GetPurchaseHistoryData(productid, responseUser.data.userid);

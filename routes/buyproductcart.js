@@ -32,7 +32,7 @@ routes.post("/", async (req, res) => {
 
     try {
         if (quantity > 0) {
-          axios.post('http://localhost:3000/API/authenticationpermission', {
+          axios.post(config.server_url + '/API/authenticationpermission', {
             username: username,
             password: password
         }, {
@@ -42,7 +42,7 @@ routes.post("/", async (req, res) => {
         })
         .then(async responseUser => {
           if (responseUser.data.status) {
-                axios.post('http://localhost:3000/API/getproductdata')
+                axios.post(config.server_url + '/API/getproductdata')
                 .then(async responseProduct => {
                   if (responseProduct.data.status) {
                     let success = false;
@@ -238,7 +238,7 @@ async function SendEmail(email, productquantity, productname, productprice) {
                       </p>
                   </div>
               </div>`;
-    axios.post('http://localhost:3000/API/sendemail', {
+    axios.post(config.server_url + '/API/sendemail', {
       to: email,
       subject: `Hóa đơn giao dịch khi mua sản phẩm ${productname}`,
       text: text,

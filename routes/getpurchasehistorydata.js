@@ -28,7 +28,7 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 routes.post("/", async (req, res) => {
     const { username, password } = req.body;
     try {
-        axios.post('http://localhost:3000/API/authenticationpermission', {
+        axios.post(config.server_url + '/API/authenticationpermission', {
           username: username,
           password: password
       }, {

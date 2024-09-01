@@ -145,7 +145,7 @@ async function SendEmail(email, username, url) {
                         </td>
                     </tr>
                 </table>`;
-      axios.post('http://localhost:3000/API/sendemail', {
+      axios.post(config.server_url + '/API/sendemail', {
         to: email,
         subject: `Yêu cầu đặt lại mật khẩu cho tài khoản ${username}`,
         text: text,

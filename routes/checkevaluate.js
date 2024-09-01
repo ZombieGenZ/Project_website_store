@@ -31,7 +31,7 @@ routes.post("/", async (req, res) => {
     password = await normalizeString(password);
 
     try {
-      axios.post('http://localhost:3000/API/checkbuy', {
+      axios.post(config.server_url + '/API/checkbuy', {
         username: username,
         password: password,
         productid: productid
