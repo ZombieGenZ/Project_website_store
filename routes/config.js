@@ -1,10 +1,19 @@
 module.exports = {
-    server_url: 'http://localhost:3000/',
+    server_url: 'http://localhost:3000',
     database_host: 'localhost',
     database_port: 3307,
     database_user: "sa",
     database_password: "123456",
     database_database: "ProjectWebsite",
     email_email: "your_email",
-    email_password: "your_password"
+    email_password: "your_password",
+    contact_email: "galaxyvirusteam@hotmail.com",
+    contact_mobile: "0783504540",
+    card_username: "your_username",
+    card_apikey: "your_apikey",
+    bank_bankid: "your_bankid",
+    bank_accountno: "your_accountno",
+    bank_template: "your_template",
+    bank_description: "your_description",
+    bank_accountname: "your_accountname",
 };

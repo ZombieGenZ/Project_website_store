@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require('path');
 const axios = require("axios");
+const config = require('./routes/config');
 
 const port = 3000;
 
