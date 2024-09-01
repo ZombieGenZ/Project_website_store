@@ -429,7 +429,7 @@
             justify-content: center;
         }
         .main-right-header-content-center-buylog a {
-            color: orangered;
+            color: orange;
             text-decoration: none;
         }
     </style>
@@ -1738,10 +1738,12 @@
               document.getElementById("buylog").innerHTML = "";
               if (resData.status) {
                   if (resData.data !== null) {
-                      let HTML = `<marquee class="marquee" behavior="scroll" direction="left">`;
-                          resData.data.forEach(items => { 
-                              HTML += `<b><a href="/profile/${items.username}">${items.username}</a></b> đã mua <b>x${items.totalquantity} <a href="/product/${items.productpath}">${items.producttitle}</a></b> với giá <b>${items.totalprice.toLocaleString("de-DE")}đ</b> `;
-                            });
+                      const list = [];
+                      resData.data.forEach(items => {
+                          list.push(`<b><a href="/profile/${items.username}">${items.username}</a></b> đã mua <b>x${items.totalquantity} <a href="/product/${items.productpath}">${items.producttitle}</a></b> với giá <b>${items.totalprice.toLocaleString("de-DE")}đ</b> `);
+                        });
+                        let HTML = `<marquee class="marquee" behavior="scroll" direction="left">`;
+                        HTML += list.join(" | ");
                         HTML += `</marquee>`
                         document.getElementById("buylog").innerHTML = HTML;
                 }

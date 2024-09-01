@@ -1281,7 +1281,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
-                                                ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
+                                                ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") == 0 ? "Miễn phí" : (items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") + " đ"} <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
                                                 <td class="tb-col4"><input id="quantity-${items.productid}" type="number" onchange="TotalAmount('${items.productid}', ${(items.price - (items.price / 100) * items.discount)})" class="product-quantity" value="1" min="1" /></td>
                                                 <td class="tb-col5" id="total-price-${items.productid}">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col6"><button type="button" class="btn btn-primary" onclick="BuyNow('${items.productid}', '${items.cartid}')">Mua</button></td>
@@ -1387,7 +1387,7 @@
                                             </div>
                                         </td>
                                         <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") == 0 ? "Miễn phí" : (items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") + " đ"} <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
                                         <td class="tb-col4"><input id="quantity-${items.productid}" type="number" onchange="TotalAmount('${items.productid}', ${(items.price - (items.price / 100) * items.discount)})" class="product-quantity" value="1" min="1" /></td>
                                         <td class="tb-col5" id="total-price-${items.productid}">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</td>
                                         <td class="tb-col6"><button type="button" class="btn btn-primary" onclick="BuyNow('${items.productid}', '${items.cartid}')">Mua</button></td>
@@ -1483,7 +1483,7 @@
                                             </div>
                                         </td>
                                         <td class="tb-col2"><a href="/product/${items.productpath}">${items.producttitle}</a></td>
-                                        ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
+                                        ${items.discount !== 0 ? `<td class="tb-col3">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") == 0 ? "Miễn phí" : (items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE") + " đ"} <span class="price-hide">${items.price.toLocaleString("de-DE")} đ</span></td>` : `<td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>`}
                                         <td class="tb-col4"><input id="quantity-${items.productid}" type="number" onchange="TotalAmount('${items.productid}', ${(items.price - (items.price / 100) * items.discount)})" class="product-quantity" value="1" min="1" /></td>
                                         <td class="tb-col5" id="total-price-${items.productid}">${(items.price - ((items.price / 100) * items.discount)).toLocaleString("de-DE")} đ</td>
                                         <td class="tb-col6"><button type="button" class="btn btn-primary" onclick="BuyNow('${items.productid}', '${items.cartid}')">Mua</button></td>

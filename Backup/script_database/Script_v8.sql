@@ -1,4 +1,4 @@
-DROP DATABASE ProjectWebsite;
+DROP DATABASE IF EXISTS ProjectWebsite;
 CREATE DATABASE ProjectWebsite;
 
 USE ProjectWebsite;
