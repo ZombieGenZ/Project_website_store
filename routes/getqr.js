@@ -11,13 +11,13 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 
 
 routes.post("/", async (req, res) => {
+  let { amount, username } = req.body;
     const BANK_ID = config.bank_bankid;
     const ACCOUNT_NO = config.bank_accountno;
     const TEMPLATE = config.bank_template;
-    const DESCRIPTION = config.bank_description;
+    const DESCRIPTION = `NAP%20${amount}%20VNĐ%20CHO%20TAI%20KHOAN%20${username}`;
     const ACCOUNT_NAME = config.bank_accountname;
 
-    let { amount } = req.body;
     try {
       if (!isNaN(Number(amount))) {
         if (Number(amount) > 0) {

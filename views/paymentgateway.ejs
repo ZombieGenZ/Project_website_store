@@ -801,6 +801,13 @@
                                         <th class="col-1" scope="row">#2</th>
                                         <td class="col-2">CARD</td>
                                         <td class="col-3">1.000.000.000đ</td>
+                                        <td class="col-4"><span class="badge rounded-pill text-bg-primary">Đang chờ duyệt</span></td>
+                                        <td class="col-5">00:00:00 00/00/0000</td>
+                                      </tr>
+                                      <tr>
+                                        <th class="col-1" scope="row">#3</th>
+                                        <td class="col-2">CARD</td>
+                                        <td class="col-3">1.000.000.000đ</td>
                                         <td class="col-4"><span class="badge rounded-pill text-bg-danger">Thất bại</span></td>
                                         <td class="col-5">00:00:00 00/00/0000</td>
                                       </tr>
@@ -1308,8 +1315,10 @@
         location.reload();
     }
     function LoadQR(amount) {
+        const username = localStorage.getItem("username");
         const data = {
-            amount: amount
+            amount: amount,
+            username: username
         }
         fetch('/API/getqr', {
             method: 'POST',
