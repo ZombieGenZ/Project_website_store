@@ -606,7 +606,7 @@
                         <div class="main-right-header-content-center-right-top" id="profile-right">
                             <h4 class="overflow-1 username-right" id="username-right"><span class="placeholder col-3"></span></h4>
                         </div>
-                        <div class="main-right-header-content-center-medium" id="bie">
+                        <div class="main-right-header-content-center-medium overflow-2" id="bio">
                             <span class="placeholder col-6"></span>
                             <span class="placeholder col-4"></span>
                             <span class="placeholder col-2"></span>
@@ -1161,7 +1161,7 @@
                             document.getElementById("username-right").innerHTML = `${resData.data.username} ${resData.data.Verify ? '<i class="fa-solid fa-circle-check verified"></i>' : ""}`;
                             let avatarPath = resData.data.avatarpath.replace("public\\", "/").replaceAll("\\", "/");
                             document.getElementById("avatar").src = `${avatarPath}`;
-                            document.getElementById("bie").innerHTML = `${resData.data.bio === null || resData.data.bio === undefined || resData.data.bio === "" ? "" : resData.data.bio}`;
+                            document.getElementById("bio").innerHTML = `${resData.data.bio === null || resData.data.bio === undefined || resData.data.bio === "" ? "" : resData.data.bio}`;
                             document.getElementById("id").textContent = `${resData.data.userid}`;
                             document.getElementById("rank").textContent = `${GetPermissionName(resData.data.permissionid)}`;
                             document.getElementById("createtime").textContent = `${formatDate(resData.data.createtime)}`;
