@@ -1214,7 +1214,7 @@
                                                                                                             <div class="accordion-body">
                                                                                                                 <div class="avatar-group">
                                                                                                                 <div class="input-group mb-3">
-                                                                                                                    <input type="file" class="form-control" id="ChanageAvatar-fied-input">
+                                                                                                                    <input type="file" class="form-control" id="ChanageAvatar-fied-input" accept=".jpg, .png">
                                                                                                                 </div>
                                                                                                                 </div>
                                                                                                                 <div class="comfirm-group">
@@ -1355,48 +1355,63 @@
       }
     function ChanageAvatar() {
         const input = document.getElementById("ChanageAvatar-fied-input").files;
-
+        
         if (input !== "" && input !== undefined && input !== null) {
             const username = localStorage.getItem("username");
             const password = localStorage.getItem("password");
             const formData = new FormData();
 
-            formData.append('username', username);
-            formData.append('password', password);
-            formData.append('avatar', input[0]);
-            fetch('/API/chanageavatar', {
-                method: 'POST',
-                body: formData,
-                credentials: 'include'
-                })
-                .then(res => res.json())
-                .then(resData => {
-                if (resData.status) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Chúc mừng",
-                        text: `${resData.message}`,
-                        background: '#222338',
-                        color: "white"
-                    }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.backdrop) {
-                            location.reload();
-                        }
-                        else {
-                            location.reload();
-                        }
+            const allowImg = checkImageExtension(input[0].name);
+
+            if (allowImg) {
+                formData.append('username', username);
+                formData.append('password', password);
+                formData.append('avatar', input[0]);
+                fetch('/API/chanageavatar', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                    })
+                    .then(res => res.json())
+                    .then(resData => {
+                    if (resData.status) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Chúc mừng",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white"
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.backdrop) {
+                                location.reload();
+                            }
+                            else {
+                                location.reload();
+                            }
+                            });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `${resData.message}`,
+                            background: '#222338',
+                            color: "white",
+                            footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
                         });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: `${resData.message}`,
-                        background: '#222338',
-                        color: "white",
-                        footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
-                    });
-                }
-                })
+                    }
+                    })
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Không thể tài file không phải là ảnh`,
+                    background: '#222338',
+                    color: "white",
+                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                });
+                return;
+            }
         }
         else {
             Swal.fire({
@@ -1721,6 +1736,10 @@
             return;
         }
     }
+    function checkImageExtension(filename) {
+        const validExtensions = ['.png', '.jpg'];
+        return validExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+      }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1806,7 +1806,43 @@
                         const username = localStorage.getItem("username");
                         const password = localStorage.getItem("password");
                         const formData = new FormData();
-            
+                        
+                        const allowImgProduct = checkImageExtension(productIcon.name);
+                        let allowImgPreview = true;
+
+                        for (let i = 0; i < productPicture.files.length; i++) {
+                            const itemsAllow = checkImageExtension(productPicture.files[i].name);
+                            console.log(itemsAllow);
+                            if (!itemsAllow) {
+                                allowImgPreview = false;
+                            }
+                        }
+
+                        if (!allowImgProduct || !allowImgPreview) {
+                            if (!allowImgProduct) {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: `Ảnh đại diện không phải là file ảnh`,
+                                    background: '#222338',
+                                    color: "white",
+                                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                  });
+                                return;
+                            }
+                            if (!allowImgPreview) {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: `Ảnh minh họa không phải là file ảnh`,
+                                    background: '#222338',
+                                    color: "white",
+                                    footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+                                  });
+                                return;
+                            }
+                        }
+
                         formData.append('username', username);
                         formData.append('password', password);
                         formData.append('productname', productName);
@@ -3239,6 +3275,10 @@
             return;
         }
     }
+    function checkImageExtension(filename) {
+        const validExtensions = ['.png', '.jpg'];
+        return validExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+      }
     </script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
