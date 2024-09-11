@@ -82,7 +82,39 @@ routes.post("/", async (req, res) => {
                               }
                             }
                             else {
-                              res.status(200).json({ status: false, message: "Số lượng sản phẩm giảm giá không đủ" });
+                              if (items.discount == 0) {
+                                const totalPrice = items.price * quantity;
+                                if (responseUser.data.money >= totalPrice) {
+                                  if ((items.quantity - quantity) >= 0) {
+                                    const TAX = 15 / 100; // 15%
+                                    const totalRevenue = totalPrice - (totalPrice * TAX);
+                                    const success = await CreatePurchaseHistory(responseUser.data.userid, items.productid, totalPrice, quantity);
+                                    const success_updatemoney = await UpdateUserMoney(responseUser.data.userid, totalPrice);
+                                    const success_updateproduct = await UpdateProductData_NoSale(productid, quantity);
+                                    const success_updaterevenue = await UpdateUserRevenue(totalRevenue, items.sellerid);
+                                    const success_deletecart = await DeleteCart(cartid);
+                                    await SendEmail(responseUser.data.email, quantity, items.producttitle, totalPrice)
+                                    if (success && success_updatemoney && success_updateproduct && success_updaterevenue && success_deletecart) {
+                                      res.status(200).json({ status: true, message: "Mua sản phẩm thành công!" });
+                                      return;
+                                    }
+                                    else {
+                                      res.status(200).json({ status: false, message: "Lỗi khi mua sản phẩm!" });
+                                      return;
+                                    }
+                                  }
+                                  else {
+                                    res.status(200).json({ status: false, message: "Số lượng sản phẩm còn lại không đủ!" });
+                                  }
+                                }
+                                else {
+                                  res.status(200).json({ status: false, message: "Số dư không đủ" });
+                                  return;
+                                }
+                              }
+                              else {
+                                res.status(200).json({ status: false, message: "Số lượng sản phẩm giảm giá không đủ" });
+                              }
                             }
                           }
                         });
@@ -146,6 +178,17 @@ async function UpdateProductData(productid, quantity) {
   try {
     const result = await database.query(`UPDATE Product SET quantity = quantity - ?, totalsold = totalsold + ?, discountcount = discountcount - ? WHERE productid = ?`, 
       [quantity, quantity, quantity, productid]);
+      return true;
+  }
+  catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+async function UpdateProductData_NoSale(productid, quantity) {
+  try {
+    const result = await database.query(`UPDATE Product SET quantity = quantity - ?, totalsold = totalsold + ? WHERE productid = ?`, 
+      [quantity, quantity, productid]);
       return true;
   }
   catch (e) {
