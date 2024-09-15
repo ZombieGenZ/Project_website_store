@@ -1789,6 +1789,16 @@
             const btn = document.getElementById(`temp-bill-${id}`);
             btn.click();
         }
+        function receive(id) {
+            Swal.fire({
+                title: "Opps...",
+                text: `ID ${id}: Có vẻ như quản trị viên chưa làm chức năng này`,
+                icon: "info",
+                background: '#222338',
+                color: "white",
+                footer: '<a href="https://www.facebook.com/ZombieGenZ/" target="_blank" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Bạn cần giúp hổ trợ?</a>'
+              });
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://kit.fontawesome.com/476445fe42.js" crossorigin="anonymous"></script>
