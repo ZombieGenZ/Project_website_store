@@ -1329,7 +1329,7 @@
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
+                                                <td class="tb-col6">${!items.received ? `<button type="button" class="btn btn-primary" onclick="receive('${items.historyid}')">Nhận hàng</button>` : ""}<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });
@@ -1472,7 +1472,7 @@
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
+                                                <td class="tb-col6">${!items.received ? `<button type="button" class="btn btn-primary" onclick="receive('${items.historyid}')">Nhận hàng</button>` : ""}<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });
@@ -1605,7 +1605,7 @@
                                                 <td class="tb-col3">${items.price.toLocaleString("de-DE")} đ</td>
                                                 <td class="tb-col4">${items.totalquantity}</td>
                                                 <td class="tb-col5">${items.totalprice.toLocaleString("de-DE")} đ</td>
-                                                <td class="tb-col6"><button type="button" class="btn btn-primary">Nhận hàng</button><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
+                                                <td class="tb-col6">${!items.received ? `<button type="button" class="btn btn-primary" onclick="receive('${items.historyid}')">Nhận hàng</button>` : ""}<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#bill-${count}">Xem hóa đơn</button></td>
                                             </tr>`;
                                     count++;
                                 });

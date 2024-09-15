@@ -56,7 +56,7 @@ routes.post("/", async (req, res) => {
 
   async function GetPurchaseHistoryData(userid) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT historyid, PurchaseHistory.productid, totalprice, totalquantity, price, productpath, producttitle FROM PurchaseHistory JOIN Product ON Product.productid = PurchaseHistory.productid WHERE userid = ?`, [userid], (err, res) => {
+      database.query(`SELECT historyid, PurchaseHistory.productid, totalprice, totalquantity, price, productpath, producttitle, received FROM PurchaseHistory JOIN Product ON Product.productid = PurchaseHistory.productid WHERE userid = ?`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {

@@ -56,7 +56,7 @@ routes.post("/", async (req, res) => {
 
   async function GetPurchaseHistoryData(userid, keywork) {
     return new Promise((resolve, reject) => {
-      database.query(`SELECT historyid, PurchaseHistory.productid, totalprice, totalquantity, price, productpath, producttitle FROM PurchaseHistory JOIN Product ON Product.productid = PurchaseHistory.productid WHERE userid = ? AND (Product.producttitle LIKE '%${keywork}%' OR Product.productsubtitle LIKE '%${keywork}%' OR Product.productsubtitle LIKE '%${keywork}%')`, [userid], (err, res) => {
+      database.query(`SELECT historyid, PurchaseHistory.productid, totalprice, totalquantity, price, productpath, producttitle, received FROM PurchaseHistory JOIN Product ON Product.productid = PurchaseHistory.productid WHERE userid = ? AND (Product.producttitle LIKE '%${keywork}%' OR Product.productsubtitle LIKE '%${keywork}%' OR Product.productsubtitle LIKE '%${keywork}%')`, [userid], (err, res) => {
         if (err) {
           reject(err);
         } else {

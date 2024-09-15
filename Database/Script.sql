@@ -74,6 +74,7 @@ CREATE TABLE PurchaseHistory (
 	totalprice DECIMAL(15,3) NOT NULL CHECK(totalprice > 0),
 	totalquantity INT NOT NULL CHECK(totalquantity > 0),
 	createtime DATE NOT NULL DEFAULT NOW(),
+    received BOOLEAN NOT NULL DEFAULT false,
 	PRIMARY KEY(historyid)
 );
 
